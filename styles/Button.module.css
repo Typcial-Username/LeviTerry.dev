@@ -1,0 +1,8 @@
+.button {
+    border-radius: 5rem;
+    max-width: 10rem;
+}
+
+.button:disabled {
+    background-color: grey;
+}
