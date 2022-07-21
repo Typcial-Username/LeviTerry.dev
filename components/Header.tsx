@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import styles from '../styles/Header.module.css'
 
 interface HeaderProps {
-    name: string
+    name: string,
+    links?: string[]
 }
 
 // useEffect(() => {
@@ -18,14 +19,12 @@ interface HeaderProps {
 //     scrollTop > 250 ? header?.classList.add('isSticky') : header?.classList.remove('isSticky')
 // }
 
-const Header = ({name} : HeaderProps) => {
+const Header = ({name, links} : HeaderProps) => {
   return (
     <div className={styles.header}>
-        <p>{name}</p>
+        <p><a href="/"> {name}</a></p>
         <div className={styles.links}>
-            <a className={styles.link} href="#projects">Projects</a>
-            <a className={styles.link} href="#experience">Experience</a>
-            <a className={styles.link} href="#contact">Contact</a>
+            
         </div>
     </div>
   )

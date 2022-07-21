@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #333;
+  font-family: 'Roboto', sans-serif;/*-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
+  background-color: #001220;
   color: white;
   scroll-behavior: smooth;
 }
@@ -20,4 +22,12 @@ a:hover {
 
 * {
   box-sizing: border-box;
+}
+
+.border-bottom {
+  border-bottom: 0.15rem solid #ffffff ;
+}
+
+.container {
+  padding: 0 2rem;
 }

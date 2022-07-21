@@ -3,6 +3,10 @@
     max-width: 10rem;
 }
 
+.button:hover {
+    background-color: aqua;
+}
+
 .button:disabled {
     background-color: grey;
 }
