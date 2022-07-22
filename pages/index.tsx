@@ -8,6 +8,10 @@ import { TextInput } from '../components/TextInput'
 import { Button } from '../components/Button'
 import React from 'react'
 
+const date = new Date(Date.now())
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' ,'Saturday']
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
 const Home: NextPage = () => {
   return (
     <>
@@ -58,6 +62,7 @@ const Home: NextPage = () => {
             {/* <Button name="submit" type='submit' text='Submit' /> */}
         </form>
       </div>
+      <p>{`Thank you for reading and have a great rest of your ${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}!`}</p>
       <a href='https://github.com/Typcial-Username/LeviTerry.dev' target="_blank">View Source</a>
     </div>
     </>
