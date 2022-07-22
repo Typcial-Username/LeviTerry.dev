@@ -15,7 +15,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Levi Terry</title>
         <meta name="description" content="Levi Terry's Developer Portfolio" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/favicon.ico" />
         <meta property="og:title" content='Levi Terry' />
         <meta property='og:url' content="https://leviterry.dev"/>
         <meta property='og:type' content='website' />
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       <section>
         <h1 id="projects">Projects</h1>
         <div className={styles.grid}>
-          <Card title="DuckBot" description={`DuckBot is a multipurpose bot for Discord which allows server owners to help moderate their servers and have fun/increase activity among their members.\n(website coming soon)`}/>
+          <Card title="DuckBot" description={`DuckBot is a multipurpose bot for Discord which allows server owners to help moderate their servers and have fun/increase activity among their members.\n(website coming soon)`} />
           </div>
       </section>
 
@@ -47,7 +47,7 @@ const Home: NextPage = () => {
       </section>
         
       <div className={styles.contact}>
-          <form className={styles.contact} id="contact" onSubmit={onContactSubmit}>
+          <form className={styles.contact} id="contact" action="/api/contact" method="post">
             <label htmlFor='name'>Name: <br /><TextInput type='text' name="name" placeholder='Your name'/></label> <br /><br />
             
             <label htmlFor='email'>Email: <br /><TextInput type='email' name="email" placeholder='you@yourdomain.com' /></label><br /><br />

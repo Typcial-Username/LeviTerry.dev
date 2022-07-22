@@ -3,7 +3,6 @@ import styles from '../styles/Header.module.css'
 
 interface HeaderProps {
     name: string,
-    links?: string[]
 }
 
 // useEffect(() => {
@@ -19,10 +18,10 @@ interface HeaderProps {
 //     scrollTop > 250 ? header?.classList.add('isSticky') : header?.classList.remove('isSticky')
 // }
 
-const Header = ({name, links} : HeaderProps) => {
+const Header = ({ name } : HeaderProps) => {
   return (
     <div className={styles.header}>
-        <p><a href="/"> {name}</a></p>
+        <p><a href="/">{name}</a></p>
         <div className={styles.links}>
             
         </div>

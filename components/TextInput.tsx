@@ -1,6 +1,7 @@
 import styles from '../styles/TextInput.module.css'
 
 type TextInputType = 'text' | 'email' | 'submit' | 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'tel' | 'time' | 'url' | 'week' 
+
 interface TextInputProps {
     name?: string, 
     type?: TextInputType,
