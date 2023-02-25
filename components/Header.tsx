@@ -1,29 +1,22 @@
-import { useEffect } from 'react'
 import styles from '../styles/Header.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHtml5 } from '@fortawesome/free-brands-svg-icons'
+
+// const sidebar = document.getElementById('sidebar')
+// sidebar?.style.
 
 interface HeaderProps {
-    name: string,
+  file: string;
 }
 
-// useEffect(() => {
-//     window.addEventListener('scroll', isSticky)
-//     return () => {
-//         window.removeEventListener('scroll', isSticky)
-//     }
-// })
-
-// const isSticky = (elm) => {
-//     const header = document.querySelector('.header')
-//     const scrollTop = window.scrollY
-//     scrollTop > 250 ? header?.classList.add('isSticky') : header?.classList.remove('isSticky')
-// }
-
-const Header = ({ name } : HeaderProps) => {
+const Header = ({ file }: HeaderProps) => {
   return (
     <div className={styles.header}>
-        <p><a href="/">{name}</a></p>
         <div className={styles.links}>
-            
+
+        </div>
+        <div className={styles.file}>
+          <FontAwesomeIcon icon={faHtml5} color="orange"/> {file}
         </div>
     </div>
   )

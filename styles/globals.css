@@ -1,13 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+/* 
+Default body: #131313
+Default accent: #252526
+
+Light Body: #ffffff
+Light accent: #2c2c2c
+
+Blue body: #021627
+Blue accent: #020f1b
+*/
+
+:root {
+  --clr-primary: #ffffff;
+  --clr-secondary: #000000;
+
+  --clr-bg: #131313;
+  --clr-accent: #252526;
+  --clr-tab: #1e1e1e;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'Roboto', sans-serif;/*-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
-  background-color: #001220;
-  color: white;
+  background: var(--clr-bg); /*linear-gradient(#03182b, #084277); */
+  color: var(--clr-primary);
   scroll-behavior: smooth;
 }
 
@@ -30,4 +50,29 @@ a:hover {
 
 .container {
   padding: 0 2rem;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --clr-primary: #000000;
+    --clr-secondary: #ffffff;
+  }
+} */
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 0.15rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
 }

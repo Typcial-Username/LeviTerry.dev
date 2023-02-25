@@ -24,43 +24,6 @@
   flex-grow: 1;
 }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
-
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-}
-
-.title,
-.description {
-  text-align: center;
-}
-
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
 .grid {
   display: flex;
   align-items: left;
@@ -107,6 +70,83 @@
   justify-content: center;
 }
 
-.wave {
-  background-image: url('/images/waves.svg');
+.typing {
+  font-size: 2em;
 }
+
+.typing::before {
+  content: 'Have a ';
+  animation: animateText 15s step-end infinite;
+}
+
+@keyframes animateText {
+  10% { content: 'Have a g'; }
+  12% { content: 'Have a gr'; }
+  15% { content: 'Have a gre'; }
+  17% { content: 'Have a grea'; }
+
+  21% { content: 'Have a great'; }
+
+  30% { content: 'Have a grea'; }
+  31% { content: 'Have a gre'; }
+  33% { content: 'Have a gr'; }
+  38% { content: 'Have a'; }
+
+  39% { content: 'Have an'; }
+  40% { content: 'Have an am'; }
+  41% { content: 'Have an ama'; }
+  43% { content: 'Have an amaz'; }
+  44% { content: 'Have an amazi'; }
+  47% { content: 'Have an amazin'; }
+
+  50% { content: 'Have an amazing'; }
+
+  58% { content: 'Have an amazin'; }
+  59% { content: 'Have an amazi'; }
+  61% { content: 'Have an amaz'; }
+  63% { content: 'Have an ama'; }
+  65% { content: 'Have an am'; }
+  66% { content: 'Have an a'; }
+  67% { content: 'Have an'; }
+  69% { content: 'Have a'; }
+
+  70% { content: 'Have a t'; }
+  71% { content: 'Have a ti'; }
+  73% { content: 'Have a tip'; }
+  75% { content: 'Have a tipt'; }
+  77% { content: 'Have a tipto'; }
+
+  79% { content: 'Have a tiptop'; }
+  
+  85% { content: 'Have a tipto'; }
+  86% { content: 'Have a tipt'; }
+  89% { content: 'Have a tip'; }
+  90% { content: 'Have a ti'; }
+  91% { content: 'Have a t'; }
+  92% { content: 'Have a'; }
+}
+
+.blinker {
+  content: '';
+  display: inline-block;
+  width: 0.1em;
+  height: 0.75em;
+  margin-left: 0.1em;
+  background-color: #fff;
+
+  animation: blink 0.75s ease-in-out infinite; 
+}
+
+@keyframes blink {
+  0%, 25%, 100% { opacity: 1; }
+
+  50%, 75% { opacity: 0; }
+}
+
+.background {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  }

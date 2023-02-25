@@ -1,9 +1,19 @@
 .header {
-    border-bottom: .15rem solid white;
+    border-bottom: .25rem solid var(--clr-secondary);
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    position: relative;
+    position: sticky;
+    top: 0;
+    padding: 0 2rem;
+    background-color: var(--clr-accent);
+    /* margin-left: calc(30% - 15em); */
+}
+
+.file {
+    background-color: var(--clr-tab);
+    /* border: 1px solid green; */
+    padding: 1em;
 }
 
 .header > p {
