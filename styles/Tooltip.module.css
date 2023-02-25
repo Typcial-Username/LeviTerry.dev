@@ -1,0 +1,18 @@
+.tooltip {
+    position: relative;
+    color: white;
+    visibility: hidden;
+    padding: 0.25em;
+}
+
+.tooltip:hover {
+    visibility: visible;
+}
+
+.tooltip_arrow {
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    border-width: 5px;
+    border-style: solid;
+}

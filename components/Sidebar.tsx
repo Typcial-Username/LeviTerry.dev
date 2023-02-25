@@ -4,6 +4,7 @@ import { faGithub, faHtml5 } from '@fortawesome/free-brands-svg-icons'
 import styles from '../styles/Sidebar.module.css'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Tooltip } from './Tooltip'
 
 export const Sidebar = () => {
     const [ settingsOpen, setSettingsOpen ] = useState(false)
@@ -16,9 +17,11 @@ export const Sidebar = () => {
                         id="files"
                         className={styles.button}
                         onClick={() => selectMenu('files')}
+                        aria-label="Explorer"
                     >
                     <FontAwesomeIcon icon={faFile} size="3x"/>
                  </button>
+                 <Tooltip text={"Explorer"}/>
                 </li>
 
                 <li>

@@ -1,6 +1,6 @@
 #sidebar {
     max-width: 30%;
-    height: 75%;
+    height: 100%;
     float: left;
     background-color: var(--clr-accent);
     display: flex;
@@ -8,7 +8,7 @@
     flex-direction: column;
     position: sticky;
     padding: 0 0.25rem;
-    margin: 0;
+    /* margin-right: 2em; */
     top: 2.5em;
     justify-content: space-around;
 }

@@ -2,11 +2,13 @@
     border-bottom: .25rem solid var(--clr-secondary);
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
     position: sticky;
     top: 0;
     padding: 0 2rem;
     background-color: var(--clr-accent);
+    align-items: flex-start;
     /* margin-left: calc(30% - 15em); */
 }
 
@@ -22,8 +24,7 @@
 }
 
 .links {
-    align-items: right;
-    margin-left: auto;
+    margin-right: auto;
 }
 
 .link {
