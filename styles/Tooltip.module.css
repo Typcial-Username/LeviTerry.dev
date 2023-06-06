@@ -2,17 +2,21 @@
     position: relative;
     color: white;
     visibility: hidden;
-    padding: 0.25em;
+    /* padding: 0.25em; */
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
-.tooltip:hover {
+/* .tooltip:hover {
     visibility: visible;
-}
+} */
 
 .tooltip_arrow {
     position: absolute;
     top: 100%;
-    left: 100%;
+    left: 50%;
     border-width: 5px;
     border-style: solid;
 }

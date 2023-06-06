@@ -12,12 +12,10 @@ interface HeaderProps {
 const Header = ({ file }: HeaderProps) => {
   return (
     <div className={styles.header}>
-        <div className={styles.links}>
-
-        </div>
         <div className={styles.file}>
-          <FontAwesomeIcon icon={faHtml5} color="orange"/> {file}
-        </div>
+          {file}
+          {/* <FontAwesomeIcon icon={faHtml5} color="#e44f26"/> {file} */}
+      </div>
     </div>
   )
 }

@@ -1,26 +1,27 @@
 .header {
-    border-bottom: .25rem solid var(--clr-secondary);
-    display: flex;
-    align-items: center;
+    /* border-bottom: 1px solid #272b3b; */
+    /* display: flex; */
+    align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
     position: sticky;
-    top: 0;
-    padding: 0 2rem;
-    background-color: var(--clr-accent);
+    background-color: var(--clr-bg);
     align-items: flex-start;
-    /* margin-left: calc(30% - 15em); */
+    overflow: hidden;
+    top: 0;
 }
 
 .file {
     background-color: var(--clr-tab);
     /* border: 1px solid green; */
     padding: 1em;
+    max-width: 10em;
+    /* border: 1px solid #272b3b; */
 }
 
 .header > p {
-    align-self: start;
-    font-size: 1.5rem;
+    padding-left: 1.5em;
+    font-size: .75rem;
 }
 
 .links {

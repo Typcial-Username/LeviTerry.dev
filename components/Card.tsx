@@ -18,9 +18,10 @@ interface CardProps {
 export const Card = ({title, description, link, imageOptions}: CardProps) => {
     let content = description.replaceAll("\n", "--")
     content = content.replaceAll("--", "\n")
+
     return (
         <div className={`${styles.card}`}>
-            {/* {image ? imageLocation == 'left' ? <img src={image} />: '' : ""} */}
+            {/* {image ? imageLocation == 'left' ? <img src={image} />: '' : null} */}
             <h2 className='border-bottom'>{link ? <a className={styles.link} href={link} target="_blank">{title}</a> : title}</h2>
             <p>{content}</p>
         </div>
