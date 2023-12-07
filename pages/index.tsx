@@ -43,9 +43,9 @@ const Home: NextPage = () => {
         <section>
           <h1 id="about">About</h1>
           <p>
-            Hello, I'm Levi Terry, I am a software developer based in Southern
-            Nevada. I first started programming in 2012 when I discovered the
-            language/program known as
+            Hello, I &apos; m Levi Terry, I am a software developer based in
+            Southern Nevada. I first started programming in 2012 when I
+            discovered the language/program known as
             <Link
               link="https://scratch.mit.edu"
               target="_blank"
@@ -145,6 +145,7 @@ const Home: NextPage = () => {
           <a
             href="https://github.com/Typcial-Username/LeviTerry.dev"
             target="_blank"
+            rel="noreferrer"
           >
             View Source
           </a>

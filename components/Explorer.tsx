@@ -31,7 +31,7 @@ export const Explorer = ({ enabled, showing }: ExplorerProps) => {
               color="var(--clr-icon)"
               size="lg"
             />{" "}
-            <a href="/">index.html</a>
+            <Link href="/">index.html</Link>
           </div>
 
           <div className={styles.item}>
