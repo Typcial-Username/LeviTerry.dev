@@ -1,6 +1,7 @@
-import styles from '../styles/Header.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHtml5 } from '@fortawesome/free-brands-svg-icons'
+import styles from "../styles/Header.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHtml5 } from "@fortawesome/free-brands-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 // const sidebar = document.getElementById('sidebar')
 // sidebar?.style.
@@ -10,14 +11,15 @@ interface HeaderProps {
 }
 
 const Header = ({ file }: HeaderProps) => {
+  const faHTMLIcon = faHtml5 as IconProp;
+
   return (
     <div className={styles.header}>
-        <div className={styles.file}>
-          {file}
-          {/* <FontAwesomeIcon icon={faHtml5} color="#e44f26"/> {file} */}
+      <div className={styles.file}>
+        <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" /> {file}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

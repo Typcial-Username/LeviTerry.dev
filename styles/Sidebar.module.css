@@ -1,67 +1,87 @@
 #sidebar {
-    height: 100%;
-    top: 0;
-    max-width: 5%;
-    float: left;
-    background-color: var(--clr-accent);
-    display: flex;
-    flex-direction: column;
-    font-size: 1.5em;
-    position: sticky;
-    padding: 0 0.25rem;
-    margin-bottom: auto;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 5;
+  height: 100%;
+  top: 0;
+  width: 5%;
+  left: 0;
+  float: left;
+  background-color: var(--clr-sidebar);
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5em;
+  position: sticky;
+  padding: 0 0.25rem;
+  margin-bottom: auto;
+  align-items: center;
+  /* justify-content: space-between; */
+  /* z-index: 5; */
+  /* border: 1px solid red; */
+  /* margin-right: 5%; */
 }
 
-svg .icon {
-    margin: 0;
-    padding: 1em 0;
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item {
+  width: auto;
+  height: 100%;
 }
 
 .options {
-    list-style: none;
-    margin: 0;
-    padding: 1em 50%;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  list-style: none;
+  margin: 0 auto;
+  padding: 1em 50%;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
 }
 
-.selected {
-    border-left: 0.625em solid #888;
+.main_bar {
+  margin-bottom: auto;
+  height: 100%;
 }
 
 .button {
-    background: none;
-    border: 1px solid var(--clr-accent);
-    color: #aaa;
-    font-size: 0.5em;
+  width: 100%;
+  background: none;
+  /* border: 1px solid var(--clr-accent); */
+  color: #aaa;
+  font-size: 2rem;
+  /* padding: 1em 0; */
+  align-items: center;
+  justify-content: center;
+}
+
+.button.selected {
+  border-left: 0.125em solid #fff;
+  color: #fff;
 }
 
 .button:hover {
-    cursor: pointer;
-    color: white;
+  cursor: pointer;
+  color: white;
 }
 
 .open {
-    display: block;
-    background-color: var(--clr-accent);
+  display: block;
+  background-color: var(--clr-accent);
 }
 
 .closed {
-    display: none;
+  display: none;
 }
 
 /* .options > li {
     padding: 0.5rem;
 } */
 
-.content {
-    width: 100%;
-    margin: auto;
-    padding: 0;
-}
+/* .content {
+  width: 100%;
+  margin: auto;
+  padding: 0;
+} */

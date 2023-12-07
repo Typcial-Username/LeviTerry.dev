@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
 
 /* 
 Default:
@@ -12,21 +12,32 @@ Blue body: #011627
 Blue accent: #01111d
 */
 
-:root.dark {
-  --clr-primary: #ffffff;
-  --clr-secondary: #000000;
+:root {
+  --clr-icon: #e44f26;
+}
 
-  --clr-bg: #131313;
+:root.dark {
+  --clr-sidebar: #333;
+  --clr-explorer: #252526;
+
+  --clr-primary: #fff;
+  --clr-secondary: #000;
+
+  --clr-bg: #1e1e1e;
   --clr-accent: #252526;
   --clr-tab: #1e1e1e;
 }
 
 :root.light {
+  --clr-sidebar: #333;
+  --clr-explorer: #f3f3f3;
+
   --clr-primary: #000;
   --clr-secondary: #fff;
 
   --clr-bg: #fff;
   --clr-accent: #eaeaea;
+  --clr-tab: #fff;
 }
 
 :root.blue {
@@ -38,15 +49,21 @@ Blue accent: #01111d
   --clr-tab: #01111d;
 }
 
-html,
-body {
+* {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: Consolas, 'Courier New', monospace; /*'Roboto Mono', sans-serif;-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+}
+
+html,
+body {
+  font-family: Consolas, "Courier New", monospace; /*'Roboto Mono', sans-serif;-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
   background: var(--clr-bg); /*linear-gradient(#03182b, #084277); */
   color: var(--clr-primary);
   scroll-behavior: smooth;
+  width: 100%;
+  height: 100%;
 }
 
 a {
@@ -58,20 +75,17 @@ a:hover {
   text-decoration: underline;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 .border-bottom {
-  border-bottom: 0.15rem solid #ffffff ;
+  border-bottom: 0.15rem solid #ffffff;
 }
 
 .container {
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
+  margin-left: 25%;
 }
 
 ::-webkit-scrollbar {
-  width: 0.5rem;
+  width: 0.75em;
 }
 
 ::-webkit-scrollbar-track {

@@ -1,56 +1,64 @@
 .header {
-    /* border-bottom: 1px solid #272b3b; */
-    /* display: flex; */
-    align-items: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: sticky;
-    background-color: var(--clr-bg);
-    align-items: flex-start;
-    overflow: hidden;
-    top: 0;
+  /* border-bottom: 1px solid #272b3b; */
+  display: flex;
+  /* align-items: flex-start; */
+  /* justify-content: center; */
+  /* flex-wrap: wrap; */
+  position: sticky;
+  background-color: var(--clr-sidebar);
+  align-items: flex-start;
+  overflow: hidden;
+  top: 0;
+  margin-left: 25%;
+  width: 75%;
+  /* z-index: 2; */
 }
 
 .file {
-    background-color: var(--clr-tab);
-    /* border: 1px solid green; */
-    padding: 1em;
-    max-width: 10em;
-    /* border: 1px solid #272b3b; */
+  background-color: var(--clr-tab);
+  /* border: 1px solid green; */
+  padding: 1em;
+  max-width: 10em;
+}
+
+.file > p {
+  margin: 0;
+  padding: 0;
+  width: fit-content;
 }
 
 .header > p {
-    padding-left: 1.5em;
-    font-size: .75rem;
+  padding-left: 1.5em;
+  font-size: 0.75rem;
 }
 
 .links {
-    margin-right: auto;
+  margin-right: auto;
 }
 
 .link {
-    text-decoration: none;
-    padding: 0.25em;
-    margin-left: auto;
-    font-size: 1.5rem;
+  text-decoration: none;
+  padding: 0.25em;
+  margin-left: auto;
+  font-size: 1.5rem;
 }
 
 .grid {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 50em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 50em;
 }
 
 .isSticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    box-shadow: 0 2px 0 rgb(0 0 0 / 15%);
-    background-color: #ffffff !important;
-    animation: ease-in-out 0s normal none 1 running fadeInDown;
-    padding-top: 0px;
-    padding-bottom: 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 15%);
+  background-color: #ffffff !important;
+  animation: ease-in-out 0s normal none 1 running fadeInDown;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
