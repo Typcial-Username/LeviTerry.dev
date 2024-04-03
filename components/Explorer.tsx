@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../styles/Explorer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHtml5 } from "@fortawesome/free-brands-svg-icons";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { useRouter } from "next/router";
+
 // import { Link } from "./Link";
 
 interface ExplorerProps {
@@ -12,7 +14,14 @@ interface ExplorerProps {
   showing: string;
 }
 
-export const Explorer = ({ enabled, showing }: ExplorerProps) => {
+const Explorer = ({ enabled, showing }: ExplorerProps) => {
+  const [host, setHost] = React.useState("localhost");
+  const router = useRouter();
+
+  useEffect(() => {
+    setHost(window.location.host);
+  }, []);
+
   const faHTMLIcon = faHtml5 as IconProp;
 
   switch (showing) {
@@ -23,24 +32,42 @@ export const Explorer = ({ enabled, showing }: ExplorerProps) => {
           style={{ display: `${enabled ? "block" : "none"}` }}
         >
           <p className={styles.header}>Explorer</p>
-          <p className={styles.content}>localhost</p>
+          <p className={styles.content}>
+            {" "}
+            <FontAwesomeIcon icon={faAngleDown} /> {host}{" "}
+          </p>
 
-          <div className={styles.item}>
-            <FontAwesomeIcon
-              icon={faHTMLIcon}
-              color="var(--clr-icon)"
-              size="lg"
-            />{" "}
-            <Link href="/">index.html</Link>
+          <div className={`${styles.item} ${styles.selected}`}>
+            <Link href="/">
+              <FontAwesomeIcon
+                icon={faHTMLIcon}
+                color="var(--clr-icon)"
+                size="lg"
+              />{" "}
+              index.html
+            </Link>
           </div>
 
           <div className={styles.item}>
-            <FontAwesomeIcon
-              icon={faHTMLIcon}
-              color="var(--clr-icon)"
-              size="lg"
-            />{" "}
-            <a href="about">about.html</a>
+            <Link href="/about">
+              <FontAwesomeIcon
+                icon={faHTMLIcon}
+                color="var(--clr-icon)"
+                size="lg"
+              />{" "}
+              about.html
+            </Link>
+          </div>
+
+          <div className={styles.item}>
+            <Link href="/gallery">
+              <FontAwesomeIcon
+                icon={faHTMLIcon}
+                color="var(--clr-icon)"
+                size="lg"
+              />{" "}
+              gallery.html
+            </Link>
           </div>
         </div>
       );
@@ -52,11 +79,18 @@ export const Explorer = ({ enabled, showing }: ExplorerProps) => {
           style={{ display: `${enabled ? "block" : "none"}` }}
         >
           <p className={styles.header}>Explorer</p>
-          <p className={styles.content}>localhost</p>
+          <p className={styles.content}>
+            <p className={styles.content}>
+              {" "}
+              <FontAwesomeIcon icon={faAngleDown} /> {host}{" "}
+            </p>
+          </p>
 
-          <div className="item">
+          <div className={styles.item}>
             <FontAwesomeIcon icon={faDownload} color="var(--clr-icon)" />{" "}
-            <a href="#">Resume</a>
+            <a href="../docs/Levi_Terry_Resume.pdf" download>
+              Resume
+            </a>
           </div>
         </div>
       );
@@ -65,3 +99,5 @@ export const Explorer = ({ enabled, showing }: ExplorerProps) => {
       return <div className="explorer"></div>;
   }
 };
+
+export default Explorer;

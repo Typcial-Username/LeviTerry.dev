@@ -5,6 +5,7 @@ import {
   faCog,
   faCircleUser,
   faBars,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faHtml5 } from "@fortawesome/free-brands-svg-icons";
 import styles from "../styles/Sidebar.module.css";
@@ -19,6 +20,7 @@ export const Sidebar = () => {
   const [option, setOption] = useState("files");
 
   const faGithubIcon = faGithub as IconProp;
+  const faHTMLIcon = faHtml5 as IconProp;
 
   const themes = [
     {
@@ -40,22 +42,44 @@ export const Sidebar = () => {
       <div className={styles.content}>
         <div className={styles.main_bar}>
           <ul className={styles.options}>
+            {/* Files */}
             <li className={styles.item}>
               {/* <Tooltip text={"Files"}> */}
-              <a
-                id="files"
-                className={styles.button}
-                onClick={() => {
-                  selectMenu("files");
-                  setOption("files");
-                }}
-                aria-label="Files"
-              >
-                <FontAwesomeIcon icon={faFile} />
-              </a>
-              {/* </Tooltip> */}
+              <div id="files" className={styles.button}>
+                <a
+                  onClick={() => {
+                    selectMenu("files");
+                    setOption("files");
+                  }}
+                  aria-label="Files"
+                  title="Explorer"
+                >
+                  <FontAwesomeIcon icon={faFile} />
+                </a>
+                {/* </Tooltip> */}
+              </div>
             </li>
 
+            {/* Search */}
+            {/*}
+            <li className={styles.item}>
+              {/* <Tooltip text={"Search"}> *}
+              <a
+                id="search"
+                className={styles.button}
+                onClick={() => {
+                  selectMenu("search");
+                  setOption("search");
+                }}
+                aria-label="Search"
+              >
+                <FontAwesomeIcon icon={faSearch} />
+              </a>
+              {/* </Tooltip> *}
+            </li>
+            */}
+
+            {/* Docs */}
             <li className={styles.item}>
               {/* <Tooltip text={"Documents"}> */}
               <a
@@ -65,6 +89,7 @@ export const Sidebar = () => {
                   selectMenu("docs");
                   setOption("docs");
                 }}
+                title="Documents"
               >
                 <FontAwesomeIcon icon={faBook} />
               </a>
@@ -75,6 +100,8 @@ export const Sidebar = () => {
               <a
                 href="https://github.com/Typcial-Username"
                 className={styles.button}
+                aria-label="Visit my GitHub profile"
+                title="GitHub"
               >
                 <FontAwesomeIcon icon={faGithubIcon} />
               </a>
@@ -83,59 +110,58 @@ export const Sidebar = () => {
         </div>
 
         <div>
+          {/* Socials */}
           <ul className={`${styles.options}`}>
-            {/*
             <li>
-              {/* <Tooltip text="Socials"> }
-              <a className={styles.button}>
+              <a className={styles.button} title="Socials">
                 <FontAwesomeIcon icon={faCircleUser} />
               </a>
-              {/* </Tooltip> }
             </li>
-            */}
+
             <li>
               {/* <Tooltip text={"Settings"}> */}
               <a
                 className={styles.button}
                 type="button"
-                onClick={() => setSettingsOpen(!settingsOpen)}
+                onClick={() => {
+                  setSettingsOpen(!settingsOpen);
+                }}
+                title="Settings"
               >
                 <FontAwesomeIcon icon={faCog} />
               </a>
               {/* </Tooltip> */}
             </li>
           </ul>
+
+          {/* Settings */}
+          <div
+            className={`${styles.menu} ${
+              settingsOpen ? `${styles.open}` : `${styles.closed}`
+            }`}
+          >
+            <ul
+              style={{
+                margin: "auto",
+                padding: "auto",
+                alignContent: "center",
+                justifyContent: "center",
+                display: "flex",
+              }}
+            >
+              <form style={{ margin: "auto", padding: 0 }}>
+                <label htmlFor="theme">Theme: </label>
+                {/* <Dropdown options={themes} /> */}
+                <select name="theme" id="theme" onChange={onThemeChange}>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                  <option value="blue">Blue</option>
+                </select>
+              </form>
+            </ul>
+          </div>
         </div>
       </div>
-
-      {/*
-      <div
-        className={`${styles.content} ${
-          settingsOpen ? `${styles.open}` : `${styles.closed}`
-        }`}
-      >
-        <ul
-          style={{
-            margin: "auto",
-            padding: "auto",
-            alignContent: "center",
-            justifyContent: "center",
-            display: "flex",
-          }}
-        >
-          <form style={{ margin: "auto", padding: 0 }}>
-            <label htmlFor="theme">Theme: </label>
-            {/* <Dropdown options={themes} /> 
-            <select name="theme" id="theme" onChange={onThemeChange}>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-              <option value="blue">Blue</option>
-            </select>
-          </form>
-          {/* <li><a href="">{<FontAwesomeIcon icon={faHtml5} size="lg"/>}</a></li> 
-        </ul>
-      </div>
-         */}
     </aside>
   );
 };
@@ -144,15 +170,15 @@ const selectMenu = (btn: string) => {
   const button = document.getElementById(btn);
   button?.classList.add(`${styles.selected}`);
 
-  const allButtons = ["files", "docs"];
+  const allButtons = ["files", "docs", "search"];
+
   for (let i = 0; i < allButtons.length; i++) {
     if (allButtons[i] != btn) {
       document
         .getElementById(allButtons[i])
         ?.classList.remove(`${styles.selected}`);
-
-      localStorage.setItem("explorer-location", btn);
     }
+    btn !== "search" ? localStorage.setItem("explorer-location", btn) : null;
   }
 };
 

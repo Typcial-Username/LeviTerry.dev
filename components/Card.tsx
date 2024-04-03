@@ -21,7 +21,13 @@ export const Card = ({ title, description, link, imageOptions }: CardProps) => {
 
   return (
     <div className={`${styles.card}`}>
-      {/* {image ? imageLocation == 'left' ? <img src={image} />: '' : null} */}
+      {imageOptions ? (
+        imageOptions.location == "left" ? (
+          <img src={imageOptions.src} alt={imageOptions.alt} />
+        ) : (
+          ""
+        )
+      ) : null}
       <h2 className="border-bottom">
         {link ? (
           <a
@@ -37,6 +43,13 @@ export const Card = ({ title, description, link, imageOptions }: CardProps) => {
         )}
       </h2>
       <p>{content}</p>
+      {imageOptions ? (
+        imageOptions.location == "left" ? (
+          <img src={imageOptions.src} alt={imageOptions.alt} />
+        ) : (
+          ""
+        )
+      ) : null}
     </div>
   );
 };

@@ -4,13 +4,13 @@
   /* align-items: flex-start; */
   /* justify-content: center; */
   /* flex-wrap: wrap; */
-  position: sticky;
-  background-color: var(--clr-sidebar);
+  position: fixed;
+  background-color: var(--clr-explorer);
   align-items: flex-start;
   overflow: hidden;
   top: 0;
-  margin-left: 25%;
-  width: 75%;
+  margin-left: 15%;
+  width: 85%;
   /* z-index: 2; */
 }
 

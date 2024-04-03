@@ -1,7 +1,10 @@
+import styles from "../styles/Terminal.module.css";
+
 export const Terminal = () => {
   return (
     <div
       className="container"
+      id={styles.terminal}
       style={{
         borderTop: "1px solid whitesmoke",
         backgroundColor: "var(--clr-bg)",
@@ -12,7 +15,10 @@ export const Terminal = () => {
       <div>
         {"visitor@leviterry.dev>"}
         <form onSubmit={onSubmit}>
-          <textarea name="terminal" id="terminal" cols={30}></textarea>
+          <textarea
+            name="terminal"
+            defaultValue={"visitor@leviterry.dev> "}
+          ></textarea>
         </form>
       </div>
     </div>
