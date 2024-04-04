@@ -83,45 +83,8 @@ const Home: NextPage = () => {
 
       {/* Contact */}
       {/* <section className="container"> */}
-      <div className={styles.contact}>
-        <form
-          className={styles.contact}
-          id="contact"
-          action="/api/contact"
-          method="post"
-        >
-          <label htmlFor="name">
-            Name: <br />
-            <TextInput type="text" name="name" placeholder="Your name" />
-          </label>{" "}
-          <br />
-          <br />
-          <label htmlFor="email">
-            Email: <br />
-            <TextInput
-              type="email"
-              name="email"
-              placeholder="you@yourdomain.com"
-            />
-          </label>
-          <br />
-          <br />
-          <label htmlFor="message">
-            Message: <br />
-            <textarea
-              className={styles.text}
-              name="message"
-              placeholder="Message"
-            />
-          </label>
-          <br />
-          <br />
-          <button type="submit" name="submit">
-            Submit
-          </button>
-          <Button name="submit" type="submit" text="Submit" />
-        </form>
-      </div>
+      {/* <div className={styles.contact}>
+      </div> */}
 
       <div className={styles.typing}>
         <div className={styles.blinker}></div>

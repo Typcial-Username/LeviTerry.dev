@@ -17,7 +17,6 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <HelpBar />
-      <Sidebar />
       <ExplorerNoSSR
         enabled={true}
         showing={
@@ -26,6 +25,7 @@ export default function Layout({ children }: LayoutProps) {
             : "files"
         }
       />
+      <Sidebar />
 
       {/*localStorage.getItem("explorer-location") as string*/}
 

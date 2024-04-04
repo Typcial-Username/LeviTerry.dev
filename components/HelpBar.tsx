@@ -83,6 +83,7 @@ const HelpBar = () => {
         >
           &times;
         </button>
+        
         {/* Modal Header */}
         <h1
           style={{ color: "var(--clr-primary)", textDecoration: "underline" }}

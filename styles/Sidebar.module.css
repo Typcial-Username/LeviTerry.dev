@@ -82,16 +82,59 @@
 }
 
 .menu {
-  width: 100%;
+  width: fit-content;
+  /* height: 100%; */
   margin: auto;
+  align-self: center;
+  justify-self: center;
   padding: 0;
+  top: 90%;
   left: 100%;
   float: right;
   display: flex;
   color: var(--clr-primary);
+  z-index: -1000;
+  background-color: var(--clr-explorer);
+  border: 1px solid var(--clr-primary);
 }
 
 .settings {
   position: absolute;
   bottom: 0;
+}
+
+.modalButton {
+  float: right;
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--clr-bg);
+  color: var(--clr-primary);
+  font-size: 2rem;
+  cursor: pointer;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contact {
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.contactMenu {
+  width: fit-content;
+  /* height: 100%; */
+  margin: auto;
+  align-self: center;
+  justify-self: center;
+  padding: 0;
+  top: 50%;
+  left: 100%;
+  float: right;
+  display: flex;
+  color: var(--clr-primary);
+  z-index: -1000;
+  background-color: var(--clr-explorer);
+  border: 1px solid var(--clr-primary);
 }

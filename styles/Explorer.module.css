@@ -35,6 +35,11 @@
   background-color: transparent;
 }
 
+.item:hover {
+  cursor: pointer;
+  color: var(--clr-primary);
+}
+
 .item.selected {
   background-color: var(--clr-highlight);
 }

@@ -13,9 +13,12 @@ import { ChangeEvent, useState } from "react";
 import { Tooltip } from "./Tooltip";
 import { Dropdown } from "./Dropdown";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { TextInput } from "./TextInput";
+import { Button } from "./Button";
 
 export const Sidebar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const [option, setOption] = useState("files");
 
   // const themes = [
@@ -99,6 +102,9 @@ export const Sidebar = () => {
                 onClick={() => {
                   selectMenu("docs");
                   setOption("docs");
+                  setContactOpen(!contactOpen);
+                  console.log({ contactOpen })
+                  contactOpen ? closeContact() : openContact();
                 }}
                 title="Contact"
               >
@@ -132,6 +138,9 @@ export const Sidebar = () => {
                 type="button"
                 onClick={() => {
                   setSettingsOpen(!settingsOpen);
+                  
+                  console.log({ contactOpen })
+                  settingsOpen ? closeSettings() : openSettings();
                 }}
                 title="Settings"
               >
@@ -141,12 +150,81 @@ export const Sidebar = () => {
             </li>
           </ul>
 
-          {/* Settings */}
-          <div
-            className={`${styles.menu} ${
-              settingsOpen ? `${styles.open}` : `${styles.closed}`
-            }`}
+        </div>
+      </div>
+
+      {/* Contact Modal */}
+      <dialog
+            id="contact"
+            className={styles.contactMenu}
           >
+            {/* Close Button */}
+            <button onClick={closeContact} className={styles.modalButton}>&times;</button>
+            {/* Modal Content */}
+            <ul
+              style={{
+                margin: "auto",
+                padding: "auto",
+                alignContent: "center",
+                justifyContent: "center",
+                display: "flex",
+              }}
+            >
+              <form
+                className={styles.contact}
+                id="contact"
+                action="/api/contact"
+                method="post"
+            >
+              <label htmlFor="name">
+                Name: <br />
+                <TextInput type="text" name="name" placeholder="Your name" />
+              </label>{" "}
+
+              <br />
+              <br />
+
+              <label htmlFor="email">
+                Email: <br />
+                <TextInput
+                  type="email"
+                  name="email"
+                  placeholder="you@yourdomain.com"
+                />
+              </label>
+
+              <br />
+              <br />
+
+              <label htmlFor="message">
+                Message: <br />
+                <textarea
+                  className={styles.text}
+                  name="message"
+                  placeholder="Message"
+                />
+              </label>
+
+              <br />
+              <br />
+              
+              <button type="submit" name="submit">
+                Submit
+              </button>
+              <Button name="submit" type="submit" text="Submit" />
+            </form>
+        </ul>
+      </dialog>
+
+      {/* Settings Modal*/}
+      <dialog
+          id="settings"
+          className={styles.menu}
+          >
+            {/* Close Button */}
+            <button onClick={closeSettings} className={styles.modalButton}>&times;</button>
+            
+            {/* Modal Content */}
             <ul
               style={{
                 margin: "auto",
@@ -158,7 +236,6 @@ export const Sidebar = () => {
             >
               <form
                 style={{ margin: "auto", padding: 0 }}
-                className={`${settingsOpen ? styles.open : styles.closed}`}
               >
                 <label htmlFor="theme">Theme: </label>
                 {/* <Dropdown options={themes} /> */}
@@ -169,9 +246,7 @@ export const Sidebar = () => {
                 </select>
               </form>
             </ul>
-          </div>
-        </div>
-      </div>
+          </dialog>
     </aside>
   );
 };
@@ -208,11 +283,46 @@ const setTheme = (theme: string) => {
 
 const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
   // const root = document.querySelector(':root')
-  const elm = document.getElementById("theme");
-  // @ts-ignore
+  const elm = document.getElementById("theme") as HTMLSelectElement;
   setTheme(elm?.value);
 };
 
 function titleCase(text: string) {
   return text[0].toUpperCase() + text.slice(1).toLowerCase();
+}
+
+function openSettings() {
+  console.log("Opening settings...");
+  // Retrieve the settings dialog
+  const settings = document.getElementById("settings") as HTMLDialogElement;
+
+  console.log({settings});
+  // Open the Modal 
+  settings?.showModal()
+}
+
+function closeSettings() {
+  // Retrieve the settings dialog
+  const settings = document.getElementById("settings") as HTMLDialogElement;
+
+  // Close the Modal
+  settings?.close()
+}
+
+function openContact() {
+  console.log("Opening settings...");
+  // Retrieve the contact dialog
+  const contactMenu = document.getElementById("contact") as HTMLDialogElement;
+
+  console.log({contactMenu});
+
+  contactMenu?.showModal()
+}
+
+function closeContact() {
+  // Retrieve the contact dialog
+  const contactMenu = document.getElementById("contact") as HTMLDialogElement;
+
+  // Close the Modal
+  contactMenu?.close()
 }
