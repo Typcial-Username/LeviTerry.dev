@@ -4,13 +4,12 @@ import {
   faBook,
   faCog,
   faCircleUser,
-  faBars,
-  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import { faGithub, faHtml5 } from "@fortawesome/free-brands-svg-icons";
+import { faComments, faMessage } from "@fortawesome/free-regular-svg-icons";
+
 import styles from "../styles/Sidebar.module.css";
 import Link from "next/link";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Tooltip } from "./Tooltip";
 import { Dropdown } from "./Dropdown";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -19,23 +18,20 @@ export const Sidebar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [option, setOption] = useState("files");
 
-  const faGithubIcon = faGithub as IconProp;
-  const faHTMLIcon = faHtml5 as IconProp;
-
-  const themes = [
-    {
-      label: "Light",
-      value: "light",
-    },
-    {
-      label: "Dark",
-      value: "dark",
-    },
-    {
-      label: "Blue",
-      value: "blue",
-    },
-  ];
+  // const themes = [
+  //   {
+  //     label: "Light",
+  //     value: "light",
+  //   },
+  //   {
+  //     label: "Dark",
+  //     value: "dark",
+  //   },
+  //   {
+  //     label: "Blue",
+  //     value: "blue",
+  //   },
+  // ];
 
   return (
     <aside id={styles.sidebar}>
@@ -80,8 +76,7 @@ export const Sidebar = () => {
             */}
 
             {/* Docs */}
-            <li className={styles.item}>
-              {/* <Tooltip text={"Documents"}> */}
+            {/* <li className={styles.item}>
               <a
                 id="docs"
                 className={styles.button}
@@ -93,35 +88,47 @@ export const Sidebar = () => {
               >
                 <FontAwesomeIcon icon={faBook} />
               </a>
-              {/* </Tooltip> */}
-            </li>
+            </li> */}
 
-            <li>
+            {/* Contact */}
+            <li className={styles.item}>
+              {/* <Tooltip text={"Documents"}> */}
               <a
-                href="https://github.com/Typcial-Username"
+                id="docs"
                 className={styles.button}
-                aria-label="Visit my GitHub profile"
-                title="GitHub"
+                onClick={() => {
+                  selectMenu("docs");
+                  setOption("docs");
+                }}
+                title="Contact"
               >
-                <FontAwesomeIcon icon={faGithubIcon} />
+                <FontAwesomeIcon icon={faMessage} />
               </a>
+              {/* </Tooltip> */}
             </li>
           </ul>
         </div>
 
-        <div>
+        <div className={styles.settings}>
           {/* Socials */}
           <ul className={`${styles.options}`}>
-            <li>
-              <a className={styles.button} title="Socials">
+            {/* <li>
+              <a
+                className={styles.button}
+                title="Socials"
+                onClick={() => {
+                  selectMenu("socials");
+                  setOption("socials");
+                }}
+              >
                 <FontAwesomeIcon icon={faCircleUser} />
               </a>
-            </li>
+            </li> */}
 
             <li>
               {/* <Tooltip text={"Settings"}> */}
               <a
-                className={styles.button}
+                className={`${styles.button} `}
                 type="button"
                 onClick={() => {
                   setSettingsOpen(!settingsOpen);
@@ -149,7 +156,10 @@ export const Sidebar = () => {
                 display: "flex",
               }}
             >
-              <form style={{ margin: "auto", padding: 0 }}>
+              <form
+                style={{ margin: "auto", padding: 0 }}
+                className={`${settingsOpen ? styles.open : styles.closed}`}
+              >
                 <label htmlFor="theme">Theme: </label>
                 {/* <Dropdown options={themes} /> */}
                 <select name="theme" id="theme" onChange={onThemeChange}>
@@ -170,7 +180,7 @@ const selectMenu = (btn: string) => {
   const button = document.getElementById(btn);
   button?.classList.add(`${styles.selected}`);
 
-  const allButtons = ["files", "docs", "search"];
+  const allButtons = ["files", "docs", "socials"];
 
   for (let i = 0; i < allButtons.length; i++) {
     if (allButtons[i] != btn) {

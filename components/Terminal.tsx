@@ -4,7 +4,7 @@ export const Terminal = () => {
   return (
     <div
       className="container"
-      name="terminal"
+      data-name="terminal"
       id={styles.terminal}
       style={{
         borderTop: "1px solid whitesmoke",
@@ -14,19 +14,23 @@ export const Terminal = () => {
       <span className={styles.topBar}>
         <p className={styles.header}>Terminal</p>
 
-        <button id="close-btn" className={styles.close} onClick={closeMenu}>&times;</button>
+        <button id="close-btn" className={styles.close} onClick={closeMenu}>
+          &times;
+        </button>
       </span>
 
-      <div className={styles.text}>
-        {/* {"visitor@leviterry.dev>"} */}
-        <form onSubmit={onSubmit}>
+      {/* <div className={styles.text}> */}
+      <form onSubmit={onSubmit} className={styles.text}>
+        <span>
+          <label htmlFor="terminal">visitor@leviterry.dev {">"}</label>
           <textarea
             name="terminal"
-            defaultValue={"visitor@leviterry.dev> "}
+            // defaultValue={"visitor@leviterry.dev> "}
             className={styles.text}
-          ></textarea>
-        </form>
-      </div>
+          />
+        </span>
+      </form>
+      {/* </div> */}
     </div>
   );
 };
@@ -38,10 +42,11 @@ const onSubmit = (event: any) => {
 };
 
 function closeMenu() {
-  // const btn = document.getElementById('close-btn')
-  const terminal = document.getElementById(styles.terminal)
-  console.log(terminal)
+  // const btn = document.getElementById('close-btn')\
+  console.log(styles.terminal);
+  const terminal = document.getElementById(styles.terminal);
+  console.log(terminal);
 
-  console.log("Adding hide class to terminal...")
-  terminal?.classList.add(styles.hide)
+  console.log("Adding hide class to terminal...");
+  terminal?.classList.add("hide");
 }

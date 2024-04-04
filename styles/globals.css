@@ -26,6 +26,7 @@ Blue accent: #01111d
   --clr-bg: #1e1e1e;
   --clr-accent: #252526;
   --clr-tab: #1e1e1e;
+  --clr-highlight: #37373d;
 }
 
 :root.light {
@@ -38,6 +39,7 @@ Blue accent: #01111d
   --clr-bg: #fff;
   --clr-accent: #eaeaea;
   --clr-tab: #fff;
+  --clr-highlight: #e4e6f1;
 }
 
 :root.blue {
@@ -47,6 +49,7 @@ Blue accent: #01111d
   --clr-bg: #011627;
   --clr-accent: #010e1a;
   --clr-tab: #01111d;
+  --clr-highlight: #00293f;
 }
 
 * {
@@ -83,7 +86,7 @@ a:hover {
 
 .container {
   /* padding: 0 2rem; */
-  margin: 5% 0 0 15%;
+  margin: 7.5% 0 0 17.5%;
   text-align: center;
 }
 
@@ -101,6 +104,10 @@ a:hover {
     width: 100%;
     flex-direction: column;
   }
+}
+
+.hide {
+  display: none;
 }
 
 ::-webkit-scrollbar {

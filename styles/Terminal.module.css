@@ -1,5 +1,5 @@
 #terminal {
-  width: 85%;
+  width: 82.5%;
   height: 100%;
   resize: vertical;
   margin-top: 2.5%;
@@ -35,7 +35,7 @@
   height: 2rem;
   background-color: var(--clr-bg);
   color: var(--clr-primary);
-  font-size: large;
+  font-size: 1.5rem;
   cursor: pointer;
   border: none;
   margin: 0;
@@ -48,10 +48,6 @@
   margin-top: 0.5em;
   width: fit-content;
   text-transform: uppercase;
-}
-
-.hide {
-  display: none;
 }
 
 .topBar {

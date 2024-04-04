@@ -1,9 +1,9 @@
 .explorer {
   top: 2.5%;
   background-color: var(--clr-explorer);
-  width: 10%;
-  height: 95%;
-  margin-left: 5%;
+  width: 15%;
+  height: 100%;
+  margin-left: 2.5%;
   position: fixed;
   /* overflow: auto; */
   resize: horizontal;
@@ -29,11 +29,16 @@
 }
 
 .item {
-  margin: 10% 0 0 15%;
+  margin: 5% 0 0 10%;
   padding: 0;
   font-size: 1rem;
+  background-color: transparent;
 }
 
 .item.selected {
-  border-color: red;
+  background-color: var(--clr-highlight);
+}
+
+.subMenu {
+  margin: 5% 0 0 18%;
 }

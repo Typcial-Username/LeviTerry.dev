@@ -1,9 +1,8 @@
 #sidebar {
   height: 100%;
   top: 2.5%;
-  width: 5%;
+  width: 2.5%;
   left: 0;
-  float: left;
   background-color: var(--clr-sidebar);
   display: flex;
   flex-direction: column;
@@ -14,8 +13,6 @@
   align-items: center;
   justify-content: space-between;
   /* z-index: 5; */
-  /* border: 1px solid red; */
-  /* margin-right: 5%; */
 }
 
 .content {
@@ -89,5 +86,12 @@
   margin: auto;
   padding: 0;
   left: 100%;
+  float: right;
   display: flex;
+  color: var(--clr-primary);
+}
+
+.settings {
+  position: absolute;
+  bottom: 0;
 }
