@@ -1,0 +1,95 @@
+.header {
+    display: flex;
+    position: fixed;
+    background-color: var(--clr-bg);
+    align-items: flex-start;
+    overflow: hidden;
+    top: 0;
+    width: 85%;
+    height: 2.5%;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 1em;
+  }
+  
+.grid {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 50em;
+    grid-template: repeat(5, 1fr) / repeat(2, 1fr);
+    gap: 1em;
+}
+
+.item {
+    width: fit-content;
+    height: 100%;
+    text-align: center;
+    align-self: center;
+    background-color: var(--clr-bg);
+    color: var(--clr-primary);
+    border: 0;
+    appearance: none;
+}
+
+.item:hover {
+    /* background-color: var(--clr-primary); */
+    color: var(--clr-primary);
+    border-radius: 0.5em;
+    border: 1px solid var(--clr-primary);
+}
+
+.closeModal {
+    float: right;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--clr-bg);
+    color: var(--clr-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+.commandsModal {
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    width: 50%;
+    height: 50%;
+    background-color: var(--clr-bg);
+}
+
+.modalItem {
+    width: fit-content;
+    height: 100%;
+    text-align: center;
+    align-self: center;
+    background-color: var(--clr-bg);
+    color: var(--clr-primary);
+    border: 1px solid (var(--clr-bg) + 0.5);
+    border-radius: 0.25rem;
+    box-shadow: var(--clr-bg) 0.5em 0.5em 0.5em;
+}
+
+.modalHeader {
+    color: var(--clr-primary);
+    font-weight: bold;
+}
+
+.commandsModal::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    background-filter: blur(5px);
+}
+
+.modalButton {
+    width: fit-content;
+    height: 100%;
+    background: none;
+    color: #aaa;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
+    border-top: 0;
+}

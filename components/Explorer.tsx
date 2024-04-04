@@ -37,36 +37,32 @@ const Explorer = ({ enabled, showing }: ExplorerProps) => {
             <FontAwesomeIcon icon={faAngleDown} /> {host}{" "}
           </p>
 
+          {/* Home Page */}
           <div className={`${styles.item} ${styles.selected}`}>
             <Link href="/">
-              <FontAwesomeIcon
-                icon={faHTMLIcon}
-                color="var(--clr-icon)"
-                size="lg"
-              />{" "}
-              index.html
+              <a>
+                <span><FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" /><p>{" "} index.html</p></span>
+              </a>
             </Link>
           </div>
+        
+          {/* About Page */}
 
           <div className={styles.item}>
             <Link href="/about">
-              <FontAwesomeIcon
-                icon={faHTMLIcon}
-                color="var(--clr-icon)"
-                size="lg"
-              />{" "}
-              about.html
+              <a>
+                <span><FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" /><p>{" "} about.html</p></span>
+              </a>
             </Link>
           </div>
 
+          {/* Gallery Page */}
+
           <div className={styles.item}>
             <Link href="/gallery">
-              <FontAwesomeIcon
-                icon={faHTMLIcon}
-                color="var(--clr-icon)"
-                size="lg"
-              />{" "}
-              gallery.html
+              <a>
+                <span><FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" /><p>{" "} gallery.html</p></span>
+              </a>
             </Link>
           </div>
         </div>
@@ -96,7 +92,7 @@ const Explorer = ({ enabled, showing }: ExplorerProps) => {
       );
 
     default:
-      return <div className="explorer"></div>;
+      return <div className={styles.explorer}><p>Something went wrong...</p></div>;
   }
 };
 
