@@ -73,8 +73,17 @@ const Home: NextPage = () => {
       <div className={styles.grid}>
         <Card
           title="Code Ninjas - Code Sensei"
-          description={`March 2022 - August 2023\nAssisted in teaching children to code.`}
+          description={`March 2022 - August 2023
+          •Assisted children ages 5-14 in learning to code
+          •Helped instruct programming concepts to children.
+          •Helped debug programs created by students
+          •Taught various languages to students including Scratch, JavaScript, Lua, and C Sharp with Unity`}
           link="https://codeninjas.com/"
+          imageOptions={{
+            src: "https://www.codeninjas.com/hubfs/Group%201.svg",
+            location: "left",
+            alt: "Code Ninjas Logo",
+          }}
         />
       </div>
       {/* </section> */}

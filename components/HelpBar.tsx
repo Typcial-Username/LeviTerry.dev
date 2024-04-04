@@ -34,6 +34,7 @@ const HelpBar = () => {
         <option value="open">Open</option>
         <option value="close">Close</option>
       </select>
+
       {/* Help Menu */}
       <select
         name="help"
@@ -83,7 +84,7 @@ const HelpBar = () => {
         >
           &times;
         </button>
-        
+
         {/* Modal Header */}
         <h1
           style={{ color: "var(--clr-primary)", textDecoration: "underline" }}
@@ -137,7 +138,7 @@ function onTerminalMenuChange(event: React.ChangeEvent<HTMLSelectElement>) {
 
   const terminal = document.querySelector(
     "[data-name=terminal]"
-  ) as HTMLElement;
+  ) as HTMLSelectElement;
 
   switch (event.target.value) {
     case "open":
@@ -166,7 +167,7 @@ function onHelpMenuChange(event: React.ChangeEvent<HTMLSelectElement>) {
       openKeyboardShortcutModal();
       break;
   }
-
+  closeOtherModals(event.target.value);
   event.target.value = "help";
 }
 

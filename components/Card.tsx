@@ -44,7 +44,7 @@ export const Card = ({ title, description, link, imageOptions }: CardProps) => {
       </h2>
       <p>{content}</p>
       {imageOptions ? (
-        imageOptions.location == "left" ? (
+        imageOptions.location == "right" ? (
           <img src={imageOptions.src} alt={imageOptions.alt} />
         ) : (
           ""

@@ -1,14 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFile,
-  faBook,
-  faCog,
-  faCircleUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFile, faCog } from "@fortawesome/free-solid-svg-icons";
 import { faComments, faMessage } from "@fortawesome/free-regular-svg-icons";
 
 import styles from "../styles/Sidebar.module.css";
-import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { Tooltip } from "./Tooltip";
 import { Dropdown } from "./Dropdown";
@@ -20,21 +14,6 @@ export const Sidebar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [option, setOption] = useState("files");
-
-  // const themes = [
-  //   {
-  //     label: "Light",
-  //     value: "light",
-  //   },
-  //   {
-  //     label: "Dark",
-  //     value: "dark",
-  //   },
-  //   {
-  //     label: "Blue",
-  //     value: "blue",
-  //   },
-  // ];
 
   return (
     <aside id={styles.sidebar}>
@@ -103,7 +82,7 @@ export const Sidebar = () => {
                   selectMenu("docs");
                   setOption("docs");
                   setContactOpen(!contactOpen);
-                  console.log({ contactOpen })
+                  console.log({ contactOpen });
                   contactOpen ? closeContact() : openContact();
                 }}
                 title="Contact"
@@ -137,10 +116,7 @@ export const Sidebar = () => {
                 className={`${styles.button} `}
                 type="button"
                 onClick={() => {
-                  setSettingsOpen(!settingsOpen);
-                  
-                  console.log({ contactOpen })
-                  settingsOpen ? closeSettings() : openSettings();
+                  openSettings();
                 }}
                 title="Settings"
               >
@@ -149,141 +125,159 @@ export const Sidebar = () => {
               {/* </Tooltip> */}
             </li>
           </ul>
-
         </div>
       </div>
 
       {/* Contact Modal */}
-      <dialog
+      <dialog id="contact" className={styles.contactMenu}>
+        {/* Close Button */}
+        <button
+          id="close-contact"
+          onClick={closeContact}
+          className={styles.modalButton}
+        >
+          &times;
+        </button>
+        {/* Modal Content */}
+        <ul
+          style={{
+            margin: "auto",
+            padding: "auto",
+            alignContent: "center",
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
+          {/* Contact Form */}
+          <form
+            className={styles.contact}
             id="contact"
-            className={styles.contactMenu}
+            action="/api/contact"
+            method="post"
           >
-            {/* Close Button */}
-            <button onClick={closeContact} className={styles.modalButton}>&times;</button>
-            {/* Modal Content */}
-            <ul
-              style={{
-                margin: "auto",
-                padding: "auto",
-                alignContent: "center",
-                justifyContent: "center",
-                display: "flex",
-              }}
-            >
-              <form
-                className={styles.contact}
-                id="contact"
-                action="/api/contact"
-                method="post"
-            >
-              <label htmlFor="name">
-                Name: <br />
-                <TextInput type="text" name="name" placeholder="Your name" />
-              </label>{" "}
-
-              <br />
-              <br />
-
-              <label htmlFor="email">
-                Email: <br />
-                <TextInput
-                  type="email"
-                  name="email"
-                  placeholder="you@yourdomain.com"
-                />
-              </label>
-
-              <br />
-              <br />
-
-              <label htmlFor="message">
-                Message: <br />
-                <textarea
-                  className={styles.text}
-                  name="message"
-                  placeholder="Message"
-                />
-              </label>
-
-              <br />
-              <br />
-              
-              <button type="submit" name="submit">
-                Submit
-              </button>
-              <Button name="submit" type="submit" text="Submit" />
-            </form>
+            {/* Name Input */}
+            <label htmlFor="name">
+              Name:
+              <TextInput type="text" name="name" placeholder="Your name" />
+            </label>{" "}
+            <br />
+            <br />
+            {/* Email Input */}
+            <label htmlFor="email">
+              Email:
+              <TextInput
+                type="email"
+                name="email"
+                placeholder="you@yourdomain.com"
+              />
+            </label>
+            <br />
+            <br />
+            {/* Message Input */}
+            <label htmlFor="message">
+              Message:
+              <textarea
+                className={styles.text}
+                name="message"
+                placeholder="Message"
+              />
+            </label>
+            <br />
+            <br />
+            {/* Submit Button */}
+            <button type="submit" name="submit">
+              Submit
+            </button>
+            <Button name="submit" type="submit" text="Submit" />
+          </form>
         </ul>
       </dialog>
 
       {/* Settings Modal*/}
-      <dialog
-          id="settings"
-          className={styles.menu}
-          >
-            {/* Close Button */}
-            <button onClick={closeSettings} className={styles.modalButton}>&times;</button>
-            
-            {/* Modal Content */}
-            <ul
-              style={{
-                margin: "auto",
-                padding: "auto",
-                alignContent: "center",
-                justifyContent: "center",
-                display: "flex",
-              }}
-            >
-              <form
-                style={{ margin: "auto", padding: 0 }}
-              >
-                <label htmlFor="theme">Theme: </label>
-                {/* <Dropdown options={themes} /> */}
-                <select name="theme" id="theme" onChange={onThemeChange}>
-                  <option value="light">Light</option>
-                  <option value="dark">Dark</option>
-                  <option value="blue">Blue</option>
-                </select>
-              </form>
-            </ul>
-          </dialog>
+      <dialog id="settings" className={styles.menu}>
+        {/* Close Button */}
+        <button
+          id="close-settings"
+          onClick={closeSettings}
+          className={styles.modalButton}
+        >
+          &times;
+        </button>
+
+        {/* Modal Content */}
+        {/* <ul
+          style={{
+            margin: "auto",
+            padding: "auto",
+            alignContent: "center",
+            justifyContent: "center",
+            display: "flex",
+          }}
+        > */}
+        {/* Settings Form */}
+        <form style={{ margin: "auto", padding: 0 }}>
+          <label htmlFor="theme">Theme: </label>
+          {/* <Dropdown options={themes} /> */}
+          {/* Theme selector */}
+          <select name="theme" id="theme" onChange={onThemeChange}>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="blue">Blue</option>
+          </select>
+        </form>
+        {/* </ul> */}
+      </dialog>
     </aside>
   );
 };
 
 const selectMenu = (btn: string) => {
-  const button = document.getElementById(btn);
+  // Get the button
+  const button = document.getElementById(btn) as HTMLButtonElement;
+  // Add the selected class to the button
   button?.classList.add(`${styles.selected}`);
-
+  // List of all the buttons in the element
   const allButtons = ["files", "docs", "socials"];
 
+  // Loop through all the buttons
   for (let i = 0; i < allButtons.length; i++) {
+    // If the button is not the selected button
     if (allButtons[i] != btn) {
+      // Remove the selected class from the button
       document
         .getElementById(allButtons[i])
         ?.classList.remove(`${styles.selected}`);
     }
+
     btn !== "search" ? localStorage.setItem("explorer-location", btn) : null;
   }
 };
 
+// Ensure the 'wiundow' object is defined
 if (typeof window !== "undefined") {
+  // When the window loads, set the theme
   window.onload = (event: Event) => {
+    // Get the default theme
     const defaultTheme = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
+
+    // Set the theme
     setTheme(localStorage.getItem("theme") || defaultTheme ? "dark" : "light");
   };
 }
 
 const setTheme = (theme: string) => {
+  // Change the theme of the document
   document.documentElement.className = theme;
+  // Save the theme to localStorage
   localStorage.setItem("theme", theme);
 };
 
 const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-  // const root = document.querySelector(':root')
+  // Get the selected theme from the select element
   const elm = document.getElementById("theme") as HTMLSelectElement;
+  // Set the theme
   setTheme(elm?.value);
 };
 
@@ -292,31 +286,28 @@ function titleCase(text: string) {
 }
 
 function openSettings() {
-  console.log("Opening settings...");
   // Retrieve the settings dialog
   const settings = document.getElementById("settings") as HTMLDialogElement;
 
-  console.log({settings});
-  // Open the Modal 
-  settings?.showModal()
+  // Open the Modal
+  settings?.showModal();
 }
 
 function closeSettings() {
   // Retrieve the settings dialog
   const settings = document.getElementById("settings") as HTMLDialogElement;
 
+  console.log({ settings });
+
   // Close the Modal
-  settings?.close()
+  settings?.close();
 }
 
 function openContact() {
-  console.log("Opening settings...");
   // Retrieve the contact dialog
   const contactMenu = document.getElementById("contact") as HTMLDialogElement;
 
-  console.log({contactMenu});
-
-  contactMenu?.showModal()
+  contactMenu?.showModal();
 }
 
 function closeContact() {
@@ -324,5 +315,23 @@ function closeContact() {
   const contactMenu = document.getElementById("contact") as HTMLDialogElement;
 
   // Close the Modal
-  contactMenu?.close()
+  contactMenu?.close();
 }
+
+// function openModal(id: string) {
+//   // Retrieve all the modals
+//   const modals = document.querySelectorAll(
+//     "dialog"
+//   ) as NodeListOf<HTMLDialogElement>;
+
+//   console.log({ modals });
+
+//   for (const modal in modals) {
+//     console.log(modal, modals[modal]);
+//     if (modals[modal].id === id) {
+//       modals[modal]?.showModal();
+//     } else {
+//       modals[modal]?.close();
+//     }
+//   }
+// }

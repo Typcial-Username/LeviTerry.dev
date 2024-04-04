@@ -3,6 +3,8 @@
   height: 100%;
   resize: vertical;
   margin-top: 2.5%;
+  /* bottom: 0; */
+  position: absolute;
 }
 
 .text div {

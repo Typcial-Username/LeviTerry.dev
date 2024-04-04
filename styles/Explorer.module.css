@@ -47,3 +47,9 @@
 .subMenu {
   margin: 5% 0 0 18%;
 }
+
+.dropdown {
+  border: 0;
+  color: var(--clr-primary);
+  background-color: transparent;
+}

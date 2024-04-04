@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useRouter } from "next/router";
+import { Folder } from "./Folder";
 
 // import { Link } from "./Link";
 
@@ -27,6 +28,12 @@ interface ExplorerProps {
 const Explorer = ({ enabled, showing }: ExplorerProps) => {
   const [host, setHost] = React.useState("localhost");
   const router = useRouter();
+
+  const [folderStates, setFolderStates] = React.useState({
+    pages: true,
+    docs: true,
+    socials: true,
+  });
 
   useEffect(() => {
     setHost(window.location.host);
@@ -49,100 +56,154 @@ const Explorer = ({ enabled, showing }: ExplorerProps) => {
         <FontAwesomeIcon icon={faAngleDown} /> {host}{" "}
       </p>
 
-      <div className={styles.item}>
-        <FontAwesomeIcon icon={faAngleDown} />{" "}
-        <FontAwesomeIcon icon={faFolder} color="orange" /> Pages
-      </div>
-
-      {/* Home Page */}
-      <div
-        className={`${styles.item} ${
-          router.pathname == "/" ? styles.selected : null
-        } ${styles.subMenu}`}
-      >
-        <Link href="/">
-          {/* <a> */}
-          <span>
-            <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" />
-            <p style={{ display: "inline" }}> index.html</p>
-          </span>
-          {/* </a> */}
-        </Link>
-      </div>
-
-      {/* About Page */}
-
-      <div
-        className={`${styles.item} ${
-          router.pathname == "/about" ? styles.selected : null
-        } ${styles.subMenu}`}
-      >
-        <Link href="/about">
-          {/* <a> */}
-          <span>
-            <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" />
-            <p style={{ display: "inline" }}> about.html</p>
-          </span>
-          {/* </a> */}
-        </Link>
-      </div>
-
-      {/* Gallery Page */}
-
-      <div
-        className={`${styles.item} ${
-          router.pathname == "/gallery" ? styles.selected : null
-        } ${styles.subMenu}`}
-      >
-        <Link href="/gallery">
-          {/* <a> */}
-          <span>
-            <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" />
-            <p style={{ display: "inline" }}> gallery.html</p>
-          </span>
-          {/* </a> */}
-        </Link>
-      </div>
-
-      <div className={styles.item}>
-        <FontAwesomeIcon icon={faAngleDown} />{" "}
-        <FontAwesomeIcon icon={faFolder} color="orange" /> Documents
-      </div>
-
-      <div className={`${styles.item} ${styles.subMenu}`}>
-        <FontAwesomeIcon icon={faDownload} color="var(--clr-icon)" />{" "}
-        <a href="/docs/Levi_Terry_Resume.pdf" download>
-          Resume
-        </a>
-      </div>
-
-      <div className={styles.item}>
-        <FontAwesomeIcon icon={faAngleDown} />{" "}
-        <FontAwesomeIcon icon={faFolder} color="orange" /> Socials
-      </div>
-
-      <div className={`${styles.item} ${styles.subMenu}`}>
-        <a
-          href="https://github.com/Typcial-Username"
-          // className={styles.button}
-          aria-label="Visit my GitHub profile"
-          title="GitHub"
-          target="_empty"
+      <div>
+        <Folder
+          enabled={folderStates.pages}
+          className={`${styles.item} ${styles.dropdown}`}
+          onClick={() =>
+            setFolderStates({ ...folderStates, pages: !folderStates.pages })
+          }
         >
-          <FontAwesomeIcon icon={faGithubIcon} /> GitHub
-        </a>
+          Pages
+        </Folder>
+
+        {/* Home Page */}
+        <div
+          className={`${styles.item} ${
+            router.pathname == "/" ? styles.selected : null
+          } ${styles.subMenu}`}
+          style={
+            !folderStates.pages ? { display: "none" } : { display: "block" }
+          }
+        >
+          <Link href="/">
+            {/* <a> */}
+            <span>
+              <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" />
+              <p style={{ display: "inline" }}> index.html</p>
+            </span>
+            {/* </a> */}
+          </Link>
+        </div>
+
+        {/* About Page */}
+
+        <div
+          className={`${styles.item} ${
+            router.pathname == "/about" ? styles.selected : null
+          } ${styles.subMenu}`}
+          style={
+            !folderStates.pages ? { display: "none" } : { display: "block" }
+          }
+        >
+          <Link href="/about">
+            {/* <a> */}
+            <span>
+              <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" />
+              <p style={{ display: "inline" }}> about.html</p>
+            </span>
+            {/* </a> */}
+          </Link>
+        </div>
+
+        {/* Gallery Page */}
+        <div
+          className={`${styles.item} ${
+            router.pathname == "/gallery" ? styles.selected : null
+          } ${styles.subMenu}`}
+          style={
+            !folderStates.pages ? { display: "none" } : { display: "block" }
+          }
+        >
+          <Link href="/gallery">
+            {/* <a> */}
+            <span>
+              <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" />
+              <p style={{ display: "inline" }}> gallery.html</p>
+            </span>
+            {/* </a> */}
+          </Link>
+        </div>
       </div>
 
-      <div className={`${styles.item} ${styles.subMenu}`}>
-        <a
-          href="https://linkedin.com/in/levi-terry-dev/"
-          // className={styles.button}
-          aria-label="Visit my GitHub profile"
-          title="Linkedin"
-          target="_empty"
+      <div>
+        <Folder
+          enabled={folderStates.docs}
+          className={`${styles.item} ${styles.dropdown}`}
+          onClick={() =>
+            setFolderStates({ ...folderStates, docs: !folderStates.docs })
+          }
         >
-          <FontAwesomeIcon icon={faLinkedinIcon} color="#0a66c2" /> LinkedIn
-        </a>
+          Documents
+        </Folder>
+
+        <div
+          className={`${styles.item} ${styles.subMenu}`}
+          style={
+            !folderStates.docs ? { display: "none" } : { display: "block" }
+          }
+        >
+          <FontAwesomeIcon icon={faDownload} color="var(--clr-icon)" />{" "}
+          <a href="/docs/Levi_Terry_Resume.pdf" download>
+            Resume
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <Folder
+          enabled={folderStates.socials}
+          className={`${styles.item} ${styles.dropdown}`}
+          onClick={() =>
+            setFolderStates({ ...folderStates, socials: !folderStates.socials })
+          }
+        >
+          Socials
+        </Folder>
+        {/* <button
+          className={`${styles.item} ${styles.dropdown}`}
+          id="socials-header"
+          onClick={onSocialHeaderClick}
+        >
+          <FontAwesomeIcon icon={faAngleDown} />{" "}
+          <FontAwesomeIcon icon={faFolder} color="orange" /> Socials
+          <FontAwesomeIcon icon={faAngleRight} />{" "}
+          <FontAwesomeIcon icon={faFolder} color="orange" /> Socials
+        </button> */}
+
+        <div
+          className={`${styles.item} ${styles.subMenu}`}
+          style={
+            !folderStates.socials ? { display: "none" } : { display: "block" }
+          }
+        >
+          <a
+            href="https://github.com/Typcial-Username"
+            // className={styles.button}
+            aria-label="Visit my GitHub profile"
+            title="GitHub"
+            target="_empty"
+          >
+            <FontAwesomeIcon icon={faGithubIcon} /> GitHub
+          </a>
+        </div>
+
+        <div
+          className={`${styles.item} ${styles.subMenu}`}
+          style={
+            !folderStates.socials ? { display: "none" } : { display: "block" }
+          }
+        >
+          <a
+            href="https://linkedin.com/in/levi-terry-dev/"
+            // className={styles.button}
+            aria-label="Visit my GitHub profile"
+            title="Linkedin"
+            target="_empty"
+          >
+            <FontAwesomeIcon icon={faLinkedinIcon} color="#0a66c2" /> LinkedIn
+          </a>
+        </div>
       </div>
     </div>
   );
