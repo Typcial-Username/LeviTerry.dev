@@ -1,0 +1,27 @@
+{
+  "data": {
+    "name": "Levi Terry",
+    "age": 19,
+    "education": {
+      "school": "University of Advancing Technology",
+      "degree": "Technology Studies",
+      "year": "Freshman"
+    },
+    "hobbies": ["Programming", "Gaming"],
+    "skills": {
+      "languages": ["JavaScript", "Python", "Java", "C#", "HTML", "CSS"],
+      "frameworks": [
+        "React",
+        "Node.js",
+        "Express",
+        "Flask",
+        "Django",
+        "Bootstrap",
+        "jQuery"
+      ],
+      "databases": ["MongoDB"],
+      "tools": ["Git", "GitHub", "VS Code", "Heroku", "Netlify", "Vercel"],
+      "operatingSystems": ["Windows", "Linux"]
+    }
+  }
+}
