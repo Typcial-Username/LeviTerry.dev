@@ -17,7 +17,8 @@ const Header = ({ file }: HeaderProps) => {
   return (
     <div className={styles.header}>
       <div className={styles.file}>
-        <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-icon)" /> {file}
+        <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-html-icon)" />{" "}
+        {file}
       </div>
     </div>
   );

@@ -15,20 +15,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     return () => {
       document.removeEventListener("keydown", handleKeypress);
     };
-  }, []);
+  }, [handleKeypress]);
 
   return (
-    <>
-      <Layout>
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          ></meta>
-        </Head>
-        <Component {...pageProps} />
-      </Layout>
-    </>
+    <Layout>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        ></meta>
+      </Head>
+      <Component {...pageProps} />
+    </Layout>
   );
 }
 

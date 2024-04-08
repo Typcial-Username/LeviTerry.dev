@@ -11,8 +11,9 @@ const HelpBar = () => {
         id="file"
         className={styles.item}
         onChange={onFileMenuChange}
+        defaultValue={"file"}
       >
-        <option value="File" disabled selected hidden>
+        <option value="file" hidden>
           File
         </option>
         <option value="index.html">index</option>
@@ -27,8 +28,9 @@ const HelpBar = () => {
         id="terminal_help"
         className={styles.item}
         onChange={onTerminalMenuChange}
+        defaultValue={"terminal"}
       >
-        <option value="terminal" selected hidden>
+        <option value="terminal" hidden>
           Terminal
         </option>
         <option value="open">Open</option>
@@ -41,8 +43,9 @@ const HelpBar = () => {
         id="help"
         className={styles.item}
         onChange={onHelpMenuChange}
+        defaultValue={"help"}
       >
-        <option value="help" selected hidden>
+        <option value="help" hidden>
           Help
         </option>
         <option value="show_commands">Show Commands</option>

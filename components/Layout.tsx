@@ -1,6 +1,5 @@
-'use client';
 import HelpBar from "./HelpBar";
-import { Sidebar } from "./Sidebar";
+// import { Sidebar } from "./Sidebar";
 import { Terminal } from "./Terminal";
 import dynamic from "next/dynamic";
 import { useContext } from "react";
@@ -11,23 +10,14 @@ type LayoutProps = {
 
 const HeaderNoSSR = dynamic(() => import("./Header"), { ssr: false });
 const ExplorerNoSSR = dynamic(() => import("./Explorer"), { ssr: false });
+const SidebarNoSSR = dynamic(() => import("./Sidebar"), { ssr: false });
 
 export default function Layout({ children }: LayoutProps) {
-  // console.log(localStorage?.getItem("explorer-location"));
   return (
     <>
       <HelpBar />
-      <ExplorerNoSSR
-        enabled={true}
-        showing={
-          typeof localStorage !== "undefined"
-            ? `${localStorage.getItem("explorer-location")}`
-            : "files"
-        }
-      />
-      <Sidebar />
-
-      {/*localStorage.getItem("explorer-location") as string*/}
+      <ExplorerNoSSR enabled={true} />
+      <SidebarNoSSR />
 
       <HeaderNoSSR
         file={

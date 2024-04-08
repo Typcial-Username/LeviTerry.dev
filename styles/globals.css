@@ -13,7 +13,15 @@ Blue accent: #01111d
 */
 
 :root {
-  --clr-icon: #e44f26;
+  --clr-html-icon: #e44f26;
+  /* Json Styles */
+  --clr-json-bracket: #ff5555;
+  --clr-json-key: #00a3c8;
+  --clr-json-string: #ef682e;
+  --clr-json-number: #2aa15d;
+  --clr-json-array: #ff79c6;
+  --clr-json-boolean: #fb60b8;
+  --clr-json-object: #ff79c6;
 }
 
 :root.dark {
@@ -67,10 +75,6 @@ body {
   scroll-behavior: smooth;
 }
 
-body {
-  height: 100vh;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -81,14 +85,14 @@ a:hover {
 }
 
 .border-bottom {
-  border-bottom: 0.15rem solid #ffffff;
+  border-bottom: 0.15rem solid var(--clr-primary);
 }
 
 .container {
-  /* padding: 0 2rem; */
-  margin: 7.5% 0 0 17.5%;
+  margin: 7rem 0 0 17.5rem;
   text-align: center;
   position: relative;
+  /* height: calc(100% - 17.5rem); */
 }
 
 .grid {
@@ -96,14 +100,14 @@ a:hover {
   align-items: left;
   justify-content: left;
   flex-wrap: wrap;
-  max-width: 100%;
+  /* max-width: 100%; */
   gap: 1.5em;
 }
 
 @media (max-width: 600px) {
   .grid {
     width: 100%;
-    flex-direction: column;
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 

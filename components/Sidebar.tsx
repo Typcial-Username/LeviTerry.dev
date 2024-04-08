@@ -1,16 +1,17 @@
+"use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faCog } from "@fortawesome/free-solid-svg-icons";
 import { faComments, faMessage } from "@fortawesome/free-regular-svg-icons";
 
 import styles from "../styles/Sidebar.module.css";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Tooltip } from "./Tooltip";
 import { Dropdown } from "./Dropdown";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { TextInput } from "./TextInput";
 import { Button } from "./Button";
 
-export const Sidebar = () => {
+const Sidebar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [option, setOption] = useState("files");
@@ -24,7 +25,8 @@ export const Sidebar = () => {
             <li className={styles.item}>
               {/* <Tooltip text={"Files"}> */}
               <div id="files" className={styles.button}>
-                <a
+                <button
+                  className={styles.button}
                   onClick={() => {
                     selectMenu("files");
                     setOption("files");
@@ -33,7 +35,7 @@ export const Sidebar = () => {
                   title="Explorer"
                 >
                   <FontAwesomeIcon icon={faFile} />
-                </a>
+                </button>
                 {/* </Tooltip> */}
               </div>
             </li>
@@ -75,20 +77,16 @@ export const Sidebar = () => {
             {/* Contact */}
             <li className={styles.item}>
               {/* <Tooltip text={"Documents"}> */}
-              <a
-                id="docs"
+              <button
+                id="open-contact-modal"
                 className={styles.button}
                 onClick={() => {
-                  selectMenu("docs");
-                  setOption("docs");
-                  setContactOpen(!contactOpen);
-                  console.log({ contactOpen });
-                  contactOpen ? closeContact() : openContact();
+                  openContact();
                 }}
                 title="Contact"
               >
                 <FontAwesomeIcon icon={faMessage} />
-              </a>
+              </button>
               {/* </Tooltip> */}
             </li>
           </ul>
@@ -112,16 +110,15 @@ export const Sidebar = () => {
 
             <li>
               {/* <Tooltip text={"Settings"}> */}
-              <a
+              <button
                 className={`${styles.button} `}
-                type="button"
                 onClick={() => {
                   openSettings();
                 }}
                 title="Settings"
               >
                 <FontAwesomeIcon icon={faCog} />
-              </a>
+              </button>
               {/* </Tooltip> */}
             </li>
           </ul>
@@ -138,6 +135,9 @@ export const Sidebar = () => {
         >
           &times;
         </button>
+
+        <h1 className={styles.modalHeader}>Contact Me</h1>
+
         {/* Modal Content */}
         <ul
           style={{
@@ -161,7 +161,6 @@ export const Sidebar = () => {
               <TextInput type="text" name="name" placeholder="Your name" />
             </label>{" "}
             <br />
-            <br />
             {/* Email Input */}
             <label htmlFor="email">
               Email:
@@ -171,7 +170,6 @@ export const Sidebar = () => {
                 placeholder="you@yourdomain.com"
               />
             </label>
-            <br />
             <br />
             {/* Message Input */}
             <label htmlFor="message">
@@ -183,7 +181,6 @@ export const Sidebar = () => {
               />
             </label>
             <br />
-            <br />
             {/* Submit Button */}
             <button type="submit" name="submit">
               Submit
@@ -194,7 +191,11 @@ export const Sidebar = () => {
       </dialog>
 
       {/* Settings Modal*/}
-      <dialog id="settings" className={styles.menu}>
+      <dialog
+        id="settings"
+        className={styles.menu}
+        suppressHydrationWarning={true}
+      >
         {/* Close Button */}
         <button
           id="close-settings"
@@ -203,6 +204,8 @@ export const Sidebar = () => {
         >
           &times;
         </button>
+
+        <h1 className={styles.modalHeader}>Settings</h1>
 
         {/* Modal Content */}
         {/* <ul
@@ -248,28 +251,47 @@ const selectMenu = (btn: string) => {
         .getElementById(allButtons[i])
         ?.classList.remove(`${styles.selected}`);
     }
-
-    btn !== "search" ? localStorage.setItem("explorer-location", btn) : null;
   }
 };
 
-// Ensure the 'wiundow' object is defined
-if (typeof window !== "undefined") {
-  // When the window loads, set the theme
-  window.onload = (event: Event) => {
-    // Get the default theme
-    const defaultTheme = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
+// Ensure the 'window' object is defined
+// if (typeof window !== "undefined") {
+// When the window loads, set the theme
+document.onload = (event: Event) => {
+  // Get the default theme
+  const defaultTheme = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
 
-    // Set the theme
-    setTheme(localStorage.getItem("theme") || defaultTheme ? "dark" : "light");
-  };
-}
+  const selectedTheme =
+    localStorage.getItem("theme") ?? defaultTheme ? "dark" : "light";
+
+  console.log({
+    document,
+    selectedTheme,
+    localStorage: localStorage.getItem("theme"),
+    defaultTheme,
+  });
+
+  // Set the theme
+  setTheme(selectedTheme);
+
+  const themeChanger = document.getElementById("theme") as HTMLSelectElement;
+
+  themeChanger.value = selectedTheme;
+};
+// }
 
 const setTheme = (theme: string) => {
   // Change the theme of the document
   document.documentElement.className = theme;
+
+  console.log({
+    theme,
+    document,
+    documentClassName: document.documentElement.className,
+  });
+
   // Save the theme to localStorage
   localStorage.setItem("theme", theme);
 };
@@ -279,11 +301,13 @@ const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
   const elm = document.getElementById("theme") as HTMLSelectElement;
   // Set the theme
   setTheme(elm?.value);
+
+  // e.target.value = elm.value;
 };
 
-function titleCase(text: string) {
-  return text[0].toUpperCase() + text.slice(1).toLowerCase();
-}
+// function titleCase(text: string) {
+//   return text[0].toUpperCase() + text.slice(1).toLowerCase();
+// }
 
 function openSettings() {
   // Retrieve the settings dialog
@@ -296,8 +320,6 @@ function openSettings() {
 function closeSettings() {
   // Retrieve the settings dialog
   const settings = document.getElementById("settings") as HTMLDialogElement;
-
-  console.log({ settings });
 
   // Close the Modal
   settings?.close();
@@ -335,3 +357,5 @@ function closeContact() {
 //     }
 //   }
 // }
+
+export default Sidebar;

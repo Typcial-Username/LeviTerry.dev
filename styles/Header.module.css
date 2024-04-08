@@ -8,10 +8,10 @@
   background-color: var(--clr-explorer);
   align-items: flex-start;
   overflow: hidden;
-  top: 2.5%;
-  margin-left: 17.5%;
-  width: 82.5%;
-  /* z-index: 2; */
+  top: 3rem;
+  margin-left: 17.5rem;
+  width: calc(100% - 17.5rem);
+  z-index: 2;
 }
 
 .file {

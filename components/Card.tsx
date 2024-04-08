@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "../styles/Card.module.css";
+import Image from "next/image";
 
 type imageLocations = "left" | "right";
 type imageOptions = {
@@ -23,7 +24,7 @@ export const Card = ({ title, description, link, imageOptions }: CardProps) => {
     <div className={`${styles.card}`}>
       {imageOptions ? (
         imageOptions.location == "left" ? (
-          <img src={imageOptions.src} alt={imageOptions.alt} />
+          <Image src={imageOptions.src} alt={imageOptions.alt} />
         ) : (
           ""
         )
@@ -45,7 +46,7 @@ export const Card = ({ title, description, link, imageOptions }: CardProps) => {
       <p>{content}</p>
       {imageOptions ? (
         imageOptions.location == "right" ? (
-          <img src={imageOptions.src} alt={imageOptions.alt} />
+          <Image src={imageOptions.src} alt={imageOptions.alt} />
         ) : (
           ""
         )

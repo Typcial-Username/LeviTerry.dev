@@ -10,7 +10,6 @@ import { Button } from "../components/Button";
 import { Menu } from "../components/Menu";
 
 import { Link } from "../components/Link";
-import { Sidebar } from "../components/Sidebar";
 
 const date = new Date(Date.now());
 const days = [
@@ -27,7 +26,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Levi Terry | Home</title>
+        <title>Levi Terry&apos;s Developer Portfolio | Home</title>
         <link rel="icon" href="/images/favicon.ico" />
         <meta property="og:title" content="Levi Terry" />
         <meta property="og:type" content="website" />
@@ -69,7 +68,7 @@ const Home: NextPage = () => {
 
       {/* Experience */}
       {/* <section className="container"> */}
-      <h2 id="experience">Experience</h2>
+      {/* <h2 id="experience">Experience</h2>
       <div className={styles.grid}>
         <Card
           title="Code Ninjas - Code Sensei"
@@ -85,7 +84,7 @@ const Home: NextPage = () => {
             alt: "Code Ninjas Logo",
           }}
         />
-      </div>
+      </div> */}
       {/* </section> */}
 
       <br />
@@ -111,8 +110,4 @@ const Home: NextPage = () => {
   );
 };
 
-const onContactSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  console.log(event.target);
-};
 export default Home;

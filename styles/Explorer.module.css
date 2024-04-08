@@ -1,35 +1,38 @@
-.explorer {
-  top: 2.5%;
+#explorer {
+  top: 3rem;
   background-color: var(--clr-explorer);
-  width: 15%;
-  height: 100%;
-  margin-left: 2.5%;
+  width: 15em;
+  height: calc(100% - 3rem);
+  margin-left: 2.5rem;
   position: fixed;
   /* overflow: auto; */
   resize: horizontal;
   display: flex;
   flex-direction: column;
+  z-index: 2;
 }
 
 .header {
   text-align: left;
-  margin: 0;
+  /* margin: 0; */
   font-weight: 100;
   text-transform: uppercase;
-  margin-bottom: 5%;
   font-size: 0.8rem;
   color: #ccc;
+  margin-left: calc(10% + 1ch);
+  margin-top: 5%;
 }
 
 .content {
   width: 100%;
   height: auto;
   text-transform: uppercase;
-  font-size: 0.9rem;
+  font-size: 0.5rem;
+  text-align: left;
 }
 
 .item {
-  margin: 5% 0 0 10%;
+  margin: 5% 0 0 5%;
   padding: 0;
   font-size: 1rem;
   background-color: transparent;
