@@ -34,14 +34,12 @@ const Home: NextPage = () => {
       </Head>
 
       {/* Introduction */}
-      {/* <div className="container"> */}
-      <h1 style={{ textAlign: "center" }}>Welcome to my website</h1>
+      <h1 style={{ textAlign: "center" }}>Welcome to my Website</h1>
 
       <br />
-      {/* </div> */}
-      {/* <section className="container"> */}
+
       <p>
-        Developer
+        Levi Terry, Developer
         {/* Hello, I&apos;m Levi Terry, I am a software developer based in Southern
         Nevada. I first started programming in 2012 when I discovered the
         language/program known as
@@ -55,13 +53,6 @@ const Home: NextPage = () => {
       </p>
 
       <br />
-      {/* </section> */}
-
-      {/* Projects */}
-      {/* <section className="container"> */}
-
-      {/* </section> */}
-
       <br />
 
       {/* <div className={styles.wave}></div> */}
@@ -85,19 +76,15 @@ const Home: NextPage = () => {
           }}
         />
       </div> */}
-      {/* </section> */}
 
       <br />
 
       {/* Contact */}
-      {/* <section className="container"> */}
-      {/* <div className={styles.contact}>
-      </div> */}
-
       <div className={styles.typing}>
         <div className={styles.blinker}></div>
         {" " + days[date.getDay()]}!
       </div>
+
       <a
         href="https://github.com/Typcial-Username/LeviTerry.dev"
         target="_blank"
@@ -105,7 +92,6 @@ const Home: NextPage = () => {
       >
         View Source
       </a>
-      {/* </section> */}
     </>
   );
 };

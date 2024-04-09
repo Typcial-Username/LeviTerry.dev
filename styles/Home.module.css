@@ -194,7 +194,7 @@
   width: 0.1em;
   height: 0.75em;
   margin-left: 0.1em;
-  background-color: #fff;
+  background-color: var(--clr-primary);
 
   animation: blink 0.75s ease-in-out infinite;
 }

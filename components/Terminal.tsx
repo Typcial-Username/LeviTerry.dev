@@ -85,6 +85,12 @@ function onKeyPress(event: React.KeyboardEvent) {
       ) {
         if (command.content.includes("redirect")) {
           const path = command.content.split(" ")[1];
+
+          if (path.startsWith("http")) {
+            window.open(path, "_blank");
+            return
+          }
+
           window.location.href = path;
         }
 

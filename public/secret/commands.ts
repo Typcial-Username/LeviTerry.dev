@@ -8,17 +8,17 @@ export const Commands: Command[] = [
   {
     name: "index",
     content: "redirect /",
-    synonyms: ["main"],
+    synonyms: ["main", "home", "home page", "index.html"],
   },
   {
     name: "about",
     content: "redirect /about",
-    synonyms: ["about me", "who are you", "who are you"],
+    synonyms: ["about me", "who are you", "who are you", "about page", "about.html"],
   },
   {
     name: "gallery",
     content: "redirect /gallery",
-    synonyms: ["projects"],
+    synonyms: ["projects", "gallery page", "gallery.html"],
   },
   {
     name: "help",
@@ -30,6 +30,26 @@ export const Commands: Command[] = [
       gallery: Go to the gallery page
       ----------------------------------
       `,
-    synonyms: ["?", "assistance"],
+    synonyms: ["?", "assistance", "commands"],
   },
+  {
+    name: "contact",
+    content: "open contact",
+    synonyms: ["contact me", "contact page", "contact.html"],
+  },
+  {
+    name: 'GitHub',
+    content: 'redirect https://github.com/Typcial-Username',
+    synonyms: ['git', 'git hub', 'source code', 'source']
+  },
+  {
+    name: 'LinkedIn',
+    content: 'redirect https://linkedin.com/in/levi-terry-dev/',
+    synonyms: ['linkedin', 'linked in', 'professional', 'network']
+  },
+  {
+    name: 'Stack Overflow',
+    content: 'redirect https://stackoverflow.com/users/15316502/typical-username',
+    synonyms: ['stack overflow', 'stackoverflow', 'stack', 'overflow']
+  }
 ];

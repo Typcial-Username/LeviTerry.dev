@@ -257,7 +257,7 @@ const selectMenu = (btn: string) => {
 // Ensure the 'window' object is defined
 // if (typeof window !== "undefined") {
 // When the window loads, set the theme
-document.onload = (event: Event) => {
+window.onload = (event: Event) => {
   // Get the default theme
   const defaultTheme = window.matchMedia(
     "(prefers-color-scheme: dark)"

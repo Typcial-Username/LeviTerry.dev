@@ -201,7 +201,6 @@ function formatJson(
 
         {Object.keys(obj).map((key, index) => {
           curIdx = index;
-          console.log({ curIdx, index });
           return (
             <>
               <span key={key}>
