@@ -255,7 +255,6 @@ const selectMenu = (btn: string) => {
 };
 
 // Ensure the 'window' object is defined
-// if (typeof window !== "undefined") {
 // When the window loads, set the theme
 window.onload = (event: Event) => {
   // Get the default theme
@@ -267,6 +266,7 @@ window.onload = (event: Event) => {
     localStorage.getItem("theme") ?? defaultTheme ? "dark" : "light";
 
   console.log({
+    localTheme: localStorage.getItem("theme"),
     document,
     selectedTheme,
     localStorage: localStorage.getItem("theme"),
@@ -280,7 +280,6 @@ window.onload = (event: Event) => {
 
   themeChanger.value = selectedTheme;
 };
-// }
 
 const setTheme = (theme: string) => {
   // Change the theme of the document

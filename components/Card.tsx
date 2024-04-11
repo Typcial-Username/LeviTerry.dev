@@ -21,7 +21,7 @@ export const Card = ({ title, description, link, imageOptions }: CardProps) => {
   content = content.replaceAll("--", "\n");
 
   return (
-    <div className={`${styles.card}`}>
+    <div className={`${styles.card}`} style={{ border: '1px solid var(--clr-primary)' }}>
       {imageOptions ? (
         imageOptions.location == "left" ? (
           <Image src={imageOptions.src} alt={imageOptions.alt} />
