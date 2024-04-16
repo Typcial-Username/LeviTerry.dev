@@ -11,17 +11,6 @@ import { Menu } from "../components/Menu";
 
 import { Link } from "../components/Link";
 
-const date = new Date(Date.now());
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
 const Home: NextPage = () => {
   return (
     <>
@@ -93,18 +82,6 @@ const Home: NextPage = () => {
       {/* <section className="container"> */}
       {/* <div className={styles.contact}>
       </div> */}
-
-      <div className={styles.typing}>
-        <div className={styles.blinker}></div>
-        {" " + days[date.getDay()]}!
-      </div>
-      <a
-        href="https://github.com/Typcial-Username/LeviTerry.dev"
-        target="_blank"
-        rel="noreferrer"
-      >
-        View Source
-      </a>
       {/* </section> */}
     </>
   );

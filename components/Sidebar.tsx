@@ -257,21 +257,22 @@ const selectMenu = (btn: string) => {
 // Ensure the 'window' object is defined
 // if (typeof window !== "undefined") {
 // When the window loads, set the theme
-document.onload = (event: Event) => {
+window.onload = (event: Event) => {
   // Get the default theme
   const defaultTheme = window.matchMedia(
     "(prefers-color-scheme: dark)"
   ).matches;
 
-  const selectedTheme =
-    localStorage.getItem("theme") ?? defaultTheme ? "dark" : "light";
+  let selectedTheme: string = "dark";
 
-  console.log({
-    document,
-    selectedTheme,
-    localStorage: localStorage.getItem("theme"),
-    defaultTheme,
-  });
+  const localTheme = localStorage.getItem("theme");
+
+  if (!localTheme) {
+    console.log("localstorage theme is null, using default theme");
+    selectedTheme = defaultTheme ? "dark" : "light";
+  } else {
+    selectedTheme = localTheme;
+  }
 
   // Set the theme
   setTheme(selectedTheme);
@@ -280,6 +281,7 @@ document.onload = (event: Event) => {
 
   themeChanger.value = selectedTheme;
 };
+
 // }
 
 const setTheme = (theme: string) => {

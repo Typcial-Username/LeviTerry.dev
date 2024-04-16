@@ -1,10 +1,27 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../styles/HelpBar.module.css";
+import Image from "next/image";
 
 const HelpBar = () => {
+  const [host, setHost] = React.useState<string>("localhost");
+
+  useEffect(() => {
+    setHost(window.location.host);
+  }, []);
+
   return (
     <div className={styles.header}>
+      <div>
+        <Image
+          src={"/images/headshot.jpg"}
+          alt="Levi Terry"
+          width={50}
+          height={50}
+          className="logo"
+        />
+      </div>
+
       {/* File Menu */}
       <select
         name="file"
@@ -52,6 +69,10 @@ const HelpBar = () => {
         <option value="show_keyboard_shortcuts">Show Keyboard Shortcuts</option>
       </select>
 
+      <div className={styles.main}>
+        <p style={{ padding: "10rem" }}>{host}</p>
+      </div>
+
       {/* Commands Modal */}
       <dialog id="commands-modal" className={styles.commandsModal}>
         {/* Close Button */}
@@ -96,19 +117,74 @@ const HelpBar = () => {
         </h1>
 
         {/* Modal Content */}
-        <div className={`${styles.grid}`} style={{ border: "1px solid white" }}>
+        {/* <div className={`${styles.grid}`} style={{ border: "1px solid white" }}>
           <p className={styles.modalHeader}>Command</p>
           <p className={styles.modalHeader}>Description</p>
-          <span>
-            <button className={styles.modalButton}>index</button> <p> + </p>{" "}
-            <button className={styles.modalButton}>E</button>{" "}
+          <span className={styles.group}>
+            <button className={styles.modalButton}>Control</button>
+            <p>&nbsp;+&nbsp;</p>{" "}
+            <button className={styles.modalButton}>B</button>{" "}
           </span>
-          <p className={styles.modalItem}>Navigates to the index page.</p>
-          <button className={styles.modalButton}>about</button>
+          <p className={styles.modalItem}>Toggles the Explorer.</p>
+          <span className={styles.group}>
+            <button className={styles.modalButton}>Control</button>
+            <p>&nbsp;+&nbsp;</p>{" "}
+            <button className={styles.modalButton}>`</button>{" "}
+          </span>
           <p className={styles.modalItem}>Navigates to the about page.</p>
           <button className={styles.modalButton}>gallery</button>
           <p className={styles.modalItem}>Navigates to the gallery page.</p>
-        </div>
+        </div> */}
+
+        <input
+          type="text"
+          placeholder="Search..."
+          className={styles.search}
+          autoFocus
+        />
+
+        <table
+          className={`${styles.modalTable}`}
+          style={{ border: "1px solid var(--clr-secondary)" }}
+        >
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Key Binding</th>
+              {/* <th>Description</th> */}
+            </tr>
+          </thead>
+
+          <tbody>
+            {/* Explorer Toggle */}
+            <tr>
+              <td>
+                <p>Toggle Explorer</p>
+              </td>
+              <td className={styles.group}>
+                <button className={styles.modalButton}>Control</button> <p>+</p>{" "}
+                <button className={styles.modalButton}>B</button>
+              </td>
+
+              {/* <td>Toggles the Explorer.</td> */}
+            </tr>
+            {/* Terminal Toggle */}
+            <tr>
+              <td>Toggle Terminal</td>
+              <td className={styles.group}>
+                <button className={styles.modalButton}>Control</button> <p>+</p>{" "}
+                <button className={styles.modalButton}>`</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Toggles Terminal</td>
+              <td className={styles.group}>
+                <button className={styles.modalButton}>Control</button> <p>+</p>{" "}
+                <button className={styles.modalButton}>`</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </dialog>
     </div>
   );

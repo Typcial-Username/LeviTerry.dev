@@ -60,7 +60,7 @@ function calculateLineNums() {
     console.log({ contentHeight, lineHeight: Math.ceil(lineHeight), lines });
 
     if (Number.isInteger(lines)) {
-      for (let i = 0; i < lines; i++) {
+      for (let i = 0; i <= lines + 1; i++) {
         const li = document.createElement("li") as HTMLLIElement;
         li.textContent = `${i + 1}`;
         lineNumbers.appendChild(li);
@@ -201,7 +201,6 @@ function formatJson(
 
         {Object.keys(obj).map((key, index) => {
           curIdx = index;
-          console.log({ curIdx, index });
           return (
             <>
               <span key={key}>

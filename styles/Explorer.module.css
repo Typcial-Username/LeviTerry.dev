@@ -18,7 +18,7 @@
   font-weight: 100;
   text-transform: uppercase;
   font-size: 0.8rem;
-  color: #ccc;
+  color: var(--clr-primary);
   margin-left: calc(10% + 1ch);
   margin-top: 5%;
 }

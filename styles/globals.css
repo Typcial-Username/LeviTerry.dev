@@ -115,6 +115,176 @@ a:hover {
   display: none;
 }
 
+.typing {
+  font-size: 2em;
+}
+
+.typing::before {
+  content: "Have a ";
+  animation: animateText 15s step-end infinite;
+}
+
+.logo {
+  width: 100%;
+  border-radius: 50%;
+}
+
+/* Add char int: 2%, Remove char int: 1%, Hold Delay: 5% */
+
+@keyframes animateText {
+  10% {
+    content: "Have a g";
+  }
+  12% {
+    content: "Have a gr";
+  }
+  14% {
+    content: "Have a gre";
+  }
+  16% {
+    content: "Have a grea";
+  }
+
+  17% {
+    content: "Have a great";
+  }
+
+  22% {
+    content: "Have a grea";
+  }
+  23% {
+    content: "Have a gre";
+  }
+  24% {
+    content: "Have a gr";
+  }
+  25% {
+    content: "Have a";
+  }
+
+  27% {
+    content: "Have an";
+  }
+
+  29% {
+    content: "Have an a";
+  }
+
+  31% {
+    content: "Have an am";
+  }
+
+  33% {
+    content: "Have an ama";
+  }
+
+  35% {
+    content: "Have an ama";
+  }
+  37% {
+    content: "Have an amaz";
+  }
+  39% {
+    content: "Have an amazi";
+  }
+  41% {
+    content: "Have an amazin";
+  }
+
+  43% {
+    content: "Have an amazing";
+  }
+
+  45% {
+    content: "Have an amazin";
+  }
+
+  50% {
+    content: "Have an amazi";
+  }
+  51% {
+    content: "Have an amaz";
+  }
+  52% {
+    content: "Have an ama";
+  }
+  53% {
+    content: "Have an am";
+  }
+  54% {
+    content: "Have an a";
+  }
+  55% {
+    content: "Have an";
+  }
+  56% {
+    content: "Have a";
+  }
+
+  58% {
+    content: "Have a t";
+  }
+  60% {
+    content: "Have a ti";
+  }
+  62% {
+    content: "Have a tip";
+  }
+  64% {
+    content: "Have a tipt";
+  }
+  66% {
+    content: "Have a tipto";
+  }
+
+  68% {
+    content: "Have a tiptop";
+  }
+
+  70% {
+    content: "Have a tipto";
+  }
+  75% {
+    content: "Have a tipt";
+  }
+  76% {
+    content: "Have a tip";
+  }
+  77% {
+    content: "Have a ti";
+  }
+  78% {
+    content: "Have a t";
+  }
+  79% {
+    content: "Have a";
+  }
+}
+
+.blinker {
+  content: "";
+  display: inline-block;
+  width: 0.1em;
+  height: 0.75em;
+  margin-left: 0.1em;
+  background-color: #fff;
+
+  animation: blink 0.75s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,
+  25%,
+  100% {
+    opacity: 1;
+  }
+
+  50%,
+  75% {
+    opacity: 0;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 0.75em;
 }
