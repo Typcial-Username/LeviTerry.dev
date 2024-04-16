@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import styles from "../styles/Terminal.module.css";
 import { Commands } from "../public/secret/commands";
@@ -6,7 +7,7 @@ import { useEffect } from "react";
 
 export const Terminal = () => {
   const [host, setHost] = React.useState("localhost");
-  const [bottom, setBottom] = React.useState(0);
+  // const [bottom, setBottom] = React.useState(0);
 
   useEffect(() => {
     setHost(window.location.host);
@@ -30,6 +31,7 @@ export const Terminal = () => {
         marginLeft: '17.5rem'
       }}
     >
+      <div className={styles.resizer}></div>
       <span className={styles.topBar}>
         <p className={styles.header}>Terminal</p>
 
@@ -40,20 +42,22 @@ export const Terminal = () => {
 
       {/* <div className={styles.text}> */}
       <form onSubmit={onSubmit} className={styles.text}>
-        <span>
-          <label htmlFor="terminal">
+        {/* <span> */}
+          {/* <label htmlFor="terminal">
             visitor@{host}
             {">"}
-          </label>
+          </label> */}
           <textarea
             name="terminal"
             id="terminal"
             data-name="terminal"
             onKeyDown={onKeyPress}
-            defaultValue={`visitor@${host}> `}
+            defaultValue={`visitor@${host}>`}
+            autoComplete={"off"}
+            spellCheck={false}
             className={styles.text}
           />
-        </span>
+        {/* </span> */}
       </form>
       {/* </div> */}
     </div>
@@ -197,3 +201,28 @@ function terminalWrite(element: HTMLTextAreaElement, text: string, speed: number
 function removePunctuation(text: string): string {
   return text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
 }
+
+// function makeResizableDiv() {
+//   const resizer = document?.querySelector(".resizer") as HTMLDivElement;
+//   resizer.addEventListener("mousedown", () => {
+//     resizer.addEventListener("mousemove", resize);  
+//     window.addEventListener("mousemove", resize);
+//     window.addEventListener("mouseup", stopResize);
+//   })
+
+//   function resize(event: MouseEvent) {
+//     const terminal = document?.querySelector(".terminal") as HTMLDivElement;
+//     const terminalText = document?.querySelector(".text") as HTMLTextAreaElement;
+
+//     const originalY = terminal.getBoundingClientRect().top;
+//     const originalMouseY = event.clientY;
+
+//     terminal.style.height = originalY + (event.clientY - originalMouseY) + "px";
+//   }
+
+//   function stopResize() {
+//     window.removeEventListener("mousemove", resize);
+//   }
+// }
+
+// makeResizableDiv()
