@@ -30,7 +30,16 @@
 }
 
 .text {
-  color: #0070f3;
+  text-align: left;
+  /* margin: auto; */
+  /* color: #0070f3; */
+}
+
+.image_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
 }
 
 /* .contacts {

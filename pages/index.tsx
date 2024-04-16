@@ -23,14 +23,12 @@ const Home: NextPage = () => {
       </Head>
 
       {/* Introduction */}
-      {/* <div className="container"> */}
-      <h1 style={{ textAlign: "center" }}>Welcome to my website</h1>
+      <h1 style={{ textAlign: "center" }}>Welcome to my Website</h1>
 
       <br />
-      {/* </div> */}
-      {/* <section className="container"> */}
+
       <p>
-        Developer
+        Levi Terry, Developer
         {/* Hello, I&apos;m Levi Terry, I am a software developer based in Southern
         Nevada. I first started programming in 2012 when I discovered the
         language/program known as
@@ -44,13 +42,6 @@ const Home: NextPage = () => {
       </p>
 
       <br />
-      {/* </section> */}
-
-      {/* Projects */}
-      {/* <section className="container"> */}
-
-      {/* </section> */}
-
       <br />
 
       {/* <div className={styles.wave}></div> */}
@@ -74,7 +65,51 @@ const Home: NextPage = () => {
           }}
         />
       </div> */}
-      {/* </section> */}
+
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: "repeat(3, 1fr)",
+          margin: "0 5rem 2.5rem",
+        }}
+      >
+        <div>
+          <p className={styles.text}>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate
+            soluta adipisci sed neque laboriosam. Eos quidem, adipisci harum
+            error aspernatur, quasi repudiandae fugiat esse praesentium
+            doloremque, maiores dolores officiis deserunt. Vel eaque dolor,
+            magni est ut eveniet beatae nisi aut unde consequuntur ducimus sequi
+            quam suscipit. Esse praesentium neque alias expedita laboriosam
+            consequatur quam eligendi sint magni ex. Iste modi incidunt earum
+            quaerat, beatae deserunt rem numquam odit in doloribus nesciunt
+            minus ipsa provident quos.
+          </p>
+        </div>
+
+        <div className={styles.image_container}>
+          <img
+            src="https://via.placeholder.com/200"
+            alt="Placeholder Image"
+            style={{ borderRadius: "50%" }}
+          />
+        </div>
+
+        <div className={styles.text}>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias
+            sed voluptates architecto deserunt debitis nostrum alias a, deleniti
+            cupiditate cumque, quae dolores voluptas enim ipsa aliquid.
+            Voluptate quos consectetur libero labore iusto. Deserunt minima
+            architecto nesciunt voluptatum, dolor quod minus illo at autem
+            soluta ducimus maiores aspernatur atque tenetur fugit velit
+            perspiciatis? Odit velit nihil vero, corrupti ducimus exercitationem
+            assumenda quibusdam doloremque reprehenderit. Voluptatem fuga
+            mollitia dolorum iste neque exercitationem esse doloribus quis sit
+            a?
+          </p>
+        </div>
+      </div>
 
       <br />
 

@@ -92,6 +92,7 @@ a:hover {
   margin: 7rem 0 0 17.5rem;
   text-align: center;
   position: relative;
+  /* overflow-y: scroll; */
   /* height: calc(100% - 17.5rem); */
 }
 

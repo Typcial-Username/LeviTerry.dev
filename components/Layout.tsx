@@ -2,7 +2,7 @@ import HelpBar from "./HelpBar";
 // import { Sidebar } from "./Sidebar";
 import { Terminal } from "./Terminal";
 import dynamic from "next/dynamic";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -33,9 +33,10 @@ export default function Layout({ children }: LayoutProps) {
       <HeaderNoSSR
         file={
           typeof window !== "undefined"
-            ? pathName(window.location.pathname) + ".html"
+            ? pathName(window.location.pathname)
             : "unknown.html"
         }
+        extension="html"
       />
       <main className="container">{children}</main>
 

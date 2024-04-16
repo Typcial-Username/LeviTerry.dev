@@ -8,7 +8,7 @@ import {
   faLinkedin,
   faStackOverflow,
 } from "@fortawesome/free-brands-svg-icons";
-import { faDownload, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faAngleDown, faFileCode } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useRouter } from "next/router";
@@ -106,10 +106,10 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               {/* <a> */}
               <span>
                 <FontAwesomeIcon
-                  icon={faHTMLIcon}
+                  icon={faFileCode}
                   color="var(--clr-html-icon)"
                 />
-                <p style={{ display: "inline" }}> about.html</p>
+                <p style={{ display: "inline" }}> about.json</p>
               </span>
               {/* </a> */}
             </Link>

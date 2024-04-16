@@ -5,7 +5,7 @@ const age = Today.getFullYear() - Birthday.getFullYear();
 
 export const AboutData = {
   name: "Levi Terry",
-  age: age,
+  // age: age,
   education: {
     school: "University of Advancing Technology (UAT)",
     degree: "Technology Studies",
@@ -32,7 +32,7 @@ export const AboutData = {
     ],
     frameworks: ["React", "Next.js", "Node.js", "Express"],
     databases: ["MongoDB"],
-    tools: ["Git", "GitHub", "VS Code", "Heroku", "Netlify", "Vercel"],
+    tools: ["Git", "GitHub", "VS Code", "Netlify"],
     operatingSystems: ["Windows", "Linux"],
   },
 };

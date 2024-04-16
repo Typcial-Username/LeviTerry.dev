@@ -17,8 +17,9 @@
   /* margin: 0; */
   font-weight: 100;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
   color: var(--clr-primary);
+  font-size: 0.25rem;
   margin-left: calc(10% + 1ch);
   margin-top: 5%;
 }
