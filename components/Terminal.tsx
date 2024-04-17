@@ -1,12 +1,14 @@
-'use client';
-import React from "react";
+"use client";
+import React, { useRef } from "react";
 import styles from "../styles/Terminal.module.css";
 import { Commands } from "../public/secret/commands";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
+import { hostname } from "os";
 
 export const Terminal = () => {
   const [host, setHost] = React.useState("localhost");
+  const terminalValue = useRef<string>("");
   // const [bottom, setBottom] = React.useState(0);
 
   useEffect(() => {
@@ -26,9 +28,9 @@ export const Terminal = () => {
       data-name="terminal"
       id={styles.terminal}
       style={{
-        borderTop: "1px solid whitesmoke",
+        // borderTop: "1px solid whitesmoke",
         backgroundColor: "var(--clr-bg)",
-        marginLeft: '17.5rem'
+        marginLeft: "var(--main-m-left)",
       }}
     >
       <div className={styles.resizer}></div>
@@ -43,20 +45,20 @@ export const Terminal = () => {
       {/* <div className={styles.text}> */}
       <form onSubmit={onSubmit} className={styles.text}>
         {/* <span> */}
-          {/* <label htmlFor="terminal">
+        {/* <label htmlFor="terminal">
             visitor@{host}
             {">"}
           </label> */}
-          <textarea
-            name="terminal"
-            id="terminal"
-            data-name="terminal"
-            onKeyDown={onKeyPress}
-            defaultValue={`visitor@${host}>`}
-            autoComplete={"off"}
-            spellCheck={false}
-            className={styles.text}
-          />
+        <textarea
+          name="terminal"
+          id="terminal"
+          data-name="terminal"
+          onKeyDown={onKeyPress}
+          defaultValue={`visitor@${host}>`}
+          autoComplete={"off"}
+          spellCheck={false}
+          className={styles.text}
+        />
         {/* </span> */}
       </form>
       {/* </div> */}
@@ -86,13 +88,13 @@ function onKeyPress(event: React.KeyboardEvent) {
     let foundCommand = false;
 
     const target = event.target as HTMLTextAreaElement;
-    
+
     const lines = target.value.split("\n");
-    
-    console.log({ lines })
+
+    console.log({ lines });
 
     let content = removePunctuation(lines[lines.length - 1].toLowerCase());
-    let splitContent = content.split(">")
+    let splitContent = content.split(">");
 
     if (splitContent.length > 1) {
       content = splitContent[1].trim();
@@ -107,27 +109,31 @@ function onKeyPress(event: React.KeyboardEvent) {
       ) {
         foundCommand = true;
         if (command.content.includes("redirect")) {
-          const path = command.content.split(" ")[1];
+          const path = command.content.split("redirect ")[1];
 
           if (path.startsWith("http")) {
+            target.value += `\nRedirecting to ${path}\n${target.defaultValue}`;
             window.open(path, "_blank");
-            return
+            return;
           }
 
+          target.value += `\nRedirecting to ${path}\nname@${hostname} `;
+          // target.value += `\nname@${hostname}>`;
+
           window.location.href = path;
+
           return;
         }
 
         terminalWrite(target, "\n" + command.content, 15);
-        return
+        return;
       }
     });
 
     if (!foundCommand) {
-      console.log("Command not found." + content)
+      console.log("Command not found." + content);
       terminalWrite(target, "\nCommand not found.", 0);
     }
-
 
     // switch (content) {
     //   case "about":
@@ -162,7 +168,11 @@ function onKeyPress(event: React.KeyboardEvent) {
   }
 }
 
-function terminalWrite(element: HTMLTextAreaElement, text: string, speed: number) {
+function terminalWrite(
+  element: HTMLTextAreaElement,
+  text: string,
+  speed: number
+) {
   // const terminal = document.querySelector(
   //   "#terminal"
   // ) as HTMLTextAreaElement;
@@ -170,7 +180,6 @@ function terminalWrite(element: HTMLTextAreaElement, text: string, speed: number
   // console.log({ text })
 
   element.disabled = true;
-
   let interval: NodeJS.Timeout = setTimeout(() => {}, 0);
   // slowly add the text to the terminal
 
@@ -205,7 +214,7 @@ function removePunctuation(text: string): string {
 // function makeResizableDiv() {
 //   const resizer = document?.querySelector(".resizer") as HTMLDivElement;
 //   resizer.addEventListener("mousedown", () => {
-//     resizer.addEventListener("mousemove", resize);  
+//     resizer.addEventListener("mousemove", resize);
 //     window.addEventListener("mousemove", resize);
 //     window.addEventListener("mouseup", stopResize);
 //   })

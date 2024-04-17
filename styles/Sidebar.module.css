@@ -82,7 +82,7 @@
 }
 
 .menu {
-  max-width: 15%;
+  max-width: 100em;
   /* height: 100%; */
   /* margin: auto; */
   /* align-self: center;
@@ -106,7 +106,7 @@
   padding: 0;
   top: 50%;
   left: 2.5%;
-  float: right;
+  /* float: right; */
   /* display: flex; */
   flex-direction: column;
   color: var(--clr-primary);

@@ -1,12 +1,12 @@
 .button {
-    border-radius: 5rem;
-    max-width: 10rem;
+  border-radius: 0.5rem;
+  max-width: 10rem;
 }
 
 .button:hover {
-    background-color: aqua;
+  background-color: aqua;
 }
 
 .button:disabled {
-    background-color: grey;
+  background-color: grey;
 }

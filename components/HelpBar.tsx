@@ -12,180 +12,195 @@ const HelpBar = () => {
 
   return (
     <div className={styles.header}>
-      <div>
+      <div
+        style={{
+          width: "25px",
+          textAlign: "center",
+          justifyContent: "center",
+          display: "flex",
+        }}
+      >
         <Image
           src={"/images/headshot.jpg"}
           alt="Levi Terry"
-          width={50}
-          height={50}
+          width={25}
+          height={25}
           className="logo"
         />
       </div>
 
-      {/* File Menu */}
-      <select
-        name="file"
-        id="file"
-        className={styles.item}
-        onChange={onFileMenuChange}
-        defaultValue={"file"}
-      >
-        <option value="file" hidden>
-          File
-        </option>
-        <option value="index.html">index</option>
-        <option value="about.html">about</option>
-        <option value="gallery.html">gallery</option>
-        <option value="exit">Exit</option>
-      </select>
-
-      {/* Terminal Menu */}
-      <select
-        name="terminal"
-        id="terminal_help"
-        className={styles.item}
-        onChange={onTerminalMenuChange}
-        defaultValue={"terminal"}
-      >
-        <option value="terminal" hidden>
-          Terminal
-        </option>
-        <option value="open">Open</option>
-        <option value="close">Close</option>
-      </select>
-
-      {/* Help Menu */}
-      <select
-        name="help"
-        id="help"
-        className={styles.item}
-        onChange={onHelpMenuChange}
-        defaultValue={"help"}
-      >
-        <option value="help" hidden>
-          Help
-        </option>
-        <option value="show_commands">Show Commands</option>
-        <option value="show_keyboard_shortcuts">Show Keyboard Shortcuts</option>
-      </select>
-
-      <div className={styles.main}>
-        <p style={{ padding: "10rem" }}>{host}</p>
-      </div>
-
-      {/* Commands Modal */}
-      <dialog id="commands-modal" className={styles.commandsModal}>
-        {/* Close Button */}
-        <button onClick={closeCommandsModal} className={styles.closeModal}>
-          &times;
-        </button>
-
-        {/* Modal Header */}
-        <h1
-          style={{ color: "var(--clr-primary)", textDecoration: "underline" }}
+      <div className={styles.mainContent}>
+        {/* File Menu */}
+        <select
+          name="file"
+          id="file"
+          className={styles.item}
+          onChange={onFileMenuChange}
+          defaultValue={"file"}
         >
-          Commands
-        </h1>
-        {/* Modal Content */}
-        <div className={`${styles.grid}`} style={{ border: "1px solid white" }}>
-          <p className={styles.modalHeader}>Command</p>
-          <p className={styles.modalHeader}>Description</p>
-          <p className={styles.modalItem}>index</p>
-          <p className={styles.modalItem}>Navigates to the index page.</p>
-          <p className={styles.modalItem}>about</p>
-          <p className={styles.modalItem}>Navigates to the about page.</p>
-          <p className={styles.modalItem}>gallery</p>
-          <p className={styles.modalItem}>Navigates to the gallery page.</p>
+          <option value="file" hidden>
+            File
+          </option>
+          <option value="index.html">index</option>
+          <option value="about.html">about</option>
+          <option value="gallery.html">gallery</option>
+          <option value="exit">Exit</option>
+        </select>
+
+        {/* Terminal Menu */}
+        <select
+          name="terminal"
+          id="terminal_help"
+          className={styles.item}
+          onChange={onTerminalMenuChange}
+          defaultValue={"terminal"}
+        >
+          <option value="terminal" hidden>
+            Terminal
+          </option>
+          <option value="open">Open</option>
+          <option value="close">Close</option>
+        </select>
+
+        {/* Help Menu */}
+        <select
+          name="help"
+          id="help"
+          className={styles.item}
+          onChange={onHelpMenuChange}
+          defaultValue={"help"}
+        >
+          <option value="help" hidden>
+            Help
+          </option>
+          <option value="show_commands">Show Commands</option>
+          <option value="show_keyboard_shortcuts">
+            Show Keyboard Shortcuts
+          </option>
+        </select>
+
+        <div className={styles.main}>
+          <p style={{ padding: "10rem" }}>{host}</p>
         </div>
-      </dialog>
 
-      {/* Keyboard Shortcut Modal */}
-      <dialog id="keyboard-shortcut-modal" className={styles.commandsModal}>
-        {/* Close Button */}
-        <button
-          onClick={closeKeyboardShortcutModal}
-          className={styles.closeModal}
-        >
-          &times;
-        </button>
+        {/* Commands Modal */}
+        <dialog id="commands-modal" className={styles.commandsModal}>
+          {/* Close Button */}
+          <button onClick={closeCommandsModal} className={styles.closeModal}>
+            &times;
+          </button>
 
-        {/* Modal Header */}
-        <h1
-          style={{ color: "var(--clr-primary)", textDecoration: "underline" }}
-        >
-          Keyboard Shortcuts
-        </h1>
+          {/* Modal Header */}
+          <h1
+            style={{ color: "var(--clr-primary)", textDecoration: "underline" }}
+          >
+            Commands
+          </h1>
+          {/* Modal Content */}
+          <div
+            className={`${styles.grid}`}
+            style={{ border: "1px solid white" }}
+          >
+            <p className={styles.modalHeader}>Command</p>
+            <p className={styles.modalHeader}>Description</p>
+            <p className={styles.modalItem}>index</p>
+            <p className={styles.modalItem}>Navigates to the index page.</p>
+            <p className={styles.modalItem}>about</p>
+            <p className={styles.modalItem}>Navigates to the about page.</p>
+            <p className={styles.modalItem}>gallery</p>
+            <p className={styles.modalItem}>Navigates to the gallery page.</p>
+          </div>
+        </dialog>
 
-        {/* Modal Content */}
-        {/* <div className={`${styles.grid}`} style={{ border: "1px solid white" }}>
-          <p className={styles.modalHeader}>Command</p>
-          <p className={styles.modalHeader}>Description</p>
-          <span className={styles.group}>
-            <button className={styles.modalButton}>Control</button>
-            <p>&nbsp;+&nbsp;</p>{" "}
-            <button className={styles.modalButton}>B</button>{" "}
-          </span>
-          <p className={styles.modalItem}>Toggles the Explorer.</p>
-          <span className={styles.group}>
-            <button className={styles.modalButton}>Control</button>
-            <p>&nbsp;+&nbsp;</p>{" "}
-            <button className={styles.modalButton}>`</button>{" "}
-          </span>
-          <p className={styles.modalItem}>Navigates to the about page.</p>
-          <button className={styles.modalButton}>gallery</button>
-          <p className={styles.modalItem}>Navigates to the gallery page.</p>
-        </div> */}
+        {/* Keyboard Shortcut Modal */}
+        <dialog id="keyboard-shortcut-modal" className={styles.commandsModal}>
+          {/* Close Button */}
+          <button
+            onClick={closeKeyboardShortcutModal}
+            className={styles.closeModal}
+          >
+            &times;
+          </button>
 
-        <input
-          type="text"
-          placeholder="Search..."
-          className={styles.search}
-          autoFocus
-        />
+          {/* Modal Header */}
+          <h1
+            style={{ color: "var(--clr-primary)", textDecoration: "underline" }}
+          >
+            Keyboard Shortcuts
+          </h1>
 
-        <table
-          className={`${styles.modalTable}`}
-          style={{ border: "1px solid var(--clr-secondary)" }}
-        >
-          <thead>
-            <tr>
-              <th>Command</th>
-              <th>Key Binding</th>
-              {/* <th>Description</th> */}
-            </tr>
-          </thead>
+          {/* Modal Content */}
+          {/* <div className={`${styles.grid}`} style={{ border: "1px solid white" }}>
+            <p className={styles.modalHeader}>Command</p>
+            <p className={styles.modalHeader}>Description</p>
+            <span className={styles.group}>
+              <button className={styles.modalButton}>Control</button>
+              <p>&nbsp;+&nbsp;</p>{" "}
+              <button className={styles.modalButton}>B</button>{" "}
+            </span>
+            <p className={styles.modalItem}>Toggles the Explorer.</p>
+            <span className={styles.group}>
+              <button className={styles.modalButton}>Control</button>
+              <p>&nbsp;+&nbsp;</p>{" "}
+              <button className={styles.modalButton}>`</button>{" "}
+            </span>
+            <p className={styles.modalItem}>Navigates to the about page.</p>
+            <button className={styles.modalButton}>gallery</button>
+            <p className={styles.modalItem}>Navigates to the gallery page.</p>
+          </div> */}
 
-          <tbody>
-            {/* Explorer Toggle */}
-            <tr>
-              <td>
-                <p>Toggle Explorer</p>
-              </td>
-              <td className={styles.group}>
-                <button className={styles.modalButton}>Control</button> <p>+</p>{" "}
-                <button className={styles.modalButton}>B</button>
-              </td>
+          <input
+            type="text"
+            placeholder="Search..."
+            className={styles.search}
+            autoFocus
+            name="search"
+          />
 
-              {/* <td>Toggles the Explorer.</td> */}
-            </tr>
-            {/* Terminal Toggle */}
-            <tr>
-              <td>Toggle Terminal</td>
-              <td className={styles.group}>
-                <button className={styles.modalButton}>Control</button> <p>+</p>{" "}
-                <button className={styles.modalButton}>`</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Toggles Terminal</td>
-              <td className={styles.group}>
-                <button className={styles.modalButton}>Control</button> <p>+</p>{" "}
-                <button className={styles.modalButton}>`</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </dialog>
+          <table
+            className={`${styles.modalTable}`}
+            style={{ border: "1px solid var(--clr-secondary)" }}
+          >
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Key Binding</th>
+                {/* <th>Description</th> */}
+              </tr>
+            </thead>
+
+            <tbody>
+              {/* Explorer Toggle */}
+              <tr>
+                <td>
+                  <p>Toggle Explorer</p>
+                </td>
+                <td className={styles.group}>
+                  <button className={styles.modalButton}>Control</button>{" "}
+                  <p>+</p> <button className={styles.modalButton}>B</button>
+                </td>
+
+                {/* <td>Toggles the Explorer.</td> */}
+              </tr>
+              {/* Terminal Toggle */}
+              <tr>
+                <td>Toggle Terminal</td>
+                <td className={styles.group}>
+                  <button className={styles.modalButton}>Control</button>{" "}
+                  <p>+</p> <button className={styles.modalButton}>`</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Toggles Terminal</td>
+                <td className={styles.group}>
+                  <button className={styles.modalButton}>Control</button>{" "}
+                  <p>+</p> <button className={styles.modalButton}>`</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </dialog>
+      </div>
     </div>
   );
 };

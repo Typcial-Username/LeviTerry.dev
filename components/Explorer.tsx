@@ -8,17 +8,18 @@ import {
   faLinkedin,
   faStackOverflow,
 } from "@fortawesome/free-brands-svg-icons";
-import { faDownload, faAngleDown, faFileCode } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  faAngleDown,
+  faFileCode,
+  faAngleRight,
+} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useRouter } from "next/router";
 import { Folder } from "./Folder";
 
-interface ExplorerProps {
-  enabled: boolean;
-}
-
-const Explorer = ({ enabled }: ExplorerProps) => {
+const Explorer = () => {
   const [headerOpen, setHeaderOpen] = React.useState(true);
   const [host, setHost] = React.useState("localhost");
   const router = useRouter();
@@ -39,18 +40,27 @@ const Explorer = ({ enabled }: ExplorerProps) => {
   const faStackOverflowIcon = faStackOverflow as IconProp;
 
   return (
-    <div
-      id={styles.explorer}
-      style={{ display: `${enabled ? "block" : "none"}` }}
-    >
+    <div id="explorer" className={styles.explorer}>
       <p className={styles.header}>Explorer</p>
       <button
         className={`${styles.content} ${styles.item} ${styles.dropdown}`}
         onClick={() => setHeaderOpen(!headerOpen)}
       >
-        {" "}
-        <FontAwesomeIcon icon={faAngleDown} /> {host}{" "}
+        <span>
+          {headerOpen ? (
+            <>
+              <FontAwesomeIcon icon={faAngleDown} />{" "}
+            </>
+          ) : (
+            <>
+              <FontAwesomeIcon icon={faAngleRight} />{" "}
+            </>
+          )}
+          {/* <FontAwesomeIcon icon={faAngleDown} />{" "} */}
+          <p style={{ display: "inline-block" }}>{host}</p>
+        </span>
       </button>
+
       <div
         style={
           headerOpen
@@ -79,21 +89,16 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               !folderStates.pages ? { display: "none" } : { display: "block" }
             }
           >
+            <span>
+              <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-html-icon)" />{" "}
+            </span>
+
             <Link href="/">
-              {/* <a> */}
-              <span>
-                <FontAwesomeIcon
-                  icon={faHTMLIcon}
-                  color="var(--clr-html-icon)"
-                />
-                <p style={{ display: "inline" }}> index.html</p>
-              </span>
-              {/* </a> */}
+              <p style={{ display: "inline" }}>index.html</p>
             </Link>
           </div>
 
           {/* About Page */}
-
           <div
             className={`${styles.item} ${
               router.pathname == "/about" ? styles.selected : null
@@ -102,16 +107,12 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               !folderStates.pages ? { display: "none" } : { display: "block" }
             }
           >
+            <span>
+              <FontAwesomeIcon icon={faFileCode} color="var(--clr-html-icon)" />{" "}
+            </span>
+
             <Link href="/about">
-              {/* <a> */}
-              <span>
-                <FontAwesomeIcon
-                  icon={faFileCode}
-                  color="var(--clr-html-icon)"
-                />
-                <p style={{ display: "inline" }}> about.json</p>
-              </span>
-              {/* </a> */}
+              <p style={{ display: "inline" }}> about.json</p>
             </Link>
           </div>
 
@@ -124,16 +125,11 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               !folderStates.pages ? { display: "none" } : { display: "block" }
             }
           >
+            <span>
+              <FontAwesomeIcon icon={faHTMLIcon} color="var(--clr-html-icon)" />{" "}
+            </span>
             <Link href="/gallery">
-              {/* <a> */}
-              <span>
-                <FontAwesomeIcon
-                  icon={faHTMLIcon}
-                  color="var(--clr-html-icon)"
-                />
-                <p style={{ display: "inline" }}> gallery.html</p>
-              </span>
-              {/* </a> */}
+              <p style={{ display: "inline" }}> gallery.html</p>
             </Link>
           </div>
         </div>
@@ -192,6 +188,9 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               !folderStates.socials ? { display: "none" } : { display: "block" }
             }
           >
+            <span>
+              <FontAwesomeIcon icon={faGithubIcon} />{" "}
+            </span>
             <a
               href="https://github.com/Typcial-Username"
               // className={styles.button}
@@ -199,7 +198,7 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               title="GitHub"
               target="_empty"
             >
-              <FontAwesomeIcon icon={faGithubIcon} /> GitHub
+              GitHub
             </a>
           </div>
 
@@ -209,6 +208,9 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               !folderStates.socials ? { display: "none" } : { display: "block" }
             }
           >
+            <span>
+              <FontAwesomeIcon icon={faLinkedinIcon} color="#0a66c2" />{" "}
+            </span>
             <a
               href="https://linkedin.com/in/levi-terry-dev/"
               // className={styles.button}
@@ -216,7 +218,7 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               title="Linkedin"
               target="_empty"
             >
-              <FontAwesomeIcon icon={faLinkedinIcon} color="#0a66c2" /> LinkedIn
+              LinkedIn
             </a>
           </div>
 
@@ -226,6 +228,9 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               !folderStates.socials ? { display: "none" } : { display: "block" }
             }
           >
+            <span>
+              <FontAwesomeIcon icon={faStackOverflowIcon} color="orange" />{" "}
+            </span>
             <a
               href="https://stackoverflow.com/users/15316502/typical-username"
               // className={styles.button}
@@ -233,7 +238,6 @@ const Explorer = ({ enabled }: ExplorerProps) => {
               title="Stack Overflow"
               target="_empty"
             >
-              <FontAwesomeIcon icon={faStackOverflowIcon} color="orange" />{" "}
               Stack Overflow
             </a>
           </div>

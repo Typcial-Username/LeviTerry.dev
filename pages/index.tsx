@@ -16,7 +16,7 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Levi Terry&apos;s Developer Portfolio | Home</title>
-        <link rel="icon" href="/images/favicon.ico" />
+        <link rel="icon" href="/images/headshot.jpg" />
         <meta property="og:title" content="Levi Terry" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_us" />
@@ -88,10 +88,12 @@ const Home: NextPage = () => {
         </div>
 
         <div className={styles.image_container}>
-          <img
-            src="https://via.placeholder.com/200"
+          <Image
+            src="/images/headshot.jpg"
+            width={200}
+            height={200}
             alt="Placeholder Image"
-            style={{ borderRadius: "50%" }}
+            // style={{ borderRadius: "50%" }}
           />
         </div>
 

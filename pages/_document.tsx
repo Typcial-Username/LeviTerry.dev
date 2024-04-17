@@ -15,6 +15,10 @@ export default function Document() {
           content="Levi Terry's Developer Portfolio"
         />
         <meta property="og:url" content="https://leviterry.dev" />
+        <meta
+          property="og:image"
+          content="https://leviterry.dev/images/og-image.png"
+        />
       </Head>
       <body>
         <Main />

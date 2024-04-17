@@ -3,33 +3,28 @@ import type { AppProps } from "next/app";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Layout from "../components/Layout";
 import Head from "next/head";
-import { useCallback, useEffect } from "react";
+import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   // All the key presses made within the timeout
-  let allKeyPresses: string[] = [];
+  let allKeyPresses: MutableRefObject<string[]> = useRef<string[]>([]);
   // How long to wait before processing the key presses
-  const keyPressTimeout: number = 1000;
+  const keyPressTimeout: number = 250;
   // Whether or not to allow new key presses
-  let allowingNewKeyPresses: boolean = true;
+  let allowingNewKeyPresses: MutableRefObject<boolean> = useRef(true);
 
   const handleKeypress = useCallback((event: KeyboardEvent) => {
     if (!allowingNewKeyPresses) return;
 
-    console.log("Key Pressed: ", event.key);
-    allKeyPresses.push(event.key);
-
-    console.log("Before Timeout");
+    allKeyPresses.current.push(event.key);
 
     setTimeout(() => {
-      allowingNewKeyPresses = false;
-      console.log("Key Presses: ", allKeyPresses);
+      allowingNewKeyPresses.current = false;
 
-      handleKeyPressTimeout(allKeyPresses);
+      handleKeyPressTimeout(allKeyPresses.current);
 
-      console.log("Resetting Key Presses");
-      allKeyPresses = [];
-      allowingNewKeyPresses = true;
+      allKeyPresses.current = [];
+      allowingNewKeyPresses.current = true;
     }, keyPressTimeout);
   }, []);
 
@@ -68,18 +63,37 @@ function handleKeyPressTimeout(allKeyPresses: string[]) {
 
 function toggleExplorer() {
   const explorer = document.getElementById("explorer") as HTMLDivElement;
-  // const
 
-  if (explorer) {
+  const root = document.querySelector(":root") as HTMLElement;
+
+  if (
+    explorer &&
+    (!explorer.style.display || explorer.style.display === "block")
+  ) {
+    console.log("Hiding Explorer");
     explorer.style.display = "none";
+    root.style.setProperty("--main-m-left", "2.5rem");
+  } else if (explorer && explorer.style.display === "none") {
+    console.log("Showing Explorer");
+    explorer.style.display = "block";
+    root.style.setProperty("--main-m-left", "17.5rem");
   }
 }
 
 function toggleTerminal() {
-  const terminal = document.getElementById("terminal") as HTMLDivElement;
+  const terminal = document.querySelector(
+    "[data-name=terminal]"
+  ) as HTMLDivElement;
 
-  if (terminal) {
+  console.log({ terminal, display: terminal.style.display });
+
+  if (
+    terminal &&
+    (!terminal.style.display || terminal.style.display === "block")
+  ) {
     terminal.style.display = "none";
+  } else if (terminal && terminal.style.display === "none") {
+    terminal.style.display = "block";
   }
 }
 

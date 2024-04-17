@@ -24,10 +24,18 @@ const days = [
 ];
 
 export default function Layout({ children }: LayoutProps) {
+  // let explorer: HTMLDivElement;
+  // let selected: HTMLDivElement | undefined;
+
+  // useEffect(() => {
+  //   explorer = document.getElementById("explorer") as HTMLDivElement;
+  //   selected = explorer.getElementsByClassName("selected")[0] as HTMLDivElement;
+  // }, []);
+
   return (
     <>
       <HelpBar />
-      <ExplorerNoSSR enabled={true} />
+      <ExplorerNoSSR />
       <SidebarNoSSR />
 
       <HeaderNoSSR
@@ -36,11 +44,15 @@ export default function Layout({ children }: LayoutProps) {
             ? pathName(window.location.pathname)
             : "unknown.html"
         }
-        extension="html"
+        extension={"html"}
       />
-      <main className="container">{children}</main>
 
-      <div className="container">
+      <main className="container">
+        {children}
+
+        <br />
+
+        {/* <div className="container"> */}
         <div className="typing">
           <div className="blinker"></div>
           {" " + days[date.getDay()]}!
@@ -52,7 +64,8 @@ export default function Layout({ children }: LayoutProps) {
         >
           View Source
         </a>
-      </div>
+        {/* </div> */}
+      </main>
 
       <Terminal />
     </>

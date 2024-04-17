@@ -9,7 +9,7 @@
   align-items: flex-start;
   overflow: hidden;
   top: 3rem;
-  margin-left: 17.5rem;
+  margin-left: var(--main-m-left);
   width: calc(100% - 17.5rem);
   z-index: 2;
 }

@@ -155,31 +155,42 @@ const Sidebar = () => {
             action="/api/contact"
             method="post"
           >
-            {/* Name Input */}
-            <label htmlFor="name">
-              Name:
-              <TextInput type="text" name="name" placeholder="Your name" />
-            </label>{" "}
+            <span>
+              {/* Name Input */}
+              <label htmlFor="contact-name">Name: </label>
+              <TextInput
+                id="contact-name"
+                type="text"
+                name="name"
+                placeholder="Your name"
+              />
+            </span>
+
             <br />
             {/* Email Input */}
-            <label htmlFor="email">
-              Email:
+            <span>
+              <label htmlFor="contact-email">Email: </label>
               <TextInput
+                id="contact-email"
                 type="email"
                 name="email"
                 placeholder="you@yourdomain.com"
               />
-            </label>
+            </span>
+
             <br />
+
             {/* Message Input */}
-            <label htmlFor="message">
-              Message:
+            <span>
+              <label htmlFor="contact-message">Message: </label>
               <textarea
+                id="contact-message"
                 className={styles.text}
                 name="message"
                 placeholder="Message"
               />
-            </label>
+            </span>
+
             <br />
             {/* Submit Button */}
             <button type="submit" name="submit">

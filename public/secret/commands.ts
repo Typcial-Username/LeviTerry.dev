@@ -13,7 +13,13 @@ export const Commands: Command[] = [
   {
     name: "about",
     content: "redirect /about",
-    synonyms: ["about me", "who are you", "who are you", "about page", "about.html"],
+    synonyms: [
+      "about me",
+      "who are you",
+      "who are you",
+      "about page",
+      "about.html",
+    ],
   },
   {
     name: "gallery",
@@ -22,7 +28,7 @@ export const Commands: Command[] = [
   },
   {
     name: "help",
-    content: `\n————————————Help Menu————————————
+    content: `\n     ————————————Help Menu————————————
       Commands: 
       help: Show this help menu
       about: Open the about page
@@ -38,18 +44,19 @@ export const Commands: Command[] = [
     synonyms: ["contact me", "contact page", "contact.html"],
   },
   {
-    name: 'GitHub',
-    content: 'redirect https://github.com/Typcial-Username',
-    synonyms: ['git', 'git hub', 'source code', 'source']
+    name: "GitHub",
+    content: "redirect https://github.com/Typcial-Username",
+    synonyms: ["git", "git hub", "source code", "source"],
   },
   {
-    name: 'LinkedIn',
-    content: 'redirect https://linkedin.com/in/levi-terry-dev/',
-    synonyms: ['linkedin', 'linked in', 'professional', 'network']
+    name: "LinkedIn",
+    content: "redirect https://linkedin.com/in/levi-terry-dev/",
+    synonyms: ["linkedin", "linked in", "professional", "network"],
   },
   {
-    name: 'Stack Overflow',
-    content: 'redirect https://stackoverflow.com/users/15316502/typical-username',
-    synonyms: ['stack overflow', 'stackoverflow', 'stack', 'overflow']
-  }
+    name: "Stack Overflow",
+    content:
+      "redirect https://stackoverflow.com/users/15316502/typical-username",
+    synonyms: ["stack overflow", "stackoverflow", "stack", "overflow"],
+  },
 ];
