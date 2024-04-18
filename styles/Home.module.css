@@ -39,9 +39,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
   background-color: blueviolet;
   border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  margin: auto;
+  justify-self: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  /* margin-top: 50%; */
 }
 
 /* .contacts {

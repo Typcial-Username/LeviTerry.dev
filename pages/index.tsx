@@ -71,6 +71,7 @@ const Home: NextPage = () => {
         style={{
           gridTemplateColumns: "repeat(3, 1fr)",
           margin: "0 5rem 2.5rem",
+          // aspectRatio: "1",
         }}
       >
         <div>
@@ -90,10 +91,10 @@ const Home: NextPage = () => {
         <div className={styles.image_container}>
           <Image
             src="/images/headshot.jpg"
-            width={200}
-            height={200}
-            alt="Placeholder Image"
-            // style={{ borderRadius: "50%" }}
+            width={150}
+            height={150}
+            alt="Headshot Image"
+            className={styles.image}
           />
         </div>
 

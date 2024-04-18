@@ -4,7 +4,7 @@
   /* resize: vertical; */
   /* margin-top: 2.5em; */
   bottom: 0;
-  position: absolute;
+  position: fixed;
   /* overflow: hidden; */
 }
 

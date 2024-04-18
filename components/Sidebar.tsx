@@ -28,8 +28,7 @@ const Sidebar = () => {
                 <button
                   className={styles.button}
                   onClick={() => {
-                    selectMenu("files");
-                    setOption("files");
+                    toggleExplorer();
                   }}
                   aria-label="Files"
                   title="Explorer"
@@ -350,6 +349,25 @@ function closeContact() {
 
   // Close the Modal
   contactMenu?.close();
+}
+
+function toggleExplorer() {
+  const explorer = document.getElementById("explorer") as HTMLDivElement;
+
+  const root = document.querySelector(":root") as HTMLElement;
+
+  if (
+    explorer &&
+    (!explorer.style.display || explorer.style.display === "block")
+  ) {
+    console.log("Hiding Explorer");
+    explorer.style.display = "none";
+    root.style.setProperty("--main-m-left", "2.5rem");
+  } else if (explorer && explorer.style.display === "none") {
+    console.log("Showing Explorer");
+    explorer.style.display = "block";
+    root.style.setProperty("--main-m-left", "17.5rem");
+  }
 }
 
 // function openModal(id: string) {

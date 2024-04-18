@@ -10,7 +10,7 @@
   grid-template-columns: repeat(10, 1fr);
   width: calc(100% - 17.5rem);
   gap: 1em;
-  z-index: 2;
+  z-index: 5;
 }
 
 .mainContent {

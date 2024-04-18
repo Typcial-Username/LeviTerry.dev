@@ -20,13 +20,15 @@ const HelpBar = () => {
           display: "flex",
         }}
       >
-        <Image
-          src={"/images/headshot.jpg"}
-          alt="Levi Terry"
-          width={25}
-          height={25}
-          className="logo"
-        />
+        <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', width: '17.5rem', height: '100%' }}>
+          <Image
+            src={"/images/headshot.jpg"}
+            alt="Levi Terry"
+            width={25}
+            height={25}
+            className="logo"
+          />
+        </div>
       </div>
 
       <div className={styles.mainContent}>
