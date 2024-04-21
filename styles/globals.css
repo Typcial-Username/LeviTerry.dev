@@ -13,7 +13,19 @@ Blue accent: #01111d
 */
 
 :root {
-  --clr-icon: #e44f26;
+  --clr-html-icon: #e44f26;
+  /* Json Styles */
+  --clr-json-bracket: #ff5555;
+  --clr-json-key: #00a3c8;
+  --clr-json-string: #ef682e;
+  --clr-json-number: #2aa15d;
+  --clr-json-array: #ff79c6;
+  --clr-json-boolean: #fb60b8;
+  --clr-json-object: #ff79c6;
+
+  /* Margin */
+  --explorer-width: 15rem;
+  --main-m-left: calc(var(--explorer-width) + 2.5rem);
 }
 
 :root.dark {
@@ -26,6 +38,7 @@ Blue accent: #01111d
   --clr-bg: #1e1e1e;
   --clr-accent: #252526;
   --clr-tab: #1e1e1e;
+  --clr-highlight: #37373d;
 }
 
 :root.light {
@@ -38,6 +51,7 @@ Blue accent: #01111d
   --clr-bg: #fff;
   --clr-accent: #eaeaea;
   --clr-tab: #fff;
+  --clr-highlight: #e4e6f1;
 }
 
 :root.blue {
@@ -47,6 +61,7 @@ Blue accent: #01111d
   --clr-bg: #011627;
   --clr-accent: #010e1a;
   --clr-tab: #01111d;
+  --clr-highlight: #00293f;
 }
 
 * {
@@ -62,10 +77,11 @@ body {
   background: var(--clr-bg); /*linear-gradient(#03182b, #084277); */
   color: var(--clr-primary);
   scroll-behavior: smooth;
+  /* overflow-y: ; */
 }
 
-body {
-  height: 100vh;
+body:overflow {
+  background-color: red;
 }
 
 a {
@@ -78,13 +94,16 @@ a:hover {
 }
 
 .border-bottom {
-  border-bottom: 0.15rem solid #ffffff;
+  border-bottom: 0.15rem solid var(--clr-primary);
 }
 
 .container {
-  /* padding: 0 2rem; */
-  margin: 5% 0 0 15%;
+  top: 7rem;
+  margin: 0 0 0 var(--main-m-left);
   text-align: center;
+  position: relative;
+  /* overflow-y: scroll; */
+  height: calc(100% - 7rem);
 }
 
 .grid {
@@ -92,24 +111,232 @@ a:hover {
   align-items: left;
   justify-content: left;
   flex-wrap: wrap;
-  max-width: 100%;
+  /* max-width: 100%; */
   gap: 1.5em;
 }
 
 @media (max-width: 600px) {
   .grid {
     width: 100%;
-    flex-direction: column;
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+.hide {
+  display: none;
+}
+
+.typing {
+  font-size: 2em;
+}
+
+.typing::before {
+  content: "Have a ";
+  animation: animateText 15s step-end infinite;
+}
+
+.logo {
+  width: 100%;
+  /* height: 100%; */
+  border-radius: 50%;
+  align-self: center;
+  justify-content: center;
+}
+
+/* Add char int: 2%, Remove char int: 1%, Hold Delay: 5% */
+
+@keyframes animateText {
+  8% {
+    content: "Have a g";
+  }
+  10% {
+    content: "Have a gr";
+  }
+  12% {
+    content: "Have a gre";
+  }
+  14% {
+    content: "Have a grea";
+  }
+
+  16% {
+    content: "Have a great";
+  }
+
+  21% {
+    content: "Have a grea";
+  }
+  22% {
+    content: "Have a gre";
+  }
+  23% {
+    content: "Have a gr";
+  }
+  24% {
+    content: "Have a";
+  }
+
+  25% {
+    content: "Have an";
+  }
+
+  27% {
+    content: "Have an a";
+  }
+
+  32% {
+    content: "Have an am";
+  }
+
+  34% {
+    content: "Have an ama";
+  }
+
+  36% {
+    content: "Have an ama";
+  }
+  38% {
+    content: "Have an amaz";
+  }
+  40% {
+    content: "Have an amazi";
+  }
+  42% {
+    content: "Have an amazin";
+  }
+
+  44% {
+    content: "Have an amazing";
+  }
+
+  49% {
+    content: "Have an amazin";
+  }
+  50% {
+    content: "Have an amazi";
+  }
+  51% {
+    content: "Have an amaz";
+  }
+  52% {
+    content: "Have an ama";
+  }
+  53% {
+    content: "Have an am";
+  }
+  54% {
+    content: "Have an a";
+  }
+  55% {
+    content: "Have an";
+  }
+  56% {
+    content: "Have a";
+  }
+
+  58% {
+    content: "Have a t";
+  }
+  60% {
+    content: "Have a ti";
+  }
+  62% {
+    content: "Have a tip";
+  }
+  64% {
+    content: "Have a tipt";
+  }
+  66% {
+    content: "Have a tipto";
+  }
+
+  68% {
+    content: "Have a tiptop";
+  }
+
+  70% {
+    content: "Have a tipto";
+  }
+  75% {
+    content: "Have a tipt";
+  }
+  76% {
+    content: "Have a tip";
+  }
+  77% {
+    content: "Have a ti";
+  }
+  78% {
+    content: "Have a t";
+  }
+  79% {
+    content: "Have a";
+  }
+
+  81% {
+    content: "Have a s";
+  }
+  83% {
+    content: "Have a su";
+  }
+  85% {
+    content: "Have a sup";
+  }
+  87% {
+    content: "Have a supe";
+  }
+  89% {
+    content: "Have a super";
+  }
+  91% {
+    content: "Have a superb";
+  }
+  97% {
+    content: "Have a super";
+  }
+  98% {
+    content: "Have a supe";
+  }
+  99% {
+    content: "Have a sup";
+  }
+  100% {
+    content: "Have a su";
+  }
+
+}
+
+.blinker {
+  content: "";
+  display: inline-block;
+  width: 0.1em;
+  height: 0.75em;
+  margin-left: 0.1em;
+  background-color: #fff;
+
+  animation: blink 0.75s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,
+  25%,
+  100% {
+    opacity: 1;
+  }
+
+  50%,
+  75% {
+    opacity: 0;
   }
 }
 
 ::-webkit-scrollbar {
-  width: 0.75em;
+  width: 0.75rem;
 }
 
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px grey;
-  border-radius: 0.15rem;
+  border-radius: 0.5rem;
 }
 
 ::-webkit-scrollbar-thumb {

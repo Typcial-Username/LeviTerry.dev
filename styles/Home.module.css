@@ -1,5 +1,5 @@
 .main {
-  min-height: 100vh;
+  min-height: 100%;
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -30,7 +30,33 @@
 }
 
 .text {
-  color: #0070f3;
+  text-align: left;
+  margin: 2rem 0 2rem 0;
+  /* justify-content: center; */
+  /* margin: auto; */
+  /* color: #0070f3; */
+}
+
+.image_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  background-color: blueviolet;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  margin: auto;
+  justify-self: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  /* margin-top: 50%; */
 }
 
 /* .contacts {
@@ -45,164 +71,6 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-}
-
-.contact {
-  display: block;
-  align-items: center;
-  justify-content: center;
-}
-
-.typing {
-  font-size: 2em;
-}
-
-.typing::before {
-  content: "Have a ";
-  animation: animateText 15s step-end infinite;
-}
-
-@keyframes animateText {
-  10% {
-    content: "Have a g";
-  }
-  12% {
-    content: "Have a gr";
-  }
-  14% {
-    content: "Have a gre";
-  }
-  16% {
-    content: "Have a grea";
-  }
-
-  18% {
-    content: "Have a great";
-  }
-
-  25% {
-    content: "Have a grea";
-  }
-  27% {
-    content: "Have a gre";
-  }
-  29% {
-    content: "Have a gr";
-  }
-  31% {
-    content: "Have a";
-  }
-
-  33% {
-    content: "Have an";
-  }
-  35% {
-    content: "Have an am";
-  }
-  37% {
-    content: "Have an ama";
-  }
-  39% {
-    content: "Have an amaz";
-  }
-  41% {
-    content: "Have an amazi";
-  }
-  43% {
-    content: "Have an amazin";
-  }
-
-  47% {
-    content: "Have an amazing";
-  }
-
-  54% {
-    content: "Have an amazin";
-  }
-  56% {
-    content: "Have an amazi";
-  }
-  58% {
-    content: "Have an amaz";
-  }
-  60% {
-    content: "Have an ama";
-  }
-  62% {
-    content: "Have an am";
-  }
-  64% {
-    content: "Have an a";
-  }
-  68% {
-    content: "Have an";
-  }
-  70% {
-    content: "Have a";
-  }
-
-  72% {
-    content: "Have a t";
-  }
-  74% {
-    content: "Have a ti";
-  }
-  76% {
-    content: "Have a tip";
-  }
-  78% {
-    content: "Have a tipt";
-  }
-  81% {
-    content: "Have a tipto";
-  }
-
-  83% {
-    content: "Have a tiptop";
-  }
-
-  90% {
-    content: "Have a tipto";
-  }
-  92% {
-    content: "Have a tipt";
-  }
-  94% {
-    content: "Have a tip";
-  }
-  96% {
-    content: "Have a ti";
-  }
-  98% {
-    content: "Have a t";
-  }
-  100% {
-    content: "Have a";
-  }
-}
-
-.blinker {
-  content: "";
-  display: inline-block;
-  width: 0.1em;
-  height: 0.75em;
-  margin-left: 0.1em;
-  background-color: #fff;
-
-  animation: blink 0.75s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0%,
-  25%,
-  100% {
-    opacity: 1;
-  }
-
-  50%,
-  75% {
-    opacity: 0;
-  }
 }
 
 .background {

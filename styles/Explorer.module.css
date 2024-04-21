@@ -1,39 +1,61 @@
 .explorer {
-  top: 0;
+  top: 3rem;
   background-color: var(--clr-explorer);
-  width: 10%;
-  height: 95%;
-  margin-left: 5%;
+  width: var(--explorer-width);
+  height: calc(100% - 3rem);
+  margin-left: 2.5rem;
   position: fixed;
   /* overflow: auto; */
   resize: horizontal;
   display: flex;
   flex-direction: column;
+  z-index: 2;
 }
 
 .header {
   text-align: left;
-  margin: 0;
+  /* margin: 0; */
   font-weight: 100;
   text-transform: uppercase;
-  margin-bottom: 5%;
-  font-size: 0.8rem;
-  color: #ccc;
+  /* font-size: 0.8rem; */
+  color: var(--clr-primary);
+  font-size: 0.75rem;
+  margin-left: calc(10% + 1ch);
+  margin-top: 5%;
 }
 
 .content {
   width: 100%;
   height: auto;
   text-transform: uppercase;
-  font-size: 0.9rem;
+  font-size: 5rem;
+  text-align: left;
 }
 
 .item {
-  margin: 10% 0 0 15%;
+  margin: 5% 0 0 5%;
   padding: 0;
-  font-size: 1rem;
+  font-size: 0.75rem;
+  background-color: transparent;
+  font-weight: bold;
+}
+
+.subMenu:hover {
+  cursor: pointer;
+  color: var(--clr-primary);
+  background-color: var(--clr-highlight);
 }
 
 .item.selected {
-  border-color: red;
+  background-color: var(--clr-highlight);
+}
+
+.subMenu {
+  margin: 5% 0 0 18%;
+}
+
+.dropdown {
+  border: 0;
+  color: var(--clr-primary);
+  background-color: transparent;
 }

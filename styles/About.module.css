@@ -1,0 +1,40 @@
+.line_numbers {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #aaa;
+  margin: 0 2rem 0 2rem;
+  left: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  font-weight: normal;
+  border-right: 1px solid rgba(255 255 255 / 0.5);
+  text-align: right;
+}
+
+.line_numbers ol {
+  list-style-type: none;
+}
+
+.line_numbers ol li {
+  margin-right: 2rem;
+}
+
+.code {
+  font-size: 1rem;
+  /* font-weight: 700; */
+  color: #aaa;
+  margin-left: 5.5rem;
+  left: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-weight: normal;
+  max-width: calc(100% - 5.5rem);
+}
+
+.json {
+  display: inline;
+  color: var(--clr-primary);
+}

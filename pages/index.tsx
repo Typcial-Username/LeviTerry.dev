@@ -10,39 +10,36 @@ import { Button } from "../components/Button";
 import { Menu } from "../components/Menu";
 
 import { Link } from "../components/Link";
-import { Sidebar } from "../components/Sidebar";
-
-const date = new Date(Date.now());
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 
 const Home: NextPage = () => {
+  const date = new Date(Date.now());
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  
   return (
     <>
       <Head>
-        <title>Levi Terry | Home</title>
-        <link rel="icon" href="/images/favicon.ico" />
+        <title>Levi Terry&apos;s Developer Portfolio | Home</title>
+        <link rel="icon" href="/images/headshot.jpg" />
         <meta property="og:title" content="Levi Terry" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_us" />
       </Head>
 
       {/* Introduction */}
-      {/* <div className="container"> */}
-      <h1 style={{ textAlign: "center" }}>Welcome to my website</h1>
+      <h1 style={{ textAlign: "center" }}>Welcome to my Website</h1>
 
       <br />
-      {/* </div> */}
-      {/* <section className="container"> */}
+
       <p>
-        Developer
+        Levi Terry, Developer
         {/* Hello, I&apos;m Levi Terry, I am a software developer based in Southern
         Nevada. I first started programming in 2012 when I discovered the
         language/program known as
@@ -56,91 +53,86 @@ const Home: NextPage = () => {
       </p>
 
       <br />
-      {/* </section> */}
-
-      {/* Projects */}
-      {/* <section className="container"> */}
-
-      {/* </section> */}
-
       <br />
 
       {/* <div className={styles.wave}></div> */}
 
       {/* Experience */}
       {/* <section className="container"> */}
-      <h2 id="experience">Experience</h2>
+      {/* <h2 id="experience">Experience</h2>
       <div className={styles.grid}>
         <Card
           title="Code Ninjas - Code Sensei"
-          description={`March 2022 - August 2023\nAssisted in teaching children to code.`}
+          description={`March 2022 - August 2023
+          •Assisted children ages 5-14 in learning to code
+          •Helped instruct programming concepts to children.
+          •Helped debug programs created by students
+          •Taught various languages to students including Scratch, JavaScript, Lua, and C Sharp with Unity`}
           link="https://codeninjas.com/"
+          imageOptions={{
+            src: "https://www.codeninjas.com/hubfs/Group%201.svg",
+            location: "left",
+            alt: "Code Ninjas Logo",
+          }}
         />
+      </div> */}
+
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: "repeat(3, 1fr)",
+          margin: "0 2.5rem 2.5rem",
+          justifyContent: "center",
+          alignContent: 'center'
+          // aspectRatio: "1",
+        }}
+      >
+        <div style={{ placeSelf: 'center' }}>
+          <p className={styles.text}>
+            Hello, I&apos;m Levi Terry, A student at the University of Advancing Technology in Tempe, Arizona. I am currently studying for a Bachelor of Science in Technology Studies. I fueled by a deep passion of Robotics and Artificial Intelligence and I am always looking for new ways to learn and grow in the field of technology.
+          </p>
+        </div>
+
+        <div className={styles.image_container}>
+          <Image
+            src="/images/headshot.jpg"
+            width={150}
+            height={150}
+            alt="Headshot Image"
+            className={styles.image}
+          />
+        </div>
+
+        <div style={{ placeSelf: 'center' }}>
+          <p className={styles.text}>
+            Eager to explore the endless possibilities of technology, I aspire to carve my path towards a career that merges innovation and practicality. I am always looking for new opportunities to learn and grow in the field of technology. When I&apos;m not emersed in the world of tech, you&apos;ll likely find me out in nature seeking solace or inspiration in the beauty of the outdoors. 
+          </p>
+        </div>
       </div>
-      {/* </section> */}
 
       <br />
 
+        {/* <div className="container"> */}
+        <div className="typing">
+          <div className="blinker"></div>
+          {" " + days[date.getDay()]}!
+        </div>
+        <a
+          href="https://github.com/Typcial-Username/LeviTerry.dev"
+          target="_blank"
+          rel="noreferrer"
+        >
+          View Source
+        </a>
+        {/* </div> */}
+
       {/* Contact */}
       {/* <section className="container"> */}
-      <div className={styles.contact}>
-        <form
-          className={styles.contact}
-          id="contact"
-          action="/api/contact"
-          method="post"
-        >
-          <label htmlFor="name">
-            Name: <br />
-            <TextInput type="text" name="name" placeholder="Your name" />
-          </label>{" "}
-          <br />
-          <br />
-          <label htmlFor="email">
-            Email: <br />
-            <TextInput
-              type="email"
-              name="email"
-              placeholder="you@yourdomain.com"
-            />
-          </label>
-          <br />
-          <br />
-          <label htmlFor="message">
-            Message: <br />
-            <textarea
-              className={styles.text}
-              name="message"
-              placeholder="Message"
-            />
-          </label>
-          <br />
-          <br />
-          <button type="submit" name="submit">
-            Submit
-          </button>
-          <Button name="submit" type="submit" text="Submit" />
-        </form>
-      </div>
-
-      <div className={styles.typing}>
-        <div className={styles.blinker}></div>
-        {" " + days[date.getDay()]}!
-      </div>
-      <a
-        href="https://github.com/Typcial-Username/LeviTerry.dev"
-        target="_blank"
-        rel="noreferrer"
-      >
-        View Source
-      </a>
+      {/* <div className={styles.contact}>
+      </div> */}
       {/* </section> */}
     </>
   );
 };
 
-const onContactSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  console.log(event.target);
-};
 export default Home;
