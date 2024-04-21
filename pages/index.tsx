@@ -12,6 +12,17 @@ import { Menu } from "../components/Menu";
 import { Link } from "../components/Link";
 
 const Home: NextPage = () => {
+  const date = new Date(Date.now());
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  
   return (
     <>
       <Head>
@@ -100,6 +111,20 @@ const Home: NextPage = () => {
       </div>
 
       <br />
+
+        {/* <div className="container"> */}
+        <div className="typing">
+          <div className="blinker"></div>
+          {" " + days[date.getDay()]}!
+        </div>
+        <a
+          href="https://github.com/Typcial-Username/LeviTerry.dev"
+          target="_blank"
+          rel="noreferrer"
+        >
+          View Source
+        </a>
+        {/* </div> */}
 
       {/* Contact */}
       {/* <section className="container"> */}

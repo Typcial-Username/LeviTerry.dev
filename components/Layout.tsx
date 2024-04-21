@@ -58,20 +58,6 @@ export default function Layout({ children }: LayoutProps) {
         {children}
 
         <br />
-
-        {/* <div className="container"> */}
-        <div className="typing">
-          <div className="blinker"></div>
-          {" " + days[date.getDay()]}!
-        </div>
-        <a
-          href="https://github.com/Typcial-Username/LeviTerry.dev"
-          target="_blank"
-          rel="noreferrer"
-        >
-          View Source
-        </a>
-        {/* </div> */}
       </main>
 
       <Terminal />
