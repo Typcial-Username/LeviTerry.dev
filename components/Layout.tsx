@@ -24,13 +24,20 @@ const days = [
 ];
 
 export default function Layout({ children }: LayoutProps) {
-  // let explorer: HTMLDivElement;
-  // let selected: HTMLDivElement | undefined;
+  let explorer: HTMLDivElement | undefined;
+  let selected: HTMLDivElement | undefined;
 
-  // useEffect(() => {
-  //   explorer = document.getElementById("explorer") as HTMLDivElement;
-  //   selected = explorer.getElementsByClassName("selected")[0] as HTMLDivElement;
-  // }, []);
+  useEffect(() => {
+    explorer = document.getElementById("#explorer") as HTMLDivElement;
+
+    if (explorer) {
+      selected = explorer.getElementsByClassName(
+        ".selected"
+      )[0] as HTMLDivElement;
+    }
+
+    console.log({ explorer, selected });
+  }, []);
 
   return (
     <>
@@ -44,7 +51,7 @@ export default function Layout({ children }: LayoutProps) {
             ? pathName(window.location.pathname)
             : "unknown.html"
         }
-        extension={"html"}
+        extension={selected?.innerText.split(".")[1] || "html"}
       />
 
       <main className="container">
