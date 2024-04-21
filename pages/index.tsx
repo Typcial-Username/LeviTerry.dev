@@ -70,21 +70,15 @@ const Home: NextPage = () => {
         className="grid"
         style={{
           gridTemplateColumns: "repeat(3, 1fr)",
-          margin: "0 5rem 2.5rem",
+          margin: "0 2.5rem 2.5rem",
+          justifyContent: "center",
+          alignContent: 'center'
           // aspectRatio: "1",
         }}
       >
-        <div>
+        <div style={{ placeSelf: 'center' }}>
           <p className={styles.text}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate
-            soluta adipisci sed neque laboriosam. Eos quidem, adipisci harum
-            error aspernatur, quasi repudiandae fugiat esse praesentium
-            doloremque, maiores dolores officiis deserunt. Vel eaque dolor,
-            magni est ut eveniet beatae nisi aut unde consequuntur ducimus sequi
-            quam suscipit. Esse praesentium neque alias expedita laboriosam
-            consequatur quam eligendi sint magni ex. Iste modi incidunt earum
-            quaerat, beatae deserunt rem numquam odit in doloribus nesciunt
-            minus ipsa provident quos.
+            Hello, I&apos;m Levi Terry, A student at the University of Advancing Technology in Tempe, Arizona. I am currently studying for a Bachelor of Science in Technology Studies. I fueled by a deep passion of Robotics and Artificial Intelligence and I am always looking for new ways to learn and grow in the field of technology.
           </p>
         </div>
 
@@ -98,18 +92,9 @@ const Home: NextPage = () => {
           />
         </div>
 
-        <div className={styles.text}>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias
-            sed voluptates architecto deserunt debitis nostrum alias a, deleniti
-            cupiditate cumque, quae dolores voluptas enim ipsa aliquid.
-            Voluptate quos consectetur libero labore iusto. Deserunt minima
-            architecto nesciunt voluptatum, dolor quod minus illo at autem
-            soluta ducimus maiores aspernatur atque tenetur fugit velit
-            perspiciatis? Odit velit nihil vero, corrupti ducimus exercitationem
-            assumenda quibusdam doloremque reprehenderit. Voluptatem fuga
-            mollitia dolorum iste neque exercitationem esse doloribus quis sit
-            a?
+        <div style={{ placeSelf: 'center' }}>
+          <p className={styles.text}>
+            Eager to explore the endless possibilities of technology, I aspire to carve my path towards a career that merges innovation and practicality. I am always looking for new opportunities to learn and grow in the field of technology. When I&apos;m not emersed in the world of tech, you&apos;ll likely find me out in nature seeking solace or inspiration in the beauty of the outdoors. 
           </p>
         </div>
       </div>

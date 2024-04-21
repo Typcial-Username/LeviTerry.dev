@@ -1,11 +1,8 @@
-"use client";
 import styles from "../styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHtml5 } from "@fortawesome/free-brands-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-// const sidebar = document.getElementById('sidebar')
-// sidebar?.style.
 
 interface HeaderProps {
   file?: string;

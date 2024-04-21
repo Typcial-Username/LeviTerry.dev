@@ -10,7 +10,7 @@
   overflow: hidden;
   top: 3rem;
   margin-left: var(--main-m-left);
-  width: calc(100% - 17.5rem);
+  width: calc(100% - var(--main-m-left));
   z-index: 2;
 }
 

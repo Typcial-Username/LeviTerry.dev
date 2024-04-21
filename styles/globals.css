@@ -146,73 +146,72 @@ a:hover {
 /* Add char int: 2%, Remove char int: 1%, Hold Delay: 5% */
 
 @keyframes animateText {
-  10% {
+  8% {
     content: "Have a g";
   }
-  12% {
+  10% {
     content: "Have a gr";
   }
-  14% {
+  12% {
     content: "Have a gre";
   }
-  16% {
+  14% {
     content: "Have a grea";
   }
 
-  17% {
+  16% {
     content: "Have a great";
   }
 
-  22% {
+  21% {
     content: "Have a grea";
   }
-  23% {
+  22% {
     content: "Have a gre";
   }
-  24% {
+  23% {
     content: "Have a gr";
   }
-  25% {
+  24% {
     content: "Have a";
   }
 
-  27% {
+  25% {
     content: "Have an";
   }
 
-  29% {
+  27% {
     content: "Have an a";
   }
 
-  31% {
+  32% {
     content: "Have an am";
   }
 
-  33% {
+  34% {
     content: "Have an ama";
   }
 
-  35% {
+  36% {
     content: "Have an ama";
   }
-  37% {
+  38% {
     content: "Have an amaz";
   }
-  39% {
+  40% {
     content: "Have an amazi";
   }
-  41% {
+  42% {
     content: "Have an amazin";
   }
 
-  43% {
+  44% {
     content: "Have an amazing";
   }
 
-  45% {
+  49% {
     content: "Have an amazin";
   }
-
   50% {
     content: "Have an amazi";
   }
@@ -273,6 +272,38 @@ a:hover {
   79% {
     content: "Have a";
   }
+
+  81% {
+    content: "Have a s";
+  }
+  83% {
+    content: "Have a su";
+  }
+  85% {
+    content: "Have a sup";
+  }
+  87% {
+    content: "Have a supe";
+  }
+  89% {
+    content: "Have a super";
+  }
+  91% {
+    content: "Have a superb";
+  }
+  97% {
+    content: "Have a super";
+  }
+  98% {
+    content: "Have a supe";
+  }
+  99% {
+    content: "Have a sup";
+  }
+  100% {
+    content: "Have a su";
+  }
+
 }
 
 .blinker {
