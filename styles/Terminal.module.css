@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 .text textarea {
@@ -37,7 +37,7 @@
   color: var(--clr-primary);
   margin-bottom: 0;
   padding-bottom: 0;
-  border: 1px solid red; /*transparent*/
+  border:  transparent;
   resize: none;
 }
 

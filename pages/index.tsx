@@ -95,7 +95,7 @@ const Home: NextPage = () => {
 
         <div className={styles.image_container}>
           <Image
-            src="/images/headshot.jpg"
+            src="/images/headshot_cropped.jpg"
             width={150}
             height={150}
             alt="Headshot Image"

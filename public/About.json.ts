@@ -9,7 +9,7 @@ export const AboutData = {
   education: {
     school: "University of Advancing Technology (UAT)",
     degree: "Technology Studies",
-    year: "Freshman",
+    year: "Freshmen",
     expectedGraduation: "May 2026",
     programObjectives: [
       "Demonstrate the ability to analyze and act on creative and entrepreneurial processes of technological innovation.",
