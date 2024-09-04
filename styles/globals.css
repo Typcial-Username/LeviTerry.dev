@@ -112,7 +112,7 @@ a:hover {
   justify-content: left;
   flex-wrap: wrap;
   /* max-width: 100%; */
-  gap: 1.5em;
+  gap: 1em;
 }
 
 @media (max-width: 600px) {

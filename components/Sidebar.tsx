@@ -4,17 +4,46 @@ import { faFile, faCog } from "@fortawesome/free-solid-svg-icons";
 import { faComments, faMessage } from "@fortawesome/free-regular-svg-icons";
 
 import styles from "../styles/Sidebar.module.css";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Tooltip } from "./Tooltip";
 import { Dropdown } from "./Dropdown";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { TextInput } from "./TextInput";
 import { Button } from "./Button";
+import { useReCaptcha } from 'next-recaptcha-v3'
 
 const Sidebar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [option, setOption] = useState("files");
+
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+
+  const { executeRecaptcha } = useReCaptcha(process.env.RECAPTCHA_SITE_KEY)
+  
+  const onContactFormSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    console.log({key: process.env.RECAPTCHA_SITE_KEY})
+    const token = await executeRecaptcha('contact_form')
+
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        data: {
+          name: contactName,
+          email: contactEmail,
+          message: contactMessage,
+        },
+        token
+      })
+    })
+  }, [contactName, contactEmail, contactMessage, executeRecaptcha])
 
   return (
     <aside id={styles.sidebar}>
@@ -151,8 +180,7 @@ const Sidebar = () => {
           <form
             className={styles.contact}
             id="contact"
-            action="/api/contact"
-            method="post"
+            onSubmit={onContactFormSubmit}
           >
             <span>
               {/* Name Input */}
@@ -162,6 +190,7 @@ const Sidebar = () => {
                 type="text"
                 name="name"
                 placeholder="Your name"
+                onChange={(e) => setContactName((e.target as HTMLInputElement).value)}
               />
             </span>
 
@@ -174,9 +203,9 @@ const Sidebar = () => {
                 type="email"
                 name="email"
                 placeholder="you@yourdomain.com"
+                onChange={(e) => setContactEmail((e.target as HTMLInputElement).value)}
               />
             </span>
-
             <br />
 
             {/* Message Input */}
@@ -187,6 +216,7 @@ const Sidebar = () => {
                 className={styles.text}
                 name="message"
                 placeholder="Message"
+                onChange={(e) => setContactMessage((e.target as HTMLTextAreaElement).value)}
               />
             </span>
 
@@ -195,7 +225,7 @@ const Sidebar = () => {
             <button type="submit" name="submit">
               Submit
             </button>
-            <Button name="submit" type="submit" text="Submit" />
+            {/* <Button name="submit" type="submit" text="Submit" /> */}
           </form>
         </ul>
       </dialog>

@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import Layout from "../components/Layout";
 import Head from "next/head";
 import { MutableRefObject, useCallback, useEffect, useRef } from "react";
+import { ReCaptchaProvider } from "next-recaptcha-v3";
 
 function MyApp({ Component, pageProps }: AppProps) {
   // All the key presses made within the timeout
@@ -14,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   let allowingNewKeyPresses: MutableRefObject<boolean> = useRef(true);
 
   const handleKeypress = useCallback((event: KeyboardEvent) => {
-    if (!allowingNewKeyPresses) return;
+    if (!allowingNewKeyPresses.current) return;
 
     allKeyPresses.current.push(event.key);
 
@@ -36,12 +37,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [handleKeypress]);
 
   return (
+    <ReCaptchaProvider reCaptchaKey={process.env.RECAPTCHA_SITE_KEY} onLoad={() => {console.log("ReCaptcha Loaded!")}}>
     <Layout>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <Component {...pageProps} />
     </Layout>
+    </ReCaptchaProvider>
   );
 }
 
