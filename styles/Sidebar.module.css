@@ -1,6 +1,6 @@
 #sidebar {
-  height: calc(100% - 3rem);
-  top: 3rem;
+  top: 2rem;
+  height: calc(100% - 2rem);
   width: 2.5rem;
   left: 0;
   background-color: var(--clr-sidebar);
@@ -106,7 +106,7 @@
   padding: 0;
   top: 50%;
   left: 2.5%;
-  /* float: right; */
+  float: right;
   /* display: flex; */
   flex-direction: column;
   color: var(--clr-primary);

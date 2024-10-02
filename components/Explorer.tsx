@@ -13,6 +13,7 @@ import {
   faAngleDown,
   faFileCode,
   faAngleRight,
+  faImage,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -242,6 +243,22 @@ const Explorer = () => {
             </a>
           </div>
         </div>
+
+        {/* <div>
+          <Folder enabled={true} className={`${styles.item} ${styles.dropdown}`} >DCIM</Folder>
+        </div>
+
+        <div className={`${styles.item} ${styles.subMenu}`}>
+          <span>
+            <FontAwesomeIcon icon={faImage} color="var(--clr-icon)" />{" "}
+          </span>
+          <a
+            href="/gallery"
+            // className={styles.button}
+            aria-label="Visit my GitHub profile"
+            title="Gallery"
+          >Gallery</a>
+        </div> */}
       </div>
     </div>
   );

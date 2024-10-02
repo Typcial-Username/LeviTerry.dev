@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { AboutData } from "../public/About.json";
 import Head from "next/head";
+import Link from "next/link";
 
 const About: NextPage = () => {
   useEffect(() => {
@@ -135,7 +136,7 @@ function formatJson(
             <>
               <span key={val}>
                 <p className={styles.json} style={setJsonStyle(val)}>
-                  &quot;{val}&quot;
+                  &quot;{typeof val == 'string' && val.startsWith('http') ? <Link href={val} /> : val}&quot;
                 </p>
               </span>
               {index !== arr.length - 1 && (
@@ -154,7 +155,7 @@ function formatJson(
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </p>
                 <p className={styles.json} style={setJsonStyle(val)}>
-                  &quot;{val}&quot;
+                  &quot;{typeof val == 'string' && val.startsWith('http') ? <Link href={val} /> : val}&quot;
                 </p>
               </span>
 
@@ -191,7 +192,7 @@ function formatJson(
       </span>
     );
   } else if (typeof json === "object") {
-    const obj = json as object;
+    const obj = json as { [key: string]: any };
 
     return (
       <span className={styles.json}>
@@ -225,7 +226,7 @@ function formatJson(
 
                 {hasKey(obj, key) && typeof obj[key] !== "object" && (
                   <p className={styles.json} style={setJsonStyle(obj[key])}>
-                    {JSON.stringify(obj[key])}
+                    {typeof obj[key] === 'string' && obj[key].startsWith('http') ? <Link href={obj[key]} target="_blank">{obj[key]}</Link> : JSON.stringify(obj[key])}
                   </p>
                 )}
               </span>
@@ -249,7 +250,7 @@ function formatJson(
     return (
       <>
         <p className={styles.json} style={{ color: "var(--clr-json-string)" }}>
-          &quot;{json}&quot;
+        &quot;{json}&quot;
         </p>
         {curIdx !== idx - 1 && <p className={styles.json}>,</p>}
       </>

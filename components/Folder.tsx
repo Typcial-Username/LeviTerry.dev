@@ -20,7 +20,7 @@ export const Folder = ({
   ...props
 }: FolderProps) => {
   return (
-    <button className={className} onClick={onClick} {...props}>
+    <button className={className} onClick={onClick} {...props} style={{ cursor: 'pointer' }}>
       {content(enabled)}
       {children}
     </button>

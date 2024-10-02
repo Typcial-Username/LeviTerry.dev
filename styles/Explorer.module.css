@@ -1,8 +1,8 @@
 .explorer {
-  top: 3rem;
+  top: 2rem;
   background-color: var(--clr-explorer);
   width: var(--explorer-width);
-  height: calc(100% - 3rem);
+  height: calc(100% - 2rem);
   margin-left: 2.5rem;
   position: fixed;
   /* overflow: auto; */

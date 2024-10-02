@@ -5,12 +5,13 @@
   justify-content: left;
   overflow: hidden;
   top: 0;
-  height: 3rem;
+  height: 2rem;
   width: 100%;
   grid-template-columns: repeat(10, 1fr);
-  width: calc(100% - 17.5rem);
+  /* width: calc(100% - 17.5rem); */
   gap: 1em;
   z-index: 5;
+  
 }
 
 .mainContent {
@@ -18,6 +19,7 @@
   width: calc(100% - 17.5rem);
   height: 100%;
   display: inline;
+  display: flex;
 }
 
 .header:nth-child(2) {
@@ -56,6 +58,7 @@
   border: 1px solid var(--clr-highlight);
   color: var(--clr-primary);
   margin: auto;
+  border-color: var(--clr-primary);
 }
 
 .item:hover {
@@ -146,4 +149,18 @@
   color: var(--clr-primary);
   /* border: 1px solid var(--clr-primary); */
   border-radius: 0.25rem;
+}
+
+.hiddenButton {
+  background: none;
+  color: var(--clr-primary);
+  font-size: 1rem;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  margin-right: 1.5em;
+}
+
+.hiddenButton:hover {
+  border: 1px solid var(--clr-primary);
 }

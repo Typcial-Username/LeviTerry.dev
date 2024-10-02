@@ -60,7 +60,7 @@ export default function Layout({ children }: LayoutProps) {
         <br />
       </main>
 
-      <Terminal />
+      {/* <Terminal /> */}
     </>
   );
 }

@@ -93,7 +93,7 @@ const Home: NextPage = () => {
       >
         <div style={{ placeSelf: 'center' }}>
           <p className={styles.text}>
-            Hello, I&apos;m Levi Terry, A student at the University of Advancing Technology in Tempe, Arizona. I am currently studying for a Bachelor of Science in Technology Studies. I fueled by a deep passion of Robotics and Artificial Intelligence and I am always looking for new ways to learn and grow in the field of technology.
+          Hello. I&apos;m Levi Terry, a student at the University of Advancing Technology in Tempe, Arizona. I am currently studying for a dual Bachelor of Science major in Robotics and Embedded Systems and Digital Maker and Fabrication. A deep passion for Robotics fuels me, and I am always looking for new ways to learn and grow in technology.
           </p>
         </div>
 
@@ -116,25 +116,17 @@ const Home: NextPage = () => {
 
       <br />
 
-        {/* <div className="container"> */}
-        <div className="typing">
-          <div className="blinker"></div>
-          {" " + days[date.getDay()]}!
-        </div>
-        <a
-          href="https://github.com/Typcial-Username/LeviTerry.dev"
-          target="_blank"
-          rel="noreferrer"
-        >
-          View Source
-        </a>
-        {/* </div> */}
-
-      {/* Contact */}
-      {/* <section className="container"> */}
-      {/* <div className={styles.contact}>
-      </div> */}
-      {/* </section> */}
+      <div className="typing">
+        <div className="blinker"></div>
+        {" " + days[date.getDay()]}!
+      </div>
+      <a
+        href="https://github.com/Typcial-Username/LeviTerry.dev"
+        target="_blank"
+        rel="noreferrer"
+      >
+        View Source
+      </a>
     </>
   );
 };
