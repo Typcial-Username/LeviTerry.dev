@@ -62,7 +62,7 @@ const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
           Run
         </button>
       </form>
-      <style jsx>{`
+      <style>{`
         .terminal {
           background: #000;
           color: #fff;
