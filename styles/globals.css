@@ -26,6 +26,7 @@ Blue accent: #01111d
   /* Margin */
   --explorer-width: 15rem;
   --main-m-left: calc(var(--explorer-width) + 2.5rem);
+  --main-m-top: 2rem;
 }
 
 :root.dark {
@@ -98,13 +99,14 @@ a:hover {
 }
 
 .container {
-  top: 6rem;
-  margin: 0 0 0 var(--main-m-left);
+  top: var(--main-m-top);
+  margin-left: var(--main-m-left);
   text-align: center;
   position: relative;
   /* overflow-y: scroll; */
-  height: calc(100% - 7rem);
-  z-index: 1;
+  height: calc(100% - var(--main-m-top));
+  width: calc(100% - 2 * var(--main-m-left));
+  z-index: 100;
 }
 
 .grid {
@@ -305,7 +307,6 @@ a:hover {
   100% {
     content: "Have a su";
   }
-
 }
 
 .blinker {

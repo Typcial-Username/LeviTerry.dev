@@ -8,17 +8,17 @@
   background-color: var(--clr-explorer);
   align-items: flex-start;
   overflow: hidden;
-  top: 2rem;
+  top: var(--main-m-top);
   margin-left: var(--main-m-left);
   width: calc(100% - var(--main-m-left));
-  z-index: 2;
+  z-index: 999;
 }
 
 .file {
   background-color: var(--clr-tab);
   /* border: 1px solid green; */
   padding: 1em;
-  max-width: 10em;
+  max-width: fit-content;
 }
 
 .file > p {

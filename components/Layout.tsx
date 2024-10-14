@@ -2,7 +2,8 @@ import HelpBar from "./HelpBar";
 // import { Sidebar } from "./Sidebar";
 import { Terminal } from "./Terminal";
 import dynamic from "next/dynamic";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
+import styles from "../styles/Explorer.module.css";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -24,26 +25,31 @@ const days = [
 ];
 
 export default function Layout({ children }: LayoutProps) {
-  let explorer: HTMLDivElement | undefined;
-  let selected: HTMLDivElement | undefined;
+  const explorerRef = useRef<HTMLDivElement | null>(null);
+  const selectedRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    explorer = document.getElementById("#explorer") as HTMLDivElement;
+    explorerRef.current = document.getElementById(
+      "#explorer"
+    ) as HTMLDivElement;
 
-    if (explorer) {
-      selected = explorer.getElementsByClassName(
-        ".selected"
+    if (explorerRef.current) {
+      selectedRef.current = explorerRef.current.getElementsByClassName(
+        styles.selected
       )[0] as HTMLDivElement;
     }
 
-    console.log({ explorer, selected });
+    console.log({
+      explorer: explorerRef.current,
+      selected: selectedRef.current,
+    });
   }, []);
 
   return (
     <>
-      <HelpBar />
       <ExplorerNoSSR />
       <SidebarNoSSR />
+      <HelpBar />
 
       <HeaderNoSSR
         file={
@@ -51,7 +57,7 @@ export default function Layout({ children }: LayoutProps) {
             ? pathName(window.location.pathname)
             : "unknown.html"
         }
-        extension={selected?.innerText.split(".")[1] || "html"}
+        extension={selectedRef.current?.innerText.split(".")[1] || "html"}
       />
 
       <main className="container">
@@ -60,7 +66,7 @@ export default function Layout({ children }: LayoutProps) {
         <br />
       </main>
 
-      {/* <Terminal /> */}
+      <Terminal />
     </>
   );
 }

@@ -6,7 +6,8 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "ws": "bun run websocket-server.ts",
+    "dev:all": "concurrently \"npm run dev\" \"npm run ws\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
@@ -17,13 +18,20 @@
     "dotenv": "^16.4.5",
     "next": "^14.2.1",
     "next-recaptcha-v3": "^1.4.1",
+    "octokit": "^4.0.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "ts-node": "^10.9.2",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@octokit/types": "^13.6.1",
+    "@types/bun": "^1.1.6",
     "@types/node": "18.0.4",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
+    "@types/ws": "^8.5.11",
+    "concurrently": "^8.2.2",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.2",
     "eslint-config-react": "^1.1.7",
