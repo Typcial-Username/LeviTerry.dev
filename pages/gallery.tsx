@@ -19,6 +19,7 @@ interface Repo {
   html_url: string;
   homepage: string;
   languages: { [key: string]: number };
+  topics: string[];
 }
 
 const Gallery: NextPage = () => {
@@ -94,6 +95,33 @@ const Gallery: NextPage = () => {
     if (repos.length > 0) {
       fetchLanguages();
     }
+  }, [octokit, repos]);
+
+  // Fetch topics for each repo
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        for (const repo of repos) {
+          const res = await octokit.request(
+            `GET /repos/Typcial-Username/${repo.name}/topics`,
+            {
+              owner: "Typcial-Username",
+              repo: repo.name,
+              accept: "application/vnd.github.mercy-preview+json",
+              headers: {
+                "X-Github-Api-Version": "2022-11-28",
+              },
+            }
+          );
+
+          repo.topics = res.data.names;
+        }
+      } catch (err) {
+        console.error("Error fetching topics: ", err);
+      }
+    };
+
+    fetchTopics();
   }, [octokit, repos]);
 
   console.log({ completeRepos: repos });
