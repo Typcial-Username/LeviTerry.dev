@@ -18,7 +18,7 @@ interface Repo {
   description: string;
   html_url: string;
   homepage: string;
-  languages: string[];
+  languages: { [key: string]: number };
 }
 
 const Gallery: NextPage = () => {
@@ -67,30 +67,46 @@ const Gallery: NextPage = () => {
   useEffect(() => {
     const fetchLanguages = async () => {
       try {
-        for (const repo of repos) {
-          const res = await octokit.request(
-            `GET /repos/Typcial-Username/${repo.name}/languages`,
-            {
-              owner: "Typcial-Username",
-              repo: repo.name,
-              accept: "application/vnd.github+json",
-              headers: {
-                "X-Github-Api-Version": "2022-11-28",
-              },
-            }
-          );
+        const updatedRepos = await Promise.all(
+          repos.map(async (repo) => {
+            const res = await octokit.request(
+              `GET /repos/Typcial-Username/${repo.name}/languages`,
+              {
+                owner: "Typcial-Username",
+                repo: repo.name,
+                accept: "application/vnd.github+json",
+                headers: {
+                  "X-Github-Api-Version": "2022-11-28",
+                },
+              }
+            );
 
-          repo.languages = Object.keys(res.data);
-        }
+            return { ...repo, languages: res.data };
+          })
+        );
+
+        setRepos(updatedRepos);
       } catch (err) {
         console.error("Error fetching languages: ", err);
       }
     };
 
-    fetchLanguages();
+    if (repos.length > 0) {
+      fetchLanguages();
+    }
   }, [octokit, repos]);
 
   console.log({ completeRepos: repos });
+
+  function totalBytesOfLanguage(languages: [string, number][]) {
+    let totalBytes = 0;
+
+    for (const language of languages) {
+      totalBytes += language[1];
+    }
+
+    return totalBytes;
+  }
 
   return (
     <>
@@ -130,9 +146,9 @@ const Gallery: NextPage = () => {
                 <>
                   <br />
 
-                  {repo.languages && repo.languages.length > 0 ? (
+                  {repo.languages && Object.keys(repo.languages).length > 0 ? (
                     <span>
-                      {repo.languages.map((lang) => (
+                      {Object.entries(repo.languages).map(([lang, bytes]) => (
                         <p
                           key={`${repo.id}+${lang}`}
                           style={{
@@ -140,7 +156,15 @@ const Gallery: NextPage = () => {
                             borderRadius: "5px",
                           }}
                         >
-                          {lang}
+                          {lang}{" "}
+                          {Math.round(
+                            (bytes /
+                              totalBytesOfLanguage(
+                                Object.entries(repo.languages)
+                              )) *
+                              100
+                          )}
+                          %{" "}
                         </p>
                       ))}
                     </span>
