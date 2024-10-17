@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import styles from "../styles/HelpBar.module.css";
 import Image from "next/image";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const HelpBar = () => {
@@ -22,17 +22,27 @@ const HelpBar = () => {
       <div
         style={{
           width: "24px",
-          height: 'auto',
+          height: "auto",
           textAlign: "center",
           justifyContent: "center",
           display: "flex",
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', width: '100%', height: '2rem', position: 'relative' }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            width: "100%",
+            height: "2rem",
+            position: "relative",
+          }}
+        >
           <Image
             src={"/images/headshot.jpg"}
             alt="Levi Terry"
             fill={true}
+            sizes="100%"
             // width={`100%`}
             // height={48}
             className="logo"
@@ -42,24 +52,53 @@ const HelpBar = () => {
 
       <div className={styles.mainContent}>
         {/* File Menu */}
-        <button className={styles.hiddenButton} onClick={() => setMenuOptions({ ...menuOptions, file: !menuOptions.file })}>File</button>
-        <div style={menuOptions.file ? { display: 'block' } : { display: 'none' } }>
+        <button
+          className={styles.hiddenButton}
+          onClick={() =>
+            setMenuOptions({ ...menuOptions, file: !menuOptions.file })
+          }
+        >
+          File
+        </button>
+        <div
+          style={menuOptions.file ? { display: "block" } : { display: "none" }}
+        >
           <button>Index</button>
           <button>About</button>
           <button>Gallery</button>
           <button>Exit</button>
         </div>
-  
+
         {/* Terminal Menu */}
-        <button className={styles.hiddenButton} onClick={() => setMenuOptions({ ...menuOptions, terminal: !menuOptions.terminal })}>Terminal</button>
-        <div style={ menuOptions.terminal ? { display: 'block' } : { display: 'none' } } >
+        <button
+          className={styles.hiddenButton}
+          onClick={() =>
+            setMenuOptions({ ...menuOptions, terminal: !menuOptions.terminal })
+          }
+        >
+          Terminal
+        </button>
+        <div
+          style={
+            menuOptions.terminal ? { display: "block" } : { display: "none" }
+          }
+        >
           <p>Open</p>
           <p>Close</p>
         </div>
 
         {/* Help Menu */}
-        <button className={styles.hiddenButton} onClick={() => setMenuOptions({ ...menuOptions, help: !menuOptions.help })}>Help</button>
-        <div style={ menuOptions.help ? { display: 'block' } : { display: 'none' } }>
+        <button
+          className={styles.hiddenButton}
+          onClick={() =>
+            setMenuOptions({ ...menuOptions, help: !menuOptions.help })
+          }
+        >
+          Help
+        </button>
+        <div
+          style={menuOptions.help ? { display: "block" } : { display: "none" }}
+        >
           <p>Show Commands</p>
           <p>Show Keyboard Shortcuts</p>
         </div>
@@ -80,7 +119,13 @@ const HelpBar = () => {
         </select> */}
 
         <div className={styles.main}>
-          <p style={{ padding: "10rem" }}>{<span><FontAwesomeIcon icon={faSearch} /> {host}</span>}</p>
+          <p style={{ padding: "10rem" }}>
+            {
+              <span>
+                <FontAwesomeIcon icon={faSearch} /> {host}
+              </span>
+            }
+          </p>
         </div>
 
         {/* Commands Modal */}
