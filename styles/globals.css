@@ -81,9 +81,9 @@ body {
   /* overflow-y: ; */
 }
 
-body:overflow {
+/* body::overflow {
   background-color: red;
-}
+} */
 
 a {
   color: inherit;

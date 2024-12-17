@@ -122,7 +122,8 @@ const HelpBar = () => {
           <p style={{ padding: "10rem" }}>
             {
               <span>
-                <FontAwesomeIcon icon={faSearch} /> {host}
+                <FontAwesomeIcon icon={faSearch} />
+                {host}
               </span>
             }
           </p>

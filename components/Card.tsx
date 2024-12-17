@@ -11,7 +11,8 @@ type imageOptions = {
   alt: string;
 };
 interface CardProps {
-  title: string;
+  title: React.ReactNode;
+  isPinned?: boolean;
   description?: string;
   content?: React.ReactNode;
   link?: string;
@@ -21,6 +22,7 @@ interface CardProps {
 
 export const Card = ({
   title,
+  isPinned,
   description,
   content,
   link,
@@ -37,13 +39,16 @@ export const Card = ({
       className={`${styles.card}`}
       style={{ border: "1px solid var(--clr-primary)" }}
     >
-      {imageOptions ? (
-        imageOptions.location == "left" ? (
+      {imageOptions ?
+        imageOptions.location == "left" ?
           <Image src={imageOptions.src} alt={imageOptions.alt} fill />
-        ) : null
-      ) : null}
+        : null
+      : null}
       <h2 className="border-bottom">
-        {link ? (
+        {isPinned ?
+          <span className={styles.pinned}>📌 </span>
+        : null}
+        {link ?
           <span>
             <FontAwesomeIcon icon={faExternalLinkAlt} />{" "}
             <a
@@ -56,20 +61,18 @@ export const Card = ({
               {title}
             </a>
           </span>
-        ) : (
-          title
-        )}
+        : title}
       </h2>
 
       <p>{description}</p>
 
       {content ? content : null}
 
-      {imageOptions ? (
-        imageOptions.location == "right" ? (
+      {imageOptions ?
+        imageOptions.location == "right" ?
           <Image src={imageOptions.src} alt={imageOptions.alt} />
-        ) : null
-      ) : null}
+        : null
+      : null}
     </div>
   );
 };

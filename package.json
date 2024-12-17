@@ -10,13 +10,15 @@
     "dev:all": "concurrently \"npm run dev\" \"npm run ws\""
   },
   "dependencies": {
+    "@apollo/client": "^3.12.3",
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.1.2",
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "dotenv": "^16.4.5",
-    "next": "^14.2.1",
+    "graphql": "^16.10.0",
+    "next": "^15.1.0",
     "next-recaptcha-v3": "^1.4.1",
     "octokit": "^4.0.2",
     "react": "18.2.0",
@@ -25,6 +27,8 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "@octokit/types": "^13.6.1",
     "@types/bun": "^1.1.6",
     "@types/node": "18.0.4",
