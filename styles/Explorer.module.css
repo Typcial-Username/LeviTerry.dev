@@ -1,5 +1,5 @@
 .explorer {
-  top: var(--main-m-top);
+  top: calc(var(--main-m-top) - 2rem);
   background-color: var(--clr-explorer);
   width: var(--explorer-width);
   height: calc(100% - 2rem);
