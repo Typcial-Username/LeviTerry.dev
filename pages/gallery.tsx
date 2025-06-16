@@ -199,7 +199,7 @@ const Gallery: NextPage<GalleryProps> = ({
             gridTemplateColumns: "repeat(4, 1fr)",
           }}
         >
-          {/* {allRepos
+          {allRepos
             .sort((a, b) => {
               return a.name.localeCompare(b.name);
             })
@@ -297,7 +297,7 @@ const Gallery: NextPage<GalleryProps> = ({
                 }
                 link={repo.homepageUrl || undefined}
               />
-            ))} */}
+            ))}
         </div>
       </div>
     </>
@@ -363,14 +363,6 @@ export async function getStaticProps() {
         }
       }
   `;
-
-  const allRepoResponse = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ query: allRepoQuery }),
-  });
-
-  const userRepositories = await allRepoResponse.json();
 
   // const client = new ApolloClient({
   //   link: authLink.concat(httpLink),
@@ -459,42 +451,44 @@ export async function getStaticProps() {
     }
   }
   `
-
-  const pinnedRepoResponse = await fetch("https://api.github.com/graphql", {
+  const [allRepoResponce, pinnedRepoResponse] = await Promise.all([
+    fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ query: allRepoQuery }),
+  }),
+  fetch("https://api.github.com/graphql", {
     method: "POST",
     headers,
     body: JSON.stringify({ query: pinnedRepoQuery }),
-  });
+  })
+  ])
 
-  const pinnedRepos = await pinnedRepoResponse.json();
+  const [userRepositories, pinnedRepos] = await Promise.all([
+    allRepoResponce.json(),
+    pinnedRepoResponse.json(),
+  ]);
 
-  const { user } = userRepositories.data;
-  const { pinnedItems } = pinnedRepos.data.user;
+  if (!userRepositories?.data?.user || !pinnedRepos?.data?.user?.pinnedItems) {
+    throw new Error("Failed to fetch user repositories or pinned items from GitHub API")
+  }
 
-  const allRepos: RepositoryNode[] = (user as User).repositories.edges.map(
+  const { user }: {user: User} = userRepositories.data;
+  const { pinnedItems }: { pinnedItems: PinnedItems } = pinnedRepos.data.user;
+
+  const allRepos: RepositoryNode[] = user.repositories.edges.map(
     (edge) => edge.node
   );
 
-  const pins: PinnedItemNode[] = (pinnedItems as PinnedItems).edges.map(
-    (edge) => edge.node
+  const pinnedRepoIds: string[] = pinnedItems.edges.map(
+    (edge) => edge.node.id
   );
-
-  // Sort all repos by name
-  allRepos.sort((a, b) => {
-    if (a.name < b.name) return -1;
-    if (a.name > b.name) return 1;
-    return 0;
-  });
-
-  const rawPinnedRepos: PinnedItemNode[] = (
-    pinnedItems as PinnedItems
-  ).edges.map((edge) => edge.node);
 
   const fullPinnedRepos = allRepos.filter((repo) =>
-    rawPinnedRepos.some((pinnedRepo) => pinnedRepo.id === repo.id)
+    pinnedRepoIds.includes(repo.id)
   );
 
-  // Filter out repos that have config tags are pinned
+  // Filter out repos that have config tags or are pinned
   const filteredRepos = allRepos
     .filter(
       (repo) => !fullPinnedRepos.some((pinnedRepo) => pinnedRepo.id === repo.id)

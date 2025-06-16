@@ -14,6 +14,7 @@ import {
   faFileCode,
   faAngleRight,
   faImage,
+  faWaveSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -29,6 +30,7 @@ const Explorer = () => {
     pages: true,
     docs: true,
     socials: true,
+    tools: true
   });
 
   useEffect(() => {
@@ -131,6 +133,32 @@ const Explorer = () => {
             </span>
             <Link href="/gallery">
               <p style={{ display: "inline" }}> gallery.html</p>
+            </Link>
+          </div>
+        </div>
+
+        <div>
+          <Folder
+            enabled={folderStates.tools}
+            className={`${styles.item} ${styles.dropdown}`}
+            onClick={() =>
+              setFolderStates({ ...folderStates, tools: !folderStates.tools })
+            }
+          >
+            Tools
+          </Folder>
+
+          <div
+            className={`${styles.item} ${styles.subMenu}`}
+            style={
+              !folderStates.tools ? { display: "none" } : { display: "block" }
+            }
+          >
+            <span>
+              <FontAwesomeIcon icon={faWaveSquare} color="var(--clr-icon)" />{" "}
+            </span>
+            <Link href="/sound-modulator">
+              <p style={{ display: "inline" }}>Sound Modulator</p>
             </Link>
           </div>
         </div>
