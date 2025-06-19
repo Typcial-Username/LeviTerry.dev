@@ -4,6 +4,7 @@ import { Card } from "../components/Card";
 import Head from "next/head";
 import { config } from "dotenv";
 import path from "path";
+import styles from '../styles/Gallery.module.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExternalLinkAlt,
@@ -23,7 +24,7 @@ import {
   User,
 } from "../utils/types";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 //#endregion
 
 // Load environment variables
@@ -53,6 +54,16 @@ const Gallery: NextPage<GalleryProps> = ({
   filteredRepos: allRepos,
   fullPinnedRepos,
 }) => {
+  let terminalOpen = useRef<boolean>(false);
+  useEffect(() => {
+      const terminal = document.querySelector(
+    "[data-name=terminal]"
+  ) as HTMLDivElement;
+
+    terminalOpen.current = terminal?.style.display === "block" ? true : false;
+  })
+  
+  
   return (
     <>
       <Head>
@@ -66,12 +77,18 @@ const Gallery: NextPage<GalleryProps> = ({
           margin: 0,
           padding: 0,
           width: "100%",
+          height: `calc(100% - var(--main-m-top) - ${
+            terminalOpen.current ? "5rem" : "0"
+          })`,
           overflowY: "scroll",
         }}
       >
+        <br />
+
         {fullPinnedRepos?.length > 0 && (
           <>
             <h1>Featured Projects</h1>
+            <br />
 
             <div
               className="grid"
@@ -89,14 +106,76 @@ const Gallery: NextPage<GalleryProps> = ({
                   content={
                     <>
                       <br />
-                      <p>No Known Languages</p>
+                      {
+                        repo.languages && repo.languages.edges.length > 0 ? (
+                          <div
+                            key={`${repo.id}+languages`}
+                            className={styles.languages}
+                          >
+                            {repo.languages.edges.map(
+                              ({ node: { name, color }, size }) => (
+                                <span key={`${repo.id}+${name}`}>
+                                  <div
+                                    className={styles.languageColor}
+                                    style={{
+                                      backgroundColor: color,
+                                    }}
+                                  />
+                                  <p className={styles.languageName}>
+                                    {name || "Unknown Language"}{" "}
+                                    {((size / repo.languages.totalSize) * 100).toFixed(
+                                      1
+                                    )}
+                                    %
+                                  </p>
+                                </span>
+                              )
+                            )}
+                          </div>
+                        ) : (
+                          <p style={{ fontSize: "0.75rem" }}>
+                            No Known Languages
+                          </p>
+                        )
+                      }
                       <br />
-                      <span>
-                        <FontAwesomeIcon icon={faExternalLinkAlt} />{" "}
-                        <a href={repo.url} target="_blank" rel="noreferrer">
-                          View Source
-                        </a>
-                      </span>
+                      <p key={`${repo.id}+stars`}>
+                        ⭐ Stars {repo.stargazerCount}
+                      </p>
+                      <br />
+                      {repo.repositoryTopics &&
+                      repo.repositoryTopics.edges.length > 0 ? (
+                        repo.repositoryTopics.edges.map(({ node }) => (
+                          <span
+                            key={`${repo.id}+${node.topic.name}`}
+                            style={{
+                              backgroundColor: "#121D2F",
+                              color: "#3493F8",
+                              borderRadius: "0.5rem",
+                              padding: "0.25rem",
+                              margin: "0.25rem",
+                            }}
+                            onMouseOver={(e) => {
+                              e.currentTarget.style.color = "whitesmoke";
+                              e.currentTarget.style.backgroundColor = "#1f6feb";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.color = "#3493F8";
+                              e.currentTarget.style.backgroundColor = "#121D2F";
+                            }}
+                          >
+                            {node.topic.name}
+                          </span>
+                        ))
+                      ) : (
+                        <p style={{ fontSize: "0.75rem" }}>No Topics</p>
+                      )}
+                      <br />
+                      <br />
+                      <FontAwesomeIcon icon={faExternalLinkAlt} />{" "}
+                      <a href={repo.url} target="_blank" rel="noreferrer">
+                        View Source
+                      </a>
                     </>
                   }
                   link={repo.homepageUrl || undefined}
@@ -117,7 +196,7 @@ const Gallery: NextPage<GalleryProps> = ({
           className="grid"
           style={{
             margin: "0 5% 0 5%",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: "repeat(4, 1fr)",
           }}
         >
           {allRepos
@@ -129,11 +208,13 @@ const Gallery: NextPage<GalleryProps> = ({
                 key={repo.id}
                 title={
                   <span>
-                    {repo.isFork ?
+                    {repo.isFork ? (
                       <span>
                         <FontAwesomeIcon icon={faCodeFork} /> {repo.name}
                       </span>
-                    : repo.name}
+                    ) : (
+                      repo.name
+                    )}
                   </span>
                 }
                 description={
@@ -143,40 +224,22 @@ const Gallery: NextPage<GalleryProps> = ({
                   <>
                     <br />
 
-                    {repo.languages && repo.languages.edges.length > 0 ?
-                      <span
-                        suppressHydrationWarning
+                    {repo.languages && repo.languages.edges.length > 0 ? (
+                      <div
                         key={`${repo.id}+languages`}
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          flexWrap: "wrap",
-                          alignItems: "center",
-                        }}
+                        className={styles.languages}
                       >
                         {repo.languages.edges.map(
                           ({ node: { name, color }, size }) => (
-                            <React.Fragment key={`${repo.id}+${name}`}>
+                            <span key={`${repo.id}+${name}`}>
                               <div
+                              className={styles.languageColor}
                                 style={{
-                                  width: "1rem",
-                                  height: "1rem",
-                                  backgroundColor: color,
-                                  borderRadius: "10rem",
-                                  margin: 0,
-                                  padding: 0,
+                                  backgroundColor: color
                                 }}
                               />
                               <p
-                                style={{
-                                  color: "white",
-                                  fontWeight: "bold",
-                                  borderRadius: "10rem",
-                                  width: "fit-content",
-                                  margin: "0.25rem",
-                                  padding: "0.25rem",
-                                  fontSize: "0.75rem",
-                                }}
+                                className={styles.languageName}
                               >
                                 {name || "Unknown Language"}{" "}
                                 {(
@@ -185,11 +248,13 @@ const Gallery: NextPage<GalleryProps> = ({
                                 ).toFixed(1)}
                                 %
                               </p>
-                            </React.Fragment>
+                            </span>
                           )
                         )}
-                      </span>
-                    : <p style={{ fontSize: "0.75rem" }}>No Known Languages</p>}
+                      </div>
+                    ) : (
+                      <p style={{ fontSize: "0.75rem" }}>No Known Languages</p>
+                    )}
 
                     <p key={`${repo.id}+stars`}>
                       ⭐ Stars {repo.stargazerCount}
@@ -197,20 +262,12 @@ const Gallery: NextPage<GalleryProps> = ({
 
                     <br />
 
-                    {(
-                      repo.repositoryTopics &&
-                      repo.repositoryTopics.edges.length > 0
-                    ) ?
+                    {repo.repositoryTopics &&
+                    repo.repositoryTopics.edges.length > 0 ? (
                       repo.repositoryTopics.edges.map(({ node }) => (
                         <span
                           key={`${repo.id}+${node.topic.name}`}
-                          style={{
-                            backgroundColor: "#121D2F",
-                            color: "#3493F8",
-                            borderRadius: "0.5rem",
-                            padding: "0.25rem",
-                            margin: "0.25rem",
-                          }}
+                          className={styles.topic}
                           onMouseOver={(e) => {
                             e.currentTarget.style.color = "whitesmoke";
                             e.currentTarget.style.backgroundColor = "#1f6feb";
@@ -223,18 +280,19 @@ const Gallery: NextPage<GalleryProps> = ({
                           {node.topic.name}
                         </span>
                       ))
-                    : <p style={{ fontSize: "0.75rem" }}>No Topics</p>}
+                    ) : (
+                      <p style={{ fontSize: "0.75rem" }}>No Topics</p>
+                    )}
 
                     <br />
                     <br />
 
-                    {/* <span> */}
-                    <a href={repo.homepageUrl} target="_blank" rel="noreferrer">
+                    <a href={repo.url} target="_blank" rel="noreferrer">
                       <span>
-                        <FontAwesomeIcon icon={faExternalLinkAlt} /> View Source
+                        <FontAwesomeIcon icon={faExternalLinkAlt} /> View
+                        Source
                       </span>
                     </a>
-                    {/* </span> */}
                   </>
                 }
                 link={repo.homepageUrl || undefined}
@@ -258,15 +316,15 @@ export async function getStaticProps() {
     };
   });
 
-  const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
-  });
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+  }
 
-  const { data: userRepositories } = await client.query({
-    query: gql`
-      {
+  const allRepoQuery = `
+  {
         user(login: "Typcial-Username") {
+          id
           repositories(first: 100) {
             edges {
               node {
@@ -304,51 +362,133 @@ export async function getStaticProps() {
           }
         }
       }
-    `,
-  });
+  `;
 
-  const { data: pinnedRepos } = await client.query({
-    query: gql`
-      {
-        user(login: "Typcial-Username") {
-          pinnedItems(first: 10) {
-            edges {
-              node {
-                ... on Repository {
-                  name
-                  id
-                }
-              }
+  // const client = new ApolloClient({
+  //   link: authLink.concat(httpLink),
+  //   cache: new InMemoryCache(),
+  // });
+
+  // const { data: userRepositories } = await client.query({
+  //   query: gql`
+  //     {
+  //       user(login: "Typcial-Username") {
+  //         id
+  //         repositories(first: 100) {
+  //           edges {
+  //             node {
+  //               ... on Repository {
+  //                 name
+  //                 id
+  //                 description
+  //                 url
+  //                 homepageUrl
+  //                 pushedAt
+  //                 languages(first: 5) {
+  //                   totalSize
+  //                   edges {
+  //                     size
+  //                     node {
+  //                       name
+  //                       color
+  //                     }
+  //                   }
+  //                 }
+  //                 stargazerCount
+  //                 repositoryTopics(first: 5) {
+  //                   edges {
+  //                     node {
+  //                       topic {
+  //                         name
+  //                       }
+  //                     }
+  //                   }
+  //                 }
+  //                 isFork
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   `,
+  // });
+
+  // const { data: pinnedRepos } = await client.query({
+  //   query: gql`
+  //     {
+  //       user(login: "Typcial-Username") {
+  //         id
+  //         pinnedItems(first: 10) {
+  //           edges {
+  //             node {
+  //               ... on Repository {
+  //                 name
+  //                 id
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   `,
+  // });
+
+  const pinnedRepoQuery = `
+  {
+    user(login: "Typcial-Username") {
+      id
+      pinnedItems(first: 10) {
+        edges {
+          node {
+            ... on Repository {
+              name
+              id
             }
           }
         }
       }
-    `,
-  });
+    }
+  }
+  `
+  const [allRepoResponce, pinnedRepoResponse] = await Promise.all([
+    fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ query: allRepoQuery }),
+  }),
+  fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ query: pinnedRepoQuery }),
+  })
+  ])
 
-  const { user } = userRepositories;
-  const { pinnedItems } = pinnedRepos.user;
+  const [userRepositories, pinnedRepos] = await Promise.all([
+    allRepoResponce.json(),
+    pinnedRepoResponse.json(),
+  ]);
 
-  const allRepos: RepositoryNode[] = (user as User).repositories.edges.map(
+  if (!userRepositories?.data?.user || !pinnedRepos?.data?.user?.pinnedItems) {
+    throw new Error("Failed to fetch user repositories or pinned items from GitHub API")
+  }
+
+  const { user }: {user: User} = userRepositories.data;
+  const { pinnedItems }: { pinnedItems: PinnedItems } = pinnedRepos.data.user;
+
+  const allRepos: RepositoryNode[] = user.repositories.edges.map(
     (edge) => edge.node
   );
 
-  // Sort all repos by name
-  allRepos.sort((a, b) => {
-    if (a.name < b.name) return -1;
-    if (a.name > b.name) return 1;
-    return 0;
-  });
-
-  const rawPinnedRepos: PinnedItemNode[] = (
-    pinnedItems as PinnedItems
-  ).edges.map((edge) => edge.node);
-
-  const fullPinnedRepos = allRepos.filter((repo) =>
-    rawPinnedRepos.some((pinnedRepo) => pinnedRepo.id === repo.id)
+  const pinnedRepoIds: string[] = pinnedItems.edges.map(
+    (edge) => edge.node.id
   );
 
-  // Filter out repos that have config tags are pinned
+  const fullPinnedRepos = allRepos.filter((repo) =>
+    pinnedRepoIds.includes(repo.id)
+  );
+
+  // Filter out repos that have config tags or are pinned
   const filteredRepos = allRepos
     .filter(
       (repo) => !fullPinnedRepos.some((pinnedRepo) => pinnedRepo.id === repo.id)
@@ -368,6 +508,7 @@ export async function getStaticProps() {
       filteredRepos,
       fullPinnedRepos,
     },
+    revalidate: 60 * 60 * 24, // Revalidate every 24 hours
   };
 }
 

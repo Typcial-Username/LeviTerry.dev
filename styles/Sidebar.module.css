@@ -1,6 +1,6 @@
 #sidebar {
-  top: var(--main-m-top);
-  height: calc(100% - 2rem);
+  top: calc(var(--main-m-top) - 2rem);
+  height: calc(100% - var(--main-m-top) + 2rem);
   width: 2.5rem;
   left: 0;
   background-color: var(--clr-sidebar);

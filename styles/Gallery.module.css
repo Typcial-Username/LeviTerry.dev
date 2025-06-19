@@ -1,0 +1,32 @@
+.languages {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.languageColor {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 10rem;
+    margin-right: 0.5rem;
+    padding: 0;
+}
+
+.languageName {
+    color: white;
+    border-radius: 10rem;
+    width: fit-content;
+    margin: 0.5rem;
+    padding: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.topic {
+    background-color: #121D2F;
+    color: #3493F8;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    margin: 0.25rem
+}

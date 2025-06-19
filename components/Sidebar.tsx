@@ -45,6 +45,31 @@ const Sidebar = () => {
     })
   }, [contactName, contactEmail, contactMessage, executeRecaptcha])
 
+  useEffect(() => {
+    // Get the default theme
+    const defaultTheme = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    let selectedTheme: string = "dark";
+
+    const localTheme = localStorage.getItem("theme");
+
+    if (!localTheme) {
+      console.log("localstorage theme is null, using default theme");
+      selectedTheme = defaultTheme ? "dark" : "light";
+    } else {
+      selectedTheme = localTheme;
+    }
+
+    // Set the theme
+    setTheme(selectedTheme);
+
+    const themeChanger = document.getElementById("theme") as HTMLSelectElement;
+
+    themeChanger.value = selectedTheme;
+  }, [])
+
   return (
     <aside id={styles.sidebar}>
       <div className={styles.content}>
@@ -293,35 +318,6 @@ const selectMenu = (btn: string) => {
     }
   }
 };
-
-// Ensure the 'window' object is defined
-// When the window loads, set the theme
-window.onload = (event: Event) => {
-  // Get the default theme
-  const defaultTheme = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  ).matches;
-
-  let selectedTheme: string = "dark";
-
-  const localTheme = localStorage.getItem("theme");
-
-  if (!localTheme) {
-    console.log("localstorage theme is null, using default theme");
-    selectedTheme = defaultTheme ? "dark" : "light";
-  } else {
-    selectedTheme = localTheme;
-  }
-
-  // Set the theme
-  setTheme(selectedTheme);
-
-  const themeChanger = document.getElementById("theme") as HTMLSelectElement;
-
-  themeChanger.value = selectedTheme;
-};
-
-// }
 
 const setTheme = (theme: string) => {
   // Change the theme of the document
