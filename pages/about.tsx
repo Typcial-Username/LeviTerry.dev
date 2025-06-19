@@ -58,8 +58,6 @@ function calculateLineNums() {
     const lineHeight = getLineHeight(code);
     const lines = Math.ceil(contentHeight / Math.ceil(lineHeight));
 
-    console.log({ contentHeight, lineHeight: Math.ceil(lineHeight), lines });
-
     if (Number.isInteger(lines)) {
       for (let i = 0; i <= lines + 1; i++) {
         const li = document.createElement("li") as HTMLLIElement;
@@ -112,6 +110,8 @@ function formatJson(
 ) {
   let curIdx = 0;
 
+  console.log("Formatting JSON: ", json, idx);
+
   // Check if the json is an array
   if (Array.isArray(json)) {
     const arr = json as any[];
@@ -130,7 +130,7 @@ function formatJson(
         <p className={styles.json} style={{ color: "var(--clr-json-array)" }}>
           [
         </p>
-        {/* If the array has to wrap */}
+        {/* If the array doesn't has to wrap */}
         {!wrap &&
           arr.map((val, index) => (
             <>
@@ -145,7 +145,7 @@ function formatJson(
             </>
           ))}
 
-        {/* If the array doesn't have to wrap */}
+        {/* If the array has to wrap */}
         {wrap &&
           arr.map((val, index) => (
             <>
@@ -226,9 +226,10 @@ function formatJson(
 
                 {hasKey(obj, key) && typeof obj[key] !== "object" && (
                   <p className={styles.json} style={setJsonStyle(obj[key])}>
-                    {typeof obj[key] === 'string' && obj[key].startsWith('http') ? <Link href={obj[key]} target="_blank">{obj[key]}</Link> : JSON.stringify(obj[key])}
+                    {typeof obj[key] === 'string' && obj[key].startsWith('http') ? <Link href={obj[key]} target="_blank">&quot;{obj[key]}&quot;</Link> : JSON.stringify(obj[key])}
                   </p>
                 )}
+                
               </span>
               {index !== Object.keys(obj).length - 1 && (
                 <p className={styles.json}>,</p>

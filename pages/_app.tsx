@@ -104,11 +104,13 @@ function toggleTerminal() {
 
   if (
     terminal &&
-    (!terminal.style.display || terminal.style.display === "block")
+    (!terminal.style.display || terminal?.classList.contains("show"))
   ) {
-    terminal.style.display = "none";
-  } else if (terminal && terminal.style.display === "none") {
-    terminal.style.display = "block";
+    terminal?.classList.remove("show");
+    terminal?.classList.add("hide");
+  } else if (terminal && terminal?.classList.contains("hide")) {
+    terminal?.classList.remove("hide");
+    terminal?.classList.add("show");
   }
 }
 

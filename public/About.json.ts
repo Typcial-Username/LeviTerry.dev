@@ -8,9 +8,9 @@ export const AboutData = {
   // age: age,
   education: {
     school: "University of Advancing Technology (UAT)",
-    degree: "Robotics and Embedded Systems (B.S.) - Digital Maker and Fabrication (B.S.)",
+    degree: "Robotics Engineering (B.S.) - Digital Maker and Fabrication (B.S.)",
     universityWebsite: "https://www.uat.edu/",
-    year: "Sophomore",
+    year: "Junior",
     expectedGraduation: "May 2026",
     roboticsObjectives: [
       "Design and complete robotic and embedded systems solutions that apply to real-world situations and challenges.",
@@ -43,7 +43,7 @@ export const AboutData = {
     ],
     frameworks: ["React", "Next.js", "Node.js", "Express"],
     databases: ["MongoDB"],
-    tools: ["Git", "GitHub", "VS Code", "Netlify"],
+    tools: ["Fusion 360", "Git", "GitHub", "VS Code", "Netlify"],
     operatingSystems: ["Windows", "Linux"],
   },
 };
