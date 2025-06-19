@@ -6,7 +6,17 @@ import Head from "next/head";
 import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
 
+import { config } from "dotenv";
+import path from "path";
+
+// import { webcrypto } from 'node:crypto'
+// globalThis.crypto = webcrypto as any;
+
+// import 'altcha'
+
 function MyApp({ Component, pageProps }: AppProps) {
+  // console.log("RECAPTCHA_SITE_KEY: ", process.env.RECAPTCHA_SITE_KEY);
+
   // All the key presses made within the timeout
   let allKeyPresses: MutableRefObject<string[]> = useRef<string[]>([]);
   // How long to wait before processing the key presses
@@ -37,23 +47,27 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [handleKeypress]);
 
   return (
-    <ReCaptchaProvider reCaptchaKey={process.env.RECAPTCHA_SITE_KEY} onLoad={() => {console.log("ReCaptcha Loaded!")}}>
-    <Layout>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-      <Component {...pageProps} />
-    </Layout>
-    </ReCaptchaProvider>
-  );
+    // <ReCaptchaProvider
+    //   reCaptchaKey={process.env.RECAPTCHA_SITE_KEY}
+    //   onLoad={() => {
+    //     console.log("ReCaptcha Loaded!");
+    //   }}
+    // >
+      <Layout>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+        </Head>
+        <Component {...pageProps} />
+      </Layout>
+  ); 
+  {/* </ReCaptchaProvider> */}
 }
 
 function handleKeyPressTimeout(allKeyPresses: string[]) {
-  console.log("All Key Presses: ", allKeyPresses);
-
   const keyPresses = allKeyPresses.join("+");
-
-  console.log("Combined Key Presses: ", keyPresses);
 
   if (keyPresses === "Control+b") {
     toggleExplorer();
@@ -73,11 +87,9 @@ function toggleExplorer() {
     explorer &&
     (!explorer.style.display || explorer.style.display === "block")
   ) {
-    console.log("Hiding Explorer");
     explorer.style.display = "none";
     root.style.setProperty("--main-m-left", "2.5rem");
   } else if (explorer && explorer.style.display === "none") {
-    console.log("Showing Explorer");
     explorer.style.display = "block";
     root.style.setProperty("--main-m-left", "17.5rem");
   }

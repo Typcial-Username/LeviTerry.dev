@@ -27,6 +27,7 @@ Blue accent: #01111d
   --explorer-width: 15rem;
   --main-m-left: calc(var(--explorer-width) + 2.5rem);
   --main-m-top: 5rem;
+  --elm-spacing: 2rem;
 }
 
 :root.dark {
@@ -78,9 +79,8 @@ body {
   background: var(--clr-bg); /*linear-gradient(#03182b, #084277); */
   color: var(--clr-primary);
   scroll-behavior: smooth;
-  /* overflow-y: ; */
+  /* overflow-y: {; */
 }
-
 /* body::overflow {
   background-color: red;
 } */
@@ -99,14 +99,15 @@ a:hover {
 }
 
 .container {
-  top: var(--main-m-top);
+  top: calc(var(--main-m-top));
   margin-left: var(--main-m-left);
   text-align: center;
-  position: absolute;
+  position: relative;
   /* overflow-y: scroll; */
-  height: calc(100% - var(--main-m-top));
-  width: calc(100% - var(--main-m-left));
-  z-index: 1;
+  height: 100%;
+  width: calc(100% - calc(var(--elm-spacing) + var(--main-m-left)));
+  z-index: 100;
+  /* overflow: scroll; */
 }
 
 .grid {
@@ -129,6 +130,10 @@ a:hover {
   display: none;
 }
 
+.show {
+  display: block;
+}
+
 .typing {
   font-size: 2em;
 }
@@ -136,15 +141,6 @@ a:hover {
 .typing::before {
   content: "Have a ";
   animation: animateText 15s step-end infinite;
-}
-
-.logo {
-  width: 100%;
-  /* height: 100%; */
-  border-radius: 50%;
-  align-self: center;
-  justify-content: center;
-  margin-left: 30%;
 }
 
 /* Add char int: 2%, Remove char int: 1%, Hold Delay: 5% */

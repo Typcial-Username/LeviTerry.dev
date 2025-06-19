@@ -53,16 +53,15 @@ export default function Layout({ children }: LayoutProps) {
 
       <HeaderNoSSR
         file={
-          typeof window !== "undefined"
-            ? pathName(window.location.pathname)
-            : "unknown.html"
+          typeof window !== "undefined" ?
+            pathName(window.location.pathname)
+          : "unknown.html"
         }
         extension={selectedRef.current?.innerText.split(".")[1] || "html"}
       />
 
       <main className="container">
         {children}
-
         <br />
       </main>
 

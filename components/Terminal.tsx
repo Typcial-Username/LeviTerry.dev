@@ -9,7 +9,6 @@ import { hostname } from "os";
 export const Terminal = () => {
   const [host, setHost] = React.useState("localhost");
   const terminalValue = useRef<string>("");
-  // const [bottom, setBottom] = React.useState(0);
 
   useEffect(() => {
     setHost(window.location.host);
@@ -27,6 +26,7 @@ export const Terminal = () => {
       // className="container"
       data-name="terminal"
       id={styles.terminal}
+      className="show"
       style={{
         // borderTop: "1px solid whitesmoke",
         backgroundColor: "var(--clr-bg)",
@@ -42,13 +42,7 @@ export const Terminal = () => {
         </button>
       </span>
 
-      {/* <div className={styles.text}> */}
       <form onSubmit={onSubmit} className={styles.text}>
-        {/* <span> */}
-        {/* <label htmlFor="terminal">
-            visitor@{host}
-            {">"}
-          </label> */}
         <textarea
           name="terminal"
           id="terminal"
@@ -59,9 +53,7 @@ export const Terminal = () => {
           spellCheck={false}
           className={styles.text}
         />
-        {/* </span> */}
       </form>
-      {/* </div> */}
     </div>
   );
 };
@@ -73,12 +65,11 @@ const onSubmit = (event: any) => {
 };
 
 function closeMenu() {
-  // const btn = document.getElementById('close-btn')\
   console.log(styles.terminal);
   const terminal = document.getElementById(styles.terminal);
-  console.log(terminal);
 
   console.log("Adding hide class to terminal...");
+  terminal?.classList.remove("show");
   terminal?.classList.add("hide");
 }
 

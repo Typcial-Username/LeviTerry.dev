@@ -27,7 +27,7 @@ const Sidebar = () => {
     event.preventDefault();
     
     console.log({key: process.env.RECAPTCHA_SITE_KEY})
-    const token = await executeRecaptcha('contact_form')
+    // const token = await executeRecaptcha('contact_form')
 
     fetch('/api/contact', {
       method: 'POST',
@@ -40,7 +40,7 @@ const Sidebar = () => {
           email: contactEmail,
           message: contactMessage,
         },
-        token
+        // token
       })
     })
   }, [contactName, contactEmail, contactMessage, executeRecaptcha])
@@ -207,6 +207,7 @@ const Sidebar = () => {
             id="contact"
             onSubmit={onContactFormSubmit}
           >
+
             <span>
               {/* Name Input */}
               <label htmlFor="contact-name">Name: </label>

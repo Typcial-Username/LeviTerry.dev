@@ -2,7 +2,7 @@
 import { NextPage } from "next";
 import { Card } from "../components/Card";
 import Head from "next/head";
-import { config } from "dotenv";
+// import { config } from "dotenv";
 import path from "path";
 import styles from '../styles/Gallery.module.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,7 +28,7 @@ import React, { useEffect, useRef } from "react";
 //#endregion
 
 // Load environment variables
-config({ path: path.join(__dirname, "..") });
+// config({ path: path.join(__dirname, "..") });
 
 /**
  * * Main Priority
@@ -71,17 +71,17 @@ const Gallery: NextPage<GalleryProps> = ({
       </Head>
 
       <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          margin: 0,
-          padding: 0,
-          width: "100%",
+      // style={{
+      //   display: "flex",
+      //   flexDirection: "column",
+      //   margin: 0,
+      //   padding: 0,
+      // width: "100%",
           height: `calc(100% - var(--main-m-top) - ${
             terminalOpen.current ? "5rem" : "0"
           })`,
-          overflowY: "scroll",
-        }}
+      // overflowY: "scroll",
+      // }}
       >
         <br />
 
