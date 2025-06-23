@@ -43,7 +43,7 @@ const Sidebar = () => {
         // token
       })
     })
-  }, [contactName, contactEmail, contactMessage, executeRecaptcha])
+  }, [contactName, contactEmail, contactMessage, /*executeRecaptcha*/])
 
   useEffect(() => {
     // Get the default theme

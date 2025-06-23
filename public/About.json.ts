@@ -43,7 +43,7 @@ export const AboutData = {
     ],
     frameworks: ["React", "Next.js", "Node.js", "Express"],
     databases: ["MongoDB"],
-    tools: ["Git", "GitHub", "VS Code", "Netlify", "Bun"],
+    tools: ["Fusion 360", "Git", "GitHub", "VS Code", "Netlify", "Bun"],
     operatingSystems: ["Windows", "Linux"],
   },
 };
