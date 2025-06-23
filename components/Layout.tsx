@@ -1,8 +1,10 @@
+'use client'
+
 import HelpBar from "./HelpBar";
 // import { Sidebar } from "./Sidebar";
 import { Terminal } from "./Terminal";
 import dynamic from "next/dynamic";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from "../styles/Explorer.module.css";
 
 type LayoutProps = {
@@ -27,22 +29,48 @@ const days = [
 export default function Layout({ children }: LayoutProps) {
   const explorerRef = useRef<HTMLDivElement | null>(null);
   const selectedRef = useRef<HTMLDivElement | null>(null);
+  const [selectedExtension, setSelectedExtension] = useState("html");
 
   useEffect(() => {
-    explorerRef.current = document.getElementById(
-      "#explorer"
-    ) as HTMLDivElement;
+    const timeout = setTimeout(() => {
+    const explorer = document.getElementById("explorer") as HTMLDivElement;
+    if (!explorer) {
+      console.error("Explorer element not found");
+      return;
+    }
+
+    explorerRef.current = explorer;
 
     if (explorerRef.current) {
-      selectedRef.current = explorerRef.current.getElementsByClassName(
-        styles.selected
-      )[0] as HTMLDivElement;
+      selectedRef.current = explorerRef.current.querySelector(`.${styles.selected}`) as HTMLDivElement | null;
     }
+
+     const findSelected = () => {
+        const selected = explorer.querySelector(`.${styles.selected}`) as HTMLDivElement | null;
+        if (selected?.innerText.includes(".")) {
+          const ext = selected.innerText.split(".").pop();
+          if (ext) setSelectedExtension(ext);
+        }
+      };
+
+    findSelected();
+
+    const observer = new MutationObserver(findSelected);
+
+    observer.observe(explorer, { childList: true, subtree: true, attributes: true });
 
     console.log({
       explorer: explorerRef.current,
       selected: selectedRef.current,
     });
+  
+
+    return () => {
+      observer.disconnect()
+    };
+    }, 0);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -57,7 +85,7 @@ export default function Layout({ children }: LayoutProps) {
             ? pathName(window.location.pathname)
             : "unknown.html"
         }
-        extension={selectedRef.current?.innerText.split(".")[1] || "html"}
+        extension={selectedExtension}
       />
 
       <main className="container">

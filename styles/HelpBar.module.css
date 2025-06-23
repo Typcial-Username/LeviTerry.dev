@@ -11,6 +11,7 @@
   /* width: calc(100% - 17.5rem); */
   gap: 1em;
   z-index: 1000;
+  background-color: var(--clr-bg);
 }
 
 .mainContent {

@@ -58,8 +58,6 @@ function calculateLineNums() {
     const lineHeight = getLineHeight(code);
     const lines = Math.ceil(contentHeight / Math.ceil(lineHeight));
 
-    console.log({ contentHeight, lineHeight: Math.ceil(lineHeight), lines });
-
     if (Number.isInteger(lines)) {
       for (let i = 0; i <= lines + 1; i++) {
         const li = document.createElement("li") as HTMLLIElement;
@@ -139,7 +137,7 @@ function formatJson(
                   &quot;{typeof val == 'string' && val.startsWith('http') ? <Link href={val} /> : val}&quot;
                 </p>
               </span>
-              {index !== arr.length - 1 && (
+              {index < arr.length - 1 && (
                 <p className={styles.json}>,&nbsp;</p>
               )}
             </>
@@ -158,22 +156,18 @@ function formatJson(
                   &quot;{typeof val == 'string' && val.startsWith('http') ? <Link href={val} /> : val}&quot;
                 </p>
               </span>
-
-              {index !== arr.length - 1 && <p className={styles.json}>,</p>}
+              {index < arr.length - 1 && <p className={styles.json}>,</p>}
             </>
           ))}
 
         {/* Add ] if the array didn't wrap */}
         {!wrap && (
-          <>
-            <p
-              className={styles.json}
-              style={{ color: "var(--clr-json-array)" }}
-            >
-              ]
-            </p>
-            {curIdx !== idx - 1 && <p className={styles.json}>,</p>}
-          </>
+          <p
+            className={styles.json}
+            style={{ color: "var(--clr-json-array)" }}
+          >
+            ]
+          </p>
         )}
 
         {/* Add ] if the array did wrap */}
@@ -218,15 +212,18 @@ function formatJson(
                 {hasKey(obj, key) && typeof obj[key] === "object" && (
                   <>
                     <div className={styles.json}>
-                      {/* <p className={styles.json}></p> */}
                       {formatJson(obj[key], idx + 1)}
                     </div>
                   </>
                 )}
 
                 {hasKey(obj, key) && typeof obj[key] !== "object" && (
+                  <p className={styles.json} style={setJsonStyle(obj[key])}></p>
+                )}
+
+                {hasKey(obj, key) && typeof obj[key] !== "object" && (
                   <p className={styles.json} style={setJsonStyle(obj[key])}>
-                    {typeof obj[key] === 'string' && obj[key].startsWith('http') ? <Link href={obj[key]} target="_blank">{obj[key]}</Link> : JSON.stringify(obj[key])}
+                    {typeof obj[key] === 'string' && obj[key].startsWith('http') ? <span>&quot;<Link href={obj[key]} target="_blank">{obj[key]}</Link>&quot;</span> : JSON.stringify(obj[key])}
                   </p>
                 )}
               </span>
@@ -249,7 +246,7 @@ function formatJson(
   } else if (typeof json === "string") {
     return (
       <>
-        <p className={styles.json} style={{ color: "var(--clr-json-string)" }}>
+        <p className={styles.json} style={{ color: "var(--clr-json-string)" }}> 
         &quot;{json}&quot;
         </p>
         {curIdx !== idx - 1 && <p className={styles.json}>,</p>}

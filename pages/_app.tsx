@@ -73,11 +73,9 @@ function toggleExplorer() {
     explorer &&
     (!explorer.style.display || explorer.style.display === "block")
   ) {
-    console.log("Hiding Explorer");
     explorer.style.display = "none";
     root.style.setProperty("--main-m-left", "2.5rem");
   } else if (explorer && explorer.style.display === "none") {
-    console.log("Showing Explorer");
     explorer.style.display = "block";
     root.style.setProperty("--main-m-left", "17.5rem");
   }
@@ -87,8 +85,6 @@ function toggleTerminal() {
   const terminal = document.querySelector(
     "[data-name=terminal]"
   ) as HTMLDivElement;
-
-  console.log({ terminal, display: terminal.style.display });
 
   if (
     terminal &&

@@ -56,7 +56,6 @@ const Sidebar = () => {
     const localTheme = localStorage.getItem("theme");
 
     if (!localTheme) {
-      console.log("localstorage theme is null, using default theme");
       selectedTheme = defaultTheme ? "dark" : "light";
     } else {
       selectedTheme = localTheme;
@@ -323,12 +322,6 @@ const setTheme = (theme: string) => {
   // Change the theme of the document
   document.documentElement.className = theme;
 
-  console.log({
-    theme,
-    document,
-    documentClassName: document.documentElement.className,
-  });
-
   // Save the theme to localStorage
   localStorage.setItem("theme", theme);
 };
@@ -386,11 +379,9 @@ function toggleExplorer() {
     explorer &&
     (!explorer.style.display || explorer.style.display === "block")
   ) {
-    console.log("Hiding Explorer");
     explorer.style.display = "none";
     root.style.setProperty("--main-m-left", "2.5rem");
   } else if (explorer && explorer.style.display === "none") {
-    console.log("Showing Explorer");
     explorer.style.display = "block";
     root.style.setProperty("--main-m-left", "17.5rem");
   }

@@ -4,12 +4,16 @@ import styles from "../styles/Terminal.module.css";
 import { Commands } from "../public/secret/commands";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
-import { hostname } from "os";
 
 export const Terminal = () => {
   const [host, setHost] = React.useState("localhost");
   const terminalValue = useRef<string>("");
-  // const [bottom, setBottom] = React.useState(0);
+
+  // React.FormEvent<HTMLInputElement>
+  const onSubmit = (event: any) => {
+    event.preventDefault();
+    console.log(event.target);
+  };
 
   useEffect(() => {
     setHost(window.location.host);
@@ -64,151 +68,94 @@ export const Terminal = () => {
       {/* </div> */}
     </div>
   );
-};
-
-// React.FormEvent<HTMLInputElement>
-const onSubmit = (event: any) => {
-  event.preventDefault();
-  console.log(event.target);
-};
-
-function closeMenu() {
-  // const btn = document.getElementById('close-btn')\
-  console.log(styles.terminal);
-  const terminal = document.getElementById(styles.terminal);
-  console.log(terminal);
-
-  console.log("Adding hide class to terminal...");
-  terminal?.classList.add("hide");
-}
-
-function onKeyPress(event: React.KeyboardEvent) {
-  // console.log({ key: event.key })
-  if (event.key === "Enter") {
-    let foundCommand = false;
-
-    const target = event.target as HTMLTextAreaElement;
-
-    const lines = target.value.split("\n");
-
-    console.log({ lines });
-
-    let content = removePunctuation(lines[lines.length - 1].toLowerCase());
-    let splitContent = content.split(">");
-
-    if (splitContent.length > 1) {
-      content = splitContent[1].trim();
-    } else {
-      content = content.trim();
-    }
-
-    Commands.forEach((command) => {
-      if (
-        command.name.toLowerCase() === content ||
-        command.synonyms.includes(content)
-      ) {
-        foundCommand = true;
-        if (command.content.includes("redirect")) {
-          const path = command.content.split("redirect ")[1];
-
-          if (path.startsWith("http")) {
-            target.value += `\nRedirecting to ${path}\n${target.defaultValue}`;
-            window.open(path, "_blank");
+  
+  function closeMenu() {
+    // const btn = document.getElementById('close-btn')\
+    const terminal = document.getElementById(styles.terminal);
+  
+    terminal?.classList.add("hide");
+  }
+  
+  function onKeyPress(event: React.KeyboardEvent) {
+    // console.log({ key: event.key })
+    if (event.key === "Enter") {
+      let foundCommand = false;
+  
+      const target = event.target as HTMLTextAreaElement;
+  
+      const lines = target.value.split("\n");
+  
+      let content = removePunctuation(lines[lines.length - 1].toLowerCase());
+      let splitContent = content.split(">");
+  
+      if (splitContent.length > 1) {
+        content = splitContent[1].trim();
+      } else {
+        content = content.trim();
+      }
+  
+      Commands.forEach((command) => {
+        if (
+          command.name.toLowerCase() === content ||
+          command.synonyms.includes(content)
+        ) {
+          foundCommand = true;
+          if (command.content.includes("redirect")) {
+            const path = command.content.split("redirect ")[1];
+  
+            if (path.startsWith("http")) {
+              target.value += `\nRedirecting to ${path}\n${target.defaultValue}`;
+              window.open(path, "_blank");
+              return;
+            }
+  
+            target.value += `\nRedirecting to ${path}\nname@${host} `;
+            // target.value += `\nname@${hostname}>`;
+  
+            window.location.href = path;
+  
             return;
           }
-
-          target.value += `\nRedirecting to ${path}\nname@${hostname} `;
-          // target.value += `\nname@${hostname}>`;
-
-          window.location.href = path;
-
+  
+          terminalWrite(target, "\n" + command.content, 15);
           return;
         }
-
-        terminalWrite(target, "\n" + command.content, 15);
-        return;
+      });
+  
+      if (!foundCommand) {
+        console.log("Command not found." + content);
+        terminalWrite(target, "\nCommand not found.", 0);
       }
-    });
-
-    if (!foundCommand) {
-      console.log("Command not found." + content);
-      terminalWrite(target, "\nCommand not found.", 0);
+  }
+  
+  function terminalWrite(
+    element: HTMLTextAreaElement,
+    text: string,
+    speed: number
+  ) {
+    element.disabled = true;
+    let interval: NodeJS.Timeout = setTimeout(() => {}, 0);
+    // slowly add the text to the terminal
+  
+    if (text.length <= 0) {
+      clearTimeout(interval);
+      element.disabled = false;
+      element.value += `\nvisitor@${host} > `;
+    } else {
+      interval = setTimeout(() => {
+        let char = text.substring(0, 1);
+  
+        element.value += char;
+  
+        terminalWrite(element, text.substring(1, text.length), speed);
+      }, speed);
     }
-
-    // switch (content) {
-    //   case "about":
-    //     window.location.href = "/about";
-    //     break;
-    //   case "index":
-    //     window.location.href = "/";
-    //     break;
-    //   case "gallery":
-    //     window.location.href = "/gallery";
-    //     break;
-    //   case "exit":
-    //     window.close();
-    //     break;
-    //   case "help":
-    //     terminalWrite(
-    //       `|-------------Help Menu-------------|
-    //        |       Avaliable Commands          |
-    //        |       ------------------          |
-    //        | help: Show this menu              |
-    //        | about: Open the about page        |
-    //        | index | main: Go to the home page |
-    //        | gallery: Go to the gallery page   |
-    //       |------------------------------------|
-    //   `,
-    //       50
-    //     );
-    //   default:
-    //     console.log("Command not found.");
-    //     break;
-    // }
   }
-}
-
-function terminalWrite(
-  element: HTMLTextAreaElement,
-  text: string,
-  speed: number
-) {
-  // const terminal = document.querySelector(
-  //   "#terminal"
-  // ) as HTMLTextAreaElement;
-
-  // console.log({ text })
-
-  element.disabled = true;
-  let interval: NodeJS.Timeout = setTimeout(() => {}, 0);
-  // slowly add the text to the terminal
-
-  if (text.length <= 0) {
-    clearTimeout(interval);
-    element.disabled = false;
-    element.value += "\nvisitor@leviterry.dev > ";
-  } else {
-    interval = setTimeout(() => {
-      let char = text.substring(0, 1);
-
-      // console.log({ char });
-
-      // if (char == "\n") {
-      //   element.value += "<br>";
-      // } else if (char == " ") {
-      //   console.log("Adding space...");
-      //   element.value += "&nbsp;";
-      // }
-
-      element.value += char;
-
-      terminalWrite(element, text.substring(1, text.length), speed);
-    }, speed);
+  
+  function removePunctuation(text: string): string {
+    return text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
   }
-}
-
-function removePunctuation(text: string): string {
-  return text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+};
 }
 
 // function makeResizableDiv() {
