@@ -2,7 +2,7 @@
 import { NextPage } from "next";
 import { Card } from "../components/Card";
 import Head from "next/head";
-import { config } from "dotenv";
+// import { config } from "dotenv";
 import path from "path";
 import styles from '../styles/Gallery.module.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,13 +10,13 @@ import {
   faExternalLinkAlt,
   faCodeFork,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-  gql,
-} from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+// import {
+//   ApolloClient,
+//   createHttpLink,
+//   InMemoryCache,
+//   gql,
+// } from "@apollo/client";
+// import { setContext } from "@apollo/client/link/context";
 import {
   PinnedItemNode,
   PinnedItems,
@@ -25,10 +25,11 @@ import {
 } from "../utils/types";
 
 import React, { useEffect, useRef } from "react";
+import Link from "next/link";
 //#endregion
 
 // Load environment variables
-config({ path: path.join(__dirname, "..") });
+// config({ path: path.join(__dirname, "..") });
 
 /**
  * * Main Priority
@@ -63,7 +64,6 @@ const Gallery: NextPage<GalleryProps> = ({
     terminalOpen.current = terminal?.style.display === "block" ? true : false;
   })
   
-  
   return (
     <>
       <Head>
@@ -71,17 +71,17 @@ const Gallery: NextPage<GalleryProps> = ({
       </Head>
 
       <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          margin: 0,
-          padding: 0,
-          width: "100%",
-          height: `calc(100% - var(--main-m-top) - ${
-            terminalOpen.current ? "5rem" : "0"
-          })`,
-          overflowY: "scroll",
-        }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        margin: 0,
+        padding: 0,
+        width: "100%",
+        height: `calc(100% - var(--main-m-top) - ${
+          terminalOpen.current ? "5rem" : "0"
+        })`,
+        // overflowY: "scroll",
+      }}
       >
         <br />
 
@@ -101,7 +101,7 @@ const Gallery: NextPage<GalleryProps> = ({
                 <Card
                   key={`pinned-${repo.id}`}
                   isPinned
-                  title={<span>{repo.name}</span>}
+                  header={<span>{repo.name}</span>}
                   description="No Given Description"
                   content={
                     <>
@@ -172,13 +172,15 @@ const Gallery: NextPage<GalleryProps> = ({
                       )}
                       <br />
                       <br />
-                      <FontAwesomeIcon icon={faExternalLinkAlt} />{" "}
-                      <a href={repo.url} target="_blank" rel="noreferrer">
-                        View Source
-                      </a>
                     </>
                   }
-                  link={repo.homepageUrl || undefined}
+                  link={repo.homepageUrl}
+                  footer={
+                    <a href={repo.url} target="_blank" rel="noreferrer">
+                      View Source {" "} <FontAwesomeIcon icon={faExternalLinkAlt} />
+                    </a>
+                  }
+                  // imageOptions={{ src: "https://placehold.co/30x40", location: "left", alt: "Placeholder Image" }}
                 />
               ))}
             </div>
@@ -188,7 +190,7 @@ const Gallery: NextPage<GalleryProps> = ({
         <br />
         <br />
 
-        <h1>Personal Projects</h1>
+        <h1>More Work</h1>
 
         <br />
 
@@ -206,7 +208,7 @@ const Gallery: NextPage<GalleryProps> = ({
             .map((repo) => (
               <Card
                 key={repo.id}
-                title={
+                header={
                   <span>
                     {repo.isFork ? (
                       <span>
@@ -225,33 +227,34 @@ const Gallery: NextPage<GalleryProps> = ({
                     <br />
 
                     {repo.languages && repo.languages.edges.length > 0 ? (
-                      <div
+                        <div
                         key={`${repo.id}+languages`}
                         className={styles.languages}
-                      >
-                        {repo.languages.edges.map(
-                          ({ node: { name, color }, size }) => (
-                            <span key={`${repo.id}+${name}`}>
-                              <div
-                              className={styles.languageColor}
-                                style={{
-                                  backgroundColor: color
-                                }}
-                              />
-                              <p
-                                className={styles.languageName}
-                              >
-                                {name || "Unknown Language"}{" "}
-                                {(
-                                  (size / repo.languages.totalSize) *
-                                  100
-                                ).toFixed(1)}
-                                %
-                              </p>
-                            </span>
-                          )
-                        )}
-                      </div>
+                        >
+                        {repo.languages.edges
+                          .sort((a, b) => b.size - a.size)
+                          .map(({ node: { name, color }, size }) => (
+                          <span 
+                            key={`${repo.id}+${name}`}
+                            style={{ 
+                            display: 'flex', 
+                            alignItems: 'center',
+                            gap: '0.5rem'
+                            }}
+                          >
+                            <div
+                            className={styles.languageColor}
+                            style={{
+                              backgroundColor: color
+                            }}
+                            />
+                            <p className={styles.languageName}>
+                            {name || "Unknown Language"}{" "}
+                            {((size / repo.languages.totalSize) * 100).toFixed(1)}%
+                            </p>
+                          </span>
+                          ))}
+                        </div>
                     ) : (
                       <p style={{ fontSize: "0.75rem" }}>No Known Languages</p>
                     )}
@@ -286,16 +289,14 @@ const Gallery: NextPage<GalleryProps> = ({
 
                     <br />
                     <br />
-
-                    <a href={repo.url} target="_blank" rel="noreferrer">
-                      <span>
-                        <FontAwesomeIcon icon={faExternalLinkAlt} /> View
-                        Source
-                      </span>
-                    </a>
                   </>
                 }
                 link={repo.homepageUrl || undefined}
+                footer={
+                    <a href={repo.url} target="_blank" rel="noreferrer">
+                      View Source {" "} <FontAwesomeIcon icon={faExternalLinkAlt} />{" "}
+                    </a>
+                  }
               />
             ))}
         </div>
@@ -305,16 +306,16 @@ const Gallery: NextPage<GalleryProps> = ({
 };
 
 export async function getStaticProps() {
-  const httpLink = createHttpLink({ uri: "https://api.github.com/graphql" });
+  // const httpLink = createHttpLink({ uri: "https://api.github.com/graphql" });
 
-  const authLink = setContext((_, { headers }) => {
-    return {
-      headers: {
-        ...headers,
-        authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      },
-    };
-  });
+  // const authLink = setContext((_, { headers }) => {
+  //   return {
+  //     headers: {
+  //       ...headers,
+  //       authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+  //     },
+  //   };
+  // });
 
   const headers = {
     "Content-Type": "application/json",

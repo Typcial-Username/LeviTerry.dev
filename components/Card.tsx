@@ -11,23 +11,25 @@ type imageOptions = {
   alt: string;
 };
 interface CardProps {
-  title: React.ReactNode;
+  header: React.ReactNode;
   isPinned?: boolean;
   description?: string;
   content?: React.ReactNode;
   link?: string;
   linkHoverText?: string;
   imageOptions?: imageOptions;
+  footer?: React.ReactNode;
 }
 
 export const Card = ({
-  title,
+  header: title,
   isPinned,
   description,
   content,
   link,
   imageOptions,
   linkHoverText,
+  footer
 }: CardProps) => {
   if (description) {
     description = description.replaceAll("\n", "--");
@@ -44,22 +46,23 @@ export const Card = ({
           <Image src={imageOptions.src} alt={imageOptions.alt} fill />
         : null
       : null}
+
       <h2 className="border-bottom">
         {isPinned ?
           <span className={styles.pinned}>📌 </span>
         : null}
         {link ?
           <span>
-            <FontAwesomeIcon icon={faExternalLinkAlt} />{" "}
-            <a
+            <Link
               className={styles.link}
               href={link}
               target="_blank"
               rel="noreferrer"
               title={linkHoverText || "Link to project"}
             >
-              {title}
-            </a>
+              {title}{" "}
+              <FontAwesomeIcon icon={faExternalLinkAlt} />
+            </Link>
           </span>
         : title}
       </h2>
@@ -73,6 +76,14 @@ export const Card = ({
           <Image src={imageOptions.src} alt={imageOptions.alt} />
         : null
       : null}
+
+      {
+        footer ?
+          <div className={styles.footer}>
+            {footer}
+          </div>
+        : null
+      }
     </div>
   );
 };

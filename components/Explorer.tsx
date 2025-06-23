@@ -50,15 +50,14 @@ const Explorer = () => {
         onClick={() => setHeaderOpen(!headerOpen)}
       >
         <span>
-          {headerOpen ? (
+          {headerOpen ?
             <>
               <FontAwesomeIcon icon={faAngleDown} />{" "}
             </>
-          ) : (
-            <>
+          : <>
               <FontAwesomeIcon icon={faAngleRight} />{" "}
             </>
-          )}
+          }
           {/* <FontAwesomeIcon icon={faAngleDown} />{" "} */}
           <p style={{ display: "inline-block" }}>{host}</p>
         </span>
@@ -66,9 +65,9 @@ const Explorer = () => {
 
       <div
         style={
-          headerOpen
-            ? { display: "block", marginTop: "2.5%" }
-            : { display: "none" }
+          headerOpen ?
+            { display: "block", marginTop: "2.5%" }
+          : { display: "none" }
         }
         className={`${styles.item} ${styles.dropdown}`}
       >

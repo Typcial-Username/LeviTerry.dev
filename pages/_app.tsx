@@ -6,7 +6,17 @@ import Head from "next/head";
 import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
 
+import { config } from "dotenv";
+import path from "path";
+
+// import { webcrypto } from 'node:crypto'
+// globalThis.crypto = webcrypto as any;
+
+// import 'altcha'
+
 function MyApp({ Component, pageProps }: AppProps) {
+  // console.log("RECAPTCHA_SITE_KEY: ", process.env.RECAPTCHA_SITE_KEY);
+
   // All the key presses made within the timeout
   let allKeyPresses: MutableRefObject<string[]> = useRef<string[]>([]);
   // How long to wait before processing the key presses
@@ -37,23 +47,27 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [handleKeypress]);
 
   return (
-    <ReCaptchaProvider reCaptchaKey={process.env.RECAPTCHA_SITE_KEY} onLoad={() => {console.log("ReCaptcha Loaded!")}}>
-    <Layout>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-      <Component {...pageProps} />
-    </Layout>
-    </ReCaptchaProvider>
-  );
+    // <ReCaptchaProvider
+    //   reCaptchaKey={process.env.RECAPTCHA_SITE_KEY}
+    //   onLoad={() => {
+    //     console.log("ReCaptcha Loaded!");
+    //   }}
+    // >
+      <Layout>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+        </Head>
+        <Component {...pageProps} />
+      </Layout>
+  ); 
+  {/* </ReCaptchaProvider> */}
 }
 
 function handleKeyPressTimeout(allKeyPresses: string[]) {
-  console.log("All Key Presses: ", allKeyPresses);
-
   const keyPresses = allKeyPresses.join("+");
-
-  console.log("Combined Key Presses: ", keyPresses);
 
   if (keyPresses === "Control+b") {
     toggleExplorer();
@@ -88,11 +102,13 @@ function toggleTerminal() {
 
   if (
     terminal &&
-    (!terminal.style.display || terminal.style.display === "block")
+    (!terminal.style.display || terminal?.classList.contains("show"))
   ) {
-    terminal.style.display = "none";
-  } else if (terminal && terminal.style.display === "none") {
-    terminal.style.display = "block";
+    terminal?.classList.remove("show");
+    terminal?.classList.add("hide");
+  } else if (terminal && terminal?.classList.contains("hide")) {
+    terminal?.classList.remove("hide");
+    terminal?.classList.add("show");
   }
 }
 

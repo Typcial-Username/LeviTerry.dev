@@ -110,6 +110,8 @@ function formatJson(
 ) {
   let curIdx = 0;
 
+  console.log("Formatting JSON: ", json, idx);
+
   // Check if the json is an array
   if (Array.isArray(json)) {
     const arr = json as any[];
@@ -128,7 +130,7 @@ function formatJson(
         <p className={styles.json} style={{ color: "var(--clr-json-array)" }}>
           [
         </p>
-        {/* If the array has to wrap */}
+        {/* If the array doesn't has to wrap */}
         {!wrap &&
           arr.map((val, index) => (
             <>
@@ -143,7 +145,7 @@ function formatJson(
             </>
           ))}
 
-        {/* If the array doesn't have to wrap */}
+        {/* If the array has to wrap */}
         {wrap &&
           arr.map((val, index) => (
             <>
@@ -226,6 +228,7 @@ function formatJson(
                     {typeof obj[key] === 'string' && obj[key].startsWith('http') ? <span>&quot;<Link href={obj[key]} target="_blank">{obj[key]}</Link>&quot;</span> : JSON.stringify(obj[key])}
                   </p>
                 )}
+                
               </span>
               {index !== Object.keys(obj).length - 1 && (
                 <p className={styles.json}>,</p>

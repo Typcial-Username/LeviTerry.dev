@@ -8,7 +8,7 @@ export const AboutData = {
   // age: age,
   education: {
     school: "University of Advancing Technology (UAT)",
-    degree: "Robotics and Embedded Systems (B.S.) - Digital Maker and Fabrication (B.S.)",
+    degree: "Robotics Engineering (B.S.) - Digital Maker and Fabrication (B.S.)",
     universityWebsite: "https://www.uat.edu/",
     year: "Junior",
     expectedGraduation: "May 2026",

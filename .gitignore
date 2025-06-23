@@ -38,3 +38,8 @@ next-env.d.ts
 
 # Local Netlify folder
 .netlify
+
+# Random
+ai-program-gallery.tsx
+pages/api/programs.ts
+ai_programs/*

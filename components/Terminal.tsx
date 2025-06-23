@@ -31,6 +31,7 @@ export const Terminal = () => {
       // className="container"
       data-name="terminal"
       id={styles.terminal}
+      className="show"
       style={{
         // borderTop: "1px solid whitesmoke",
         backgroundColor: "var(--clr-bg)",
@@ -46,13 +47,7 @@ export const Terminal = () => {
         </button>
       </span>
 
-      {/* <div className={styles.text}> */}
       <form onSubmit={onSubmit} className={styles.text}>
-        {/* <span> */}
-        {/* <label htmlFor="terminal">
-            visitor@{host}
-            {">"}
-          </label> */}
         <textarea
           name="terminal"
           id="terminal"
@@ -63,9 +58,7 @@ export const Terminal = () => {
           spellCheck={false}
           className={styles.text}
         />
-        {/* </span> */}
       </form>
-      {/* </div> */}
     </div>
   );
   

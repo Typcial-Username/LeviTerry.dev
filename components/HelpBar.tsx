@@ -19,35 +19,18 @@ const HelpBar = () => {
 
   return (
     <div className={styles.header}>
-      <div
-        style={{
-          width: "24px",
-          height: "auto",
-          textAlign: "center",
-          justifyContent: "center",
-          display: "flex",
-        }}
-      >
+     
         <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            width: "100%",
-            height: "2rem",
-            position: "relative",
-          }}
+          className={styles.logoContainer}
         >
           <Image
             src={"/images/headshot.jpg"}
             alt="Levi Terry"
-            fill={true}
+            fill
             sizes="100%"
-            // width={`100%`}
-            // height={48}
-            className="logo"
+            className={styles.headshot}
+            priority
           />
-        </div>
       </div>
 
       <div className={styles.mainContent}>

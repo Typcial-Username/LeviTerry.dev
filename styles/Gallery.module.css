@@ -1,6 +1,6 @@
 .languages {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    display: flex;
+    /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); */
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
