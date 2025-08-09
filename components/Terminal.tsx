@@ -31,7 +31,7 @@ export const Terminal = () => {
       // className="container"
       data-name="terminal"
       id={styles.terminal}
-      className="show"
+      className="hide"
       style={{
         // borderTop: "1px solid whitesmoke",
         backgroundColor: "var(--clr-bg)",

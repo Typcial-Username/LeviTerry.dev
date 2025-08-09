@@ -100,15 +100,8 @@ function toggleTerminal() {
     "[data-name=terminal]"
   ) as HTMLDivElement;
 
-  if (
-    terminal &&
-    (!terminal.style.display || terminal?.classList.contains("show"))
-  ) {
-    terminal?.classList.remove("show");
-    terminal?.classList.add("hide");
-  } else if (terminal && terminal?.classList.contains("hide")) {
-    terminal?.classList.remove("hide");
-    terminal?.classList.add("show");
+  if (terminal) {
+    terminal.classList.toggle("hide");
   }
 }
 

@@ -59,3 +59,20 @@
   color: var(--clr-primary);
   background-color: transparent;
 }
+
+/* Depth-based indentation classes */
+.depth0 {
+  margin-left: 5% !important;
+}
+
+.depth1 {
+  margin-left: 10% !important;
+}
+
+.depth2 {
+  margin-left: 15% !important;
+}
+
+.depth3 {
+  margin-left: 20% !important;
+}

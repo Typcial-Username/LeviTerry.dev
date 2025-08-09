@@ -1,6 +1,7 @@
 'use client'
 
 import HelpBar from "./HelpBar";
+import HelpBarModern from "./HelpBarModern"; 
 // import { Sidebar } from "./Sidebar";
 import { Terminal } from "./Terminal";
 import dynamic from "next/dynamic";
@@ -30,6 +31,13 @@ export default function Layout({ children }: LayoutProps) {
   const explorerRef = useRef<HTMLDivElement | null>(null);
   const selectedRef = useRef<HTMLDivElement | null>(null);
   const [selectedExtension, setSelectedExtension] = useState("html");
+  const [selectedFileName, setSelectedFileName] = useState(() => {
+    // Initialize with URL path as fallback
+    if (typeof window !== "undefined") {
+      return pathName(window.location.pathname);
+    }
+    return "index";
+  });
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -47,9 +55,28 @@ export default function Layout({ children }: LayoutProps) {
 
      const findSelected = () => {
         const selected = explorer.querySelector(`.${styles.selected}`) as HTMLDivElement | null;
-        if (selected?.innerText.includes(".")) {
-          const ext = selected.innerText.split(".").pop();
-          if (ext) setSelectedExtension(ext);
+        if (selected?.innerText) {
+          const fullFileName = selected.innerText.trim();
+          
+          if (fullFileName.includes(".")) {
+            // It's a file with extension
+            const ext = fullFileName.split(".").pop();
+            const nameWithoutExt = fullFileName.split(".").slice(0, -1).join(".");
+            
+            if (ext) setSelectedExtension(ext);
+            setSelectedFileName(nameWithoutExt);
+          } else {
+            // It's a folder or file without extension
+            setSelectedFileName(fullFileName);
+            setSelectedExtension("html"); // Default extension
+          }
+        } else {
+          // Fallback to URL path if no file is selected
+          if (typeof window !== "undefined") {
+            const urlFileName = pathName(window.location.pathname);
+            setSelectedFileName(urlFileName);
+            setSelectedExtension("html");
+          }
         }
       };
 
@@ -62,15 +89,44 @@ export default function Layout({ children }: LayoutProps) {
     console.log({
       explorer: explorerRef.current,
       selected: selectedRef.current,
+      selectedFileName,
+      selectedExtension,
     });
   
 
     return () => {
       observer.disconnect()
     };
-    }, 0);
+    }, 100); // Increased timeout to ensure explorer is fully loaded
 
     return () => clearTimeout(timeout);
+  }, [selectedFileName, selectedExtension]);
+
+  // Separate effect to handle URL changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const handleLocationChange = () => {
+        const urlFileName = pathName(window.location.pathname);
+        // Only update if no file is currently selected in explorer
+        const explorer = document.getElementById("explorer");
+        const selected = explorer?.querySelector(`.${styles.selected}`);
+        
+        if (!selected || !selected.textContent?.trim()) {
+          setSelectedFileName(urlFileName);
+          setSelectedExtension("html");
+        }
+      };
+
+      // Handle initial load and navigation
+      handleLocationChange();
+      
+      // Listen for browser navigation events
+      window.addEventListener('popstate', handleLocationChange);
+      
+      return () => {
+        window.removeEventListener('popstate', handleLocationChange);
+      };
+    }
   }, []);
 
   return (
@@ -80,11 +136,7 @@ export default function Layout({ children }: LayoutProps) {
       <HelpBar />
 
       <HeaderNoSSR
-        file={
-          typeof window !== "undefined" ?
-            pathName(window.location.pathname)
-          : "unknown.html"
-        }
+        file={selectedFileName}
         extension={selectedExtension}
       />
 

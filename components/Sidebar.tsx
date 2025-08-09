@@ -67,6 +67,47 @@ const Sidebar = () => {
     const themeChanger = document.getElementById("theme") as HTMLSelectElement;
 
     themeChanger.value = selectedTheme;
+
+    // Add click-outside-to-close functionality for dialogs
+    const handleDialogClickOutside = (e: MouseEvent) => {
+      const contactDialog = document.getElementById("contact") as HTMLDialogElement;
+      const settingsDialog = document.getElementById("settings") as HTMLDialogElement;
+      
+      // Check if contact dialog is open and click is outside
+      if (contactDialog?.open && e.target === contactDialog) {
+        contactDialog.close();
+      }
+      
+      // Check if settings dialog is open and click is outside  
+      if (settingsDialog?.open && e.target === settingsDialog) {
+        settingsDialog.close();
+      }
+    };
+
+    // Add keyboard support (Escape key to close)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        const contactDialog = document.getElementById("contact") as HTMLDialogElement;
+        const settingsDialog = document.getElementById("settings") as HTMLDialogElement;
+        
+        if (contactDialog?.open) {
+          contactDialog.close();
+        }
+        if (settingsDialog?.open) {
+          settingsDialog.close();
+        }
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener('click', handleDialogClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Cleanup event listeners on unmount
+    return () => {
+      document.removeEventListener('click', handleDialogClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [])
 
   return (
@@ -190,75 +231,60 @@ const Sidebar = () => {
 
         <h1 className={styles.modalHeader}>Contact Me</h1>
 
-        {/* Modal Content */}
-        <ul
-          style={{
-            margin: "auto",
-            padding: "auto",
-            alignContent: "center",
-            justifyContent: "center",
-            display: "flex",
-          }}
+        {/* Contact Form */}
+        <form
+          className={styles.contactForm}
+          id="contact-form"
+          onSubmit={onContactFormSubmit}
         >
-          {/* Contact Form */}
-          <form
-            className={styles.contact}
-            id="contact"
-            onSubmit={onContactFormSubmit}
-          >
+          {/* Name Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="contact-name">Name</label>
+            <TextInput
+              id="contact-name"
+              type="text"
+              name="name"
+              placeholder="Your name"
+              onChange={(e) => setContactName((e.target as HTMLInputElement).value)}
+            />
+          </div>
 
-            <span>
-              {/* Name Input */}
-              <label htmlFor="contact-name">Name: </label>
-              <TextInput
-                id="contact-name"
-                type="text"
-                name="name"
-                placeholder="Your name"
-                onChange={(e) => setContactName((e.target as HTMLInputElement).value)}
-              />
-            </span>
+          {/* Email Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="contact-email">Email</label>
+            <TextInput
+              id="contact-email"
+              type="email"
+              name="email"
+              placeholder="you@yourdomain.com"
+              onChange={(e) => setContactEmail((e.target as HTMLInputElement).value)}
+            />
+          </div>
 
-            <br />
-            {/* Email Input */}
-            <span>
-              <label htmlFor="contact-email">Email: </label>
-              <TextInput
-                id="contact-email"
-                type="email"
-                name="email"
-                placeholder="you@yourdomain.com"
-                onChange={(e) => setContactEmail((e.target as HTMLInputElement).value)}
-              />
-            </span>
-            <br />
+          {/* Message Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="contact-message">Message</label>
+            <textarea
+              id="contact-message"
+              className={styles.textarea}
+              name="message"
+              placeholder="Your message here..."
+              rows={5}
+              onChange={(e) => setContactMessage((e.target as HTMLTextAreaElement).value)}
+            />
+          </div>
 
-            {/* Message Input */}
-            <span>
-              <label htmlFor="contact-message">Message: </label>
-              <textarea
-                id="contact-message"
-                className={styles.text}
-                name="message"
-                placeholder="Message"
-                onChange={(e) => setContactMessage((e.target as HTMLTextAreaElement).value)}
-              />
-            </span>
-
-            <br />
-            {/* Submit Button */}
-            <button type="submit" name="submit">
-              Submit
-            </button>
-            {/* <Button name="submit" type="submit" text="Submit" /> */}
-          </form>
-        </ul>
+          {/* Submit Button */}
+          <button type="submit" className={styles.submitButton}>
+            Send Message
+          </button>
+        </form>
       </dialog>
 
       {/* Settings Modal*/}
       <dialog
         id="settings"
-        className={styles.menu}
+        className={styles.settingsMenu}
         suppressHydrationWarning={true}
       >
         {/* Close Button */}
@@ -272,28 +298,17 @@ const Sidebar = () => {
 
         <h1 className={styles.modalHeader}>Settings</h1>
 
-        {/* Modal Content */}
-        {/* <ul
-          style={{
-            margin: "auto",
-            padding: "auto",
-            alignContent: "center",
-            justifyContent: "center",
-            display: "flex",
-          }}
-        > */}
         {/* Settings Form */}
-        <form style={{ margin: "auto", padding: 0 }}>
-          <label htmlFor="theme">Theme: </label>
-          {/* <Dropdown options={themes} /> */}
-          {/* Theme selector */}
-          <select name="theme" id="theme" onChange={onThemeChange}>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="blue">Blue</option>
-          </select>
+        <form className={styles.settingsForm}>
+          <div className={styles.formGroup}>
+            <label htmlFor="theme">Theme</label>
+            <select name="theme" id="theme" className={styles.select} onChange={onThemeChange}>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="blue">Blue</option>
+            </select>
+          </div>
         </form>
-        {/* </ul> */}
       </dialog>
     </aside>
   );

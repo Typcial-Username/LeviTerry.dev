@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ffmpeg.setFfmpegPath(ffmpegPath);
     const form = formidable({ keepExtensions: true })
 
-    const { files } = await new Promise<{ fields: formidable.Fields, files: formidable.Files }>((resolve, reject) => {
+    const { files, fields } = await new Promise<{ fields: formidable.Fields, files: formidable.Files }>((resolve, reject) => {
         form.parse(req, (err, fields, files) => {
             if (err) reject(err);
             else resolve({ fields, files })
@@ -22,7 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     const file = files[0] || files.file; // Access the file from the parsed form data
-        
+    const frequency = parseFloat(fields.frequency && fields.frequency.length > 0 ? fields.frequency[0] as string : '');
+
     if (!file) {
         console.error('No file found in form data');
         return res.status(400).json({ error: 'No file found in form data' });
@@ -67,10 +68,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     // Read PCM data from the WAV file
     const pcm = fs.readFileSync(wavPath);
-    console.log("PCM data length:", pcm.length)
 
     // Modulate the audio data
-    const finished = await modulateAudio(pcm)
+    const finished = await modulateAudio(pcm, frequency)
 
     fs.writeFileSync(modulatedPath, new Uint8Array(finished));
 
@@ -80,17 +80,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 function modulateAudio(file:Buffer, carrierHz: number = 40000, sampleRate: number = 44100): Buffer {
-    // Placeholder for audio modulation logic
-    // You can use libraries like ffmpeg or any other audio processing library here
     const carrier = 2 * Math.PI * carrierHz / sampleRate
-    const modulated = new Float32Array(file.length / 2); // Placeholder for modulated audio data
+    const modulated = new Float32Array(file.length / 2);
 
     for (let i = 0; i < modulated.length; i++) {
-        const sample = file.readInt16LE( i * 2) / 32768; // Convert to float
-        modulated[i] = sample * Math.sin(carrier * i); // Simple modulation example
+        const sample = file.readInt16LE(i * 2) / 32768; // Convert to float
+        modulated[i] = sample * Math.sin(carrier * i);
     }
 
-    // Example: return a dummy response for now
     const int16Data = new Int16Array(modulated.map(x => Math.round(x * 32767)));
     return Buffer.from(int16Data.buffer);
 }

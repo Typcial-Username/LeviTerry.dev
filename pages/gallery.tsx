@@ -1,35 +1,22 @@
 //#region Imports
 import { NextPage } from "next";
-import { Card } from "../components/Card";
 import Head from "next/head";
-// import { config } from "dotenv";
 import path from "path";
 import styles from '../styles/Gallery.module.css'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
-  faExternalLinkAlt,
-  faCodeFork,
-} from "@fortawesome/free-solid-svg-icons";
-// import {
-//   ApolloClient,
-//   createHttpLink,
-//   InMemoryCache,
-//   gql,
-// } from "@apollo/client";
-// import { setContext } from "@apollo/client/link/context";
-import {
-  PinnedItemNode,
   PinnedItems,
   RepositoryNode,
   User,
 } from "../utils/types";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import Link from "next/link";
+import { RepositoryCard } from "../components/RepositoryCard";
+import { SkeletonCards } from "../components/SkeletonCard";
+import { RepositoryFilter, FilterOptions } from "../components/RepositoryFilter";
+import { filterRepositories, getRepositoryStats } from "../utils/repositoryUtils";
 //#endregion
-
-// Load environment variables
-// config({ path: path.join(__dirname, "..") });
 
 /**
  * * Main Priority
@@ -56,13 +43,39 @@ const Gallery: NextPage<GalleryProps> = ({
   fullPinnedRepos,
 }) => {
   let terminalOpen = useRef<boolean>(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [filters, setFilters] = useState<FilterOptions>({
+    searchTerm: '',
+    selectedLanguage: '',
+    selectedTopic: '',
+    sortBy: 'name',
+    showForks: true
+  });
+
+  // Filter repositories based on current filters
+  const filteredRepositories = useMemo(() => {
+    return filterRepositories(allRepos, filters);
+  }, [allRepos, filters]);
+
+  // Get repository statistics
+  const repoStats = useMemo(() => {
+    return getRepositoryStats([...allRepos, ...fullPinnedRepos]);
+  }, [allRepos, fullPinnedRepos]);
+
   useEffect(() => {
-      const terminal = document.querySelector(
-    "[data-name=terminal]"
-  ) as HTMLDivElement;
+    const terminal = document.querySelector(
+      "[data-name=terminal]"
+    ) as HTMLDivElement;
 
     terminalOpen.current = terminal?.style.display === "block" ? true : false;
-  })
+    
+    // Simulate loading time for demonstration
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
   
   return (
     <>
@@ -71,252 +84,127 @@ const Gallery: NextPage<GalleryProps> = ({
       </Head>
 
       <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        margin: 0,
-        padding: 0,
-        width: "100%",
-        height: `calc(100% - var(--main-m-top) - ${
-          terminalOpen.current ? "5rem" : "0"
-        })`,
-        // overflowY: "scroll",
-      }}
+        className={styles.galleryContainer}
+        style={{
+          height: `calc(100% - var(--main-m-top) - ${
+            terminalOpen.current ? "5rem" : "0"
+          })`,
+        }}
       >
         <br />
 
-        {fullPinnedRepos?.length > 0 && (
-          <>
-            <h1>Featured Projects</h1>
-            <br />
+        {/* Repository Statistics */}
+        <div className={styles.statsContainer}>
+          <h2>Projects Overview</h2>
+          <div className={styles.statsGrid}>
+            <div className={styles.statItem}>
+              <span className={styles.statNumber}>{repoStats.totalRepos}</span>
+              <span className={styles.statLabel}>Total Repositories</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statNumber}>{repoStats.totalStars}</span>
+              <span className={styles.statLabel}>Total Stars</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statNumber}>{repoStats.totalForks}</span>
+              <span className={styles.statLabel}>Forks</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statNumber}>{repoStats.topLanguages.length}</span>
+              <span className={styles.statLabel}>Languages Used</span>
+            </div>
+          </div>
+        </div>
 
-            <div
-              className="grid"
-              style={{
-                margin: "0 5% 0 5%",
-                gridTemplateColumns: "repeat(3, 1fr)",
-              }}
-            >
-              {fullPinnedRepos.map((repo) => (
-                <Card
-                  key={`pinned-${repo.id}`}
-                  isPinned
-                  header={<span>{repo.name}</span>}
-                  description="No Given Description"
-                  content={
-                    <>
-                      <br />
-                      {
-                        repo.languages && repo.languages.edges.length > 0 ? (
-                          <div
-                            key={`${repo.id}+languages`}
-                            className={styles.languages}
-                          >
-                            {repo.languages.edges.map(
-                              ({ node: { name, color }, size }) => (
-                                <span key={`${repo.id}+${name}`}>
-                                  <div
-                                    className={styles.languageColor}
-                                    style={{
-                                      backgroundColor: color,
-                                    }}
-                                  />
-                                  <p className={styles.languageName}>
-                                    {name || "Unknown Language"}{" "}
-                                    {((size / repo.languages.totalSize) * 100).toFixed(
-                                      1
-                                    )}
-                                    %
-                                  </p>
-                                </span>
-                              )
-                            )}
-                          </div>
-                        ) : (
-                          <p style={{ fontSize: "0.75rem" }}>
-                            No Known Languages
-                          </p>
-                        )
-                      }
-                      <br />
-                      <p key={`${repo.id}+stars`}>
-                        ⭐ Stars {repo.stargazerCount}
-                      </p>
-                      <br />
-                      {repo.repositoryTopics &&
-                      repo.repositoryTopics.edges.length > 0 ? (
-                        repo.repositoryTopics.edges.map(({ node }) => (
-                          <span
-                            key={`${repo.id}+${node.topic.name}`}
-                            style={{
-                              backgroundColor: "#121D2F",
-                              color: "#3493F8",
-                              borderRadius: "0.5rem",
-                              padding: "0.25rem",
-                              margin: "0.25rem",
-                            }}
-                            onMouseOver={(e) => {
-                              e.currentTarget.style.color = "whitesmoke";
-                              e.currentTarget.style.backgroundColor = "#1f6feb";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.color = "#3493F8";
-                              e.currentTarget.style.backgroundColor = "#121D2F";
-                            }}
-                          >
-                            {node.topic.name}
-                          </span>
-                        ))
-                      ) : (
-                        <p style={{ fontSize: "0.75rem" }}>No Topics</p>
-                      )}
-                      <br />
-                      <br />
-                    </>
-                  }
-                  link={repo.homepageUrl}
-                  footer={
-                    <a href={repo.url} target="_blank" rel="noreferrer">
-                      View Source {" "} <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </a>
-                  }
-                  // imageOptions={{ src: "https://placehold.co/30x40", location: "left", alt: "Placeholder Image" }}
-                />
-              ))}
+        {/* Repository Filter */}
+        <RepositoryFilter
+          filters={filters}
+          onFiltersChange={setFilters}
+          repositories={allRepos}
+        />
+
+        {isLoading ? (
+          <>
+            {/* Skeleton for Featured Projects */}
+            <div className={styles.sectionHeader}>
+              <h1>Featured Projects</h1>
+            </div>
+            <div className={styles.repositoryGrid}>
+              <SkeletonCards count={3} isPinned={true} />
+            </div>
+            
+            {/* Skeleton for More Work */}
+            <div className={styles.sectionHeader}>
+              <h1>More Work</h1>
+            </div>
+            <div className={styles.repositoryGrid}>
+              <SkeletonCards count={8} />
+            </div>
+          </>
+        ) : (
+          <>
+            {fullPinnedRepos?.length > 0 && (
+              <>
+                <div className={styles.sectionHeader}>
+                  <h1>Featured Projects</h1>
+                </div>
+
+                <div className={styles.repositoryGrid}>
+                  {fullPinnedRepos.map((repo) => (
+                    <RepositoryCard
+                      key={`pinned-${repo.id}`}
+                      repository={repo}
+                      isPinned={true}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+
+            <div className={styles.sectionHeader}>
+              <h1>
+                More Work{" "}
+                {filteredRepositories.length !== allRepos.length && (
+                  <span className={styles.filterCount}>
+                    ({filteredRepositories.length} of {allRepos.length})
+                  </span>
+                )}
+              </h1>
+            </div>
+
+            <div className={styles.repositoryGrid}>
+              {filteredRepositories.length > 0 ? (
+                filteredRepositories.map((repo) => (
+                  <RepositoryCard key={repo.id} repository={repo} />
+                ))
+              ) : (
+                <div className={styles.emptyState}>
+                  <p>No repositories match your current filters.</p>
+                  <button
+                    className={styles.clearFiltersButton}
+                    onClick={() =>
+                      setFilters({
+                        searchTerm: "",
+                        selectedLanguage: "",
+                        selectedTopic: "",
+                        sortBy: "name",
+                        showForks: true,
+                      })
+                    }
+                  >
+                    Clear Filters
+                  </button>
+                </div>
+              )}
             </div>
           </>
         )}
-
-        <br />
-        <br />
-
-        <h1>More Work</h1>
-
-        <br />
-
-        <div
-          className="grid"
-          style={{
-            margin: "0 5% 0 5%",
-            gridTemplateColumns: "repeat(4, 1fr)",
-          }}
-        >
-          {allRepos
-            .sort((a, b) => {
-              return a.name.localeCompare(b.name);
-            })
-            .map((repo) => (
-              <Card
-                key={repo.id}
-                header={
-                  <span>
-                    {repo.isFork ? (
-                      <span>
-                        <FontAwesomeIcon icon={faCodeFork} /> {repo.name}
-                      </span>
-                    ) : (
-                      repo.name
-                    )}
-                  </span>
-                }
-                description={
-                  repo.description ? repo.description : "No Given Description"
-                }
-                content={
-                  <>
-                    <br />
-
-                    {repo.languages && repo.languages.edges.length > 0 ? (
-                        <div
-                        key={`${repo.id}+languages`}
-                        className={styles.languages}
-                        >
-                        {repo.languages.edges
-                          .sort((a, b) => b.size - a.size)
-                          .map(({ node: { name, color }, size }) => (
-                          <span 
-                            key={`${repo.id}+${name}`}
-                            style={{ 
-                            display: 'flex', 
-                            alignItems: 'center',
-                            gap: '0.5rem'
-                            }}
-                          >
-                            <div
-                            className={styles.languageColor}
-                            style={{
-                              backgroundColor: color
-                            }}
-                            />
-                            <p className={styles.languageName}>
-                            {name || "Unknown Language"}{" "}
-                            {((size / repo.languages.totalSize) * 100).toFixed(1)}%
-                            </p>
-                          </span>
-                          ))}
-                        </div>
-                    ) : (
-                      <p style={{ fontSize: "0.75rem" }}>No Known Languages</p>
-                    )}
-
-                    <p key={`${repo.id}+stars`}>
-                      ⭐ Stars {repo.stargazerCount}
-                    </p>
-
-                    <br />
-
-                    {repo.repositoryTopics &&
-                    repo.repositoryTopics.edges.length > 0 ? (
-                      repo.repositoryTopics.edges.map(({ node }) => (
-                        <span
-                          key={`${repo.id}+${node.topic.name}`}
-                          className={styles.topic}
-                          onMouseOver={(e) => {
-                            e.currentTarget.style.color = "whitesmoke";
-                            e.currentTarget.style.backgroundColor = "#1f6feb";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.color = "#3493F8";
-                            e.currentTarget.style.backgroundColor = "#121D2F";
-                          }}
-                        >
-                          {node.topic.name}
-                        </span>
-                      ))
-                    ) : (
-                      <p style={{ fontSize: "0.75rem" }}>No Topics</p>
-                    )}
-
-                    <br />
-                    <br />
-                  </>
-                }
-                link={repo.homepageUrl || undefined}
-                footer={
-                    <a href={repo.url} target="_blank" rel="noreferrer">
-                      View Source {" "} <FontAwesomeIcon icon={faExternalLinkAlt} />{" "}
-                    </a>
-                  }
-              />
-            ))}
-        </div>
       </div>
     </>
   );
 };
 
 export async function getStaticProps() {
-  // const httpLink = createHttpLink({ uri: "https://api.github.com/graphql" });
-
-  // const authLink = setContext((_, { headers }) => {
-  //   return {
-  //     headers: {
-  //       ...headers,
-  //       authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-  //     },
-  //   };
-  // });
-
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
@@ -364,76 +252,6 @@ export async function getStaticProps() {
         }
       }
   `;
-
-  // const client = new ApolloClient({
-  //   link: authLink.concat(httpLink),
-  //   cache: new InMemoryCache(),
-  // });
-
-  // const { data: userRepositories } = await client.query({
-  //   query: gql`
-  //     {
-  //       user(login: "Typcial-Username") {
-  //         id
-  //         repositories(first: 100) {
-  //           edges {
-  //             node {
-  //               ... on Repository {
-  //                 name
-  //                 id
-  //                 description
-  //                 url
-  //                 homepageUrl
-  //                 pushedAt
-  //                 languages(first: 5) {
-  //                   totalSize
-  //                   edges {
-  //                     size
-  //                     node {
-  //                       name
-  //                       color
-  //                     }
-  //                   }
-  //                 }
-  //                 stargazerCount
-  //                 repositoryTopics(first: 5) {
-  //                   edges {
-  //                     node {
-  //                       topic {
-  //                         name
-  //                       }
-  //                     }
-  //                   }
-  //                 }
-  //                 isFork
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   `,
-  // });
-
-  // const { data: pinnedRepos } = await client.query({
-  //   query: gql`
-  //     {
-  //       user(login: "Typcial-Username") {
-  //         id
-  //         pinnedItems(first: 10) {
-  //           edges {
-  //             node {
-  //               ... on Repository {
-  //                 name
-  //                 id
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   `,
-  // });
 
   const pinnedRepoQuery = `
   {

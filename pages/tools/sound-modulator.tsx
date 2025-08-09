@@ -18,6 +18,9 @@ const SoundModulator: NextPage = () => {
             <br />
             <input name="file" id="file" type="file" accept=".mp3,.wav" />
             <br />
+            <label htmlFor="frequency">Frequency (Hz): </label>
+            <input type="number" name="frequency" id="frequency" defaultValue={40000} />
+            <br />
             <br />
             <button type="submit" disabled={loading}>Process Audio</button>
             <br />
@@ -40,6 +43,9 @@ const SoundModulator: NextPage = () => {
         const form = event.currentTarget;
         const fileInput = form.elements.namedItem('file') as HTMLFormElement
         const file = fileInput.files?.[0];
+
+        const frequencyInput = form.elements.namedItem('frequency') as HTMLInputElement;
+        const frequency = parseFloat(frequencyInput.value);
     
         if (!file) {
             console.error('No file selected');
@@ -51,7 +57,14 @@ const SoundModulator: NextPage = () => {
         // Prepare the form data to send
         const formData = new FormData();
         formData.append('file', file);
-    
+        formData.append('frequency', frequency.toString());
+
+        if (isNaN(frequency)) {
+            console.error('Invalid frequency value');
+            setError('Error: Please enter a valid frequency.');
+            setLoading(false);
+            return;
+        }
         console.log('Form Data:', formData);
         const response = await fetch('/api/modulate-audio', {
             method: 'POST',
@@ -67,12 +80,12 @@ const SoundModulator: NextPage = () => {
         if (response.ok) {
             const data = await response.json();
     
-            const audio = new Audio(data.modulatedPath);
-            audio.controls = true; // Add controls to the audio player
+            // const audio = new Audio(data.modulatedPath);
+            // audio.controls = true; // Add controls to the audio player
     
-            const audioContainer = document.createElement('div');
-            audioContainer.appendChild(audio);
-            resP.appendChild(audioContainer);
+            // const audioContainer = document.createElement('div');
+            // audioContainer.appendChild(audio);
+            // resP.appendChild(audioContainer);
     
             resP.append(document.createElement('br'));
     

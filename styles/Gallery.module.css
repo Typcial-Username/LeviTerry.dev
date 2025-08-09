@@ -1,3 +1,80 @@
+/* Main Gallery Container */
+.galleryContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+/* Repository Grid */
+.repositoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin: 0 5%;
+  padding: 1rem 0;
+}
+
+/* Section Headers */
+.sectionHeader {
+  margin: 2rem 5% 0 5%;
+  padding-bottom: 1rem;
+}
+
+.sectionHeader h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--clr-text-primary, #fff);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filterCount {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--clr-text-secondary, #888);
+}
+
+/* Empty State */
+.emptyState {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--clr-card-bg, #1e1e1e);
+  border: 1px solid var(--clr-border, #333);
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.emptyState p {
+  font-size: 1.1rem;
+  color: var(--clr-text-secondary, #ccc);
+  margin-bottom: 1.5rem;
+}
+
+.clearFiltersButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--clr-accent, #0070f3);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clearFiltersButton:hover {
+  background: var(--clr-accent-hover, #0056b3);
+  transform: translateY(-1px);
+}
+
 .languages {
     display: flex;
     /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); */
@@ -15,12 +92,13 @@
 }
 
 .languageName {
-    color: white;
+    color: var(--clr-text-primary, #ffffff) !important;
     border-radius: 10rem;
     width: fit-content;
     margin: 0.5rem;
     padding: 0.25rem;
     font-size: 0.75rem;
+    font-weight: 500;
 }
 
 .topic {
@@ -29,4 +107,353 @@
     border-radius: 0.5rem;
     padding: 0.25rem;
     margin: 0.25rem
+}
+
+/* Repository Statistics */
+.repositoryStats {
+    color: var(--clr-text-primary, #ffffff) !important;
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin: 0.5rem 0;
+}
+
+.repositoryStats .starCount {
+    color: var(--clr-accent, #fbbf24) !important;
+    font-weight: 600;
+}
+
+.repositoryStats .starIcon {
+    color: #fbbf24;
+    margin-right: 0.25rem;
+}
+
+/* Statistics Section */
+.statsContainer {
+    margin: 1rem 5%;
+    padding: 1.5rem;
+    background: var(--clr-card-bg, #1e1e1e);
+    border: 1px solid var(--clr-border, #333);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.statsContainer h2 {
+    margin: 0 0 1rem 0;
+    color: var(--clr-text-primary, #ffffff);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.25rem;
+    background: var(--clr-card-content-bg, #2a2a2a);
+    border-radius: 6px;
+    border: 1px solid var(--clr-border-light, #444);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.statItem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.statNumber {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--clr-accent-bright, #fbbf24);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: color 0.2s ease;
+}
+
+.statItem:hover .statNumber {
+    color: var(--clr-text-primary, #ffffff);
+    text-shadow: 0 0 8px var(--clr-accent-bright, #fbbf24);
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    color: var(--clr-text-primary, #ffffff);
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+
+/* Large Screens (1200px and up) */
+@media (min-width: 1200px) {
+  .repositoryGrid {
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2rem;
+    margin: 0 8%;
+  }
+  
+  .statsContainer {
+    margin: 1rem 8%;
+  }
+  
+  .sectionHeader {
+    margin: 2rem 8% 0 8%;
+  }
+}
+
+/* Medium-Large Screens (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .repositoryGrid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* Medium Screens (768px to 991px) - Tablets */
+@media (min-width: 768px) and (max-width: 991px) {
+  .repositoryGrid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin: 0 4%;
+  }
+  
+  .statsContainer {
+    margin: 1rem 4%;
+    padding: 1.25rem;
+  }
+  
+  .sectionHeader {
+    margin: 1.5rem 4% 0 4%;
+  }
+  
+  .sectionHeader h1 {
+    font-size: 1.75rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .statItem {
+    padding: 1rem;
+  }
+  
+  .statNumber {
+    font-size: 2rem;
+    color: var(--clr-accent, #60a5fa);
+  }
+  
+  .statLabel {
+    color: var(--clr-text-secondary, #d1d5db);
+  }
+}
+
+/* Small-Medium Screens (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .repositoryGrid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 0 3%;
+  }
+  
+  .statsContainer {
+    margin: 1rem 3%;
+    padding: 1rem;
+  }
+  
+  .sectionHeader {
+    margin: 1.25rem 3% 0 3%;
+  }
+  
+  .sectionHeader h1 {
+    font-size: 1.5rem;
+  }
+  
+  .filterCount {
+    font-size: 1rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .statItem {
+    padding: 0.75rem;
+  }
+  
+  .statNumber {
+    font-size: 1.75rem;
+    color: var(--clr-accent, #60a5fa);
+  }
+  
+  .statLabel {
+    font-size: 0.8rem;
+    color: var(--clr-text-secondary, #d1d5db);
+  }
+}
+
+/* Small Screens (up to 575px) - Mobile */
+@media (max-width: 575px) {
+  .galleryContainer {
+    padding-bottom: 1rem;
+  }
+  
+  .repositoryGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 0 2%;
+  }
+  
+  .statsContainer {
+    margin: 1rem 2%;
+    padding: 1rem;
+  }
+  
+  .sectionHeader {
+    margin: 1rem 2% 0 2%;
+  }
+  
+  .sectionHeader h1 {
+    font-size: 1.4rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .filterCount {
+    font-size: 0.9rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .statItem {
+    padding: 1rem 0.75rem;
+  }
+  
+  .statNumber {
+    font-size: 1.75rem;
+    color: var(--clr-accent, #60a5fa);
+  }
+  
+  .statLabel {
+    font-size: 0.8rem;
+    color: var(--clr-text-secondary, #d1d5db);
+  }
+  
+  .emptyState {
+    padding: 2rem 1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .emptyState p {
+    font-size: 1rem;
+  }
+  
+  .clearFiltersButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Extra Small Screens (up to 400px) */
+@media (max-width: 400px) {
+  .repositoryGrid {
+    margin: 0 1%;
+  }
+  
+  .statsContainer {
+    margin: 1rem 1%;
+    padding: 0.75rem;
+  }
+  
+  .sectionHeader {
+    margin: 1rem 1% 0 1%;
+  }
+  
+  .sectionHeader h1 {
+    font-size: 1.25rem;
+  }
+  
+  .filterCount {
+    font-size: 0.85rem;
+  }
+  
+  .statNumber {
+    font-size: 1.5rem;
+    color: var(--clr-accent, #60a5fa);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .repositoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .statsContainer {
+    break-inside: avoid;
+  }
+}
+
+/* Light Theme Support */
+[data-theme="light"] .statsContainer {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .statsContainer h2 {
+  color: #111827;
+}
+
+[data-theme="light"] .statItem {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+[data-theme="light"] .statItem:hover {
+  background: #f3f4f6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .statNumber {
+  color: #2563eb;
+  text-shadow: none;
+}
+
+[data-theme="light"] .statLabel {
+  color: #374151;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .statNumber {
+    color: var(--clr-accent, #ffffff);
+    background: var(--clr-accent-bg, #000000);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+  
+  .statLabel {
+    color: var(--clr-text-primary, #ffffff);
+    font-weight: 600;
+  }
+  
+  .statItem {
+    border-width: 2px;
+    border-color: var(--clr-text-primary, #ffffff);
+  }
 }

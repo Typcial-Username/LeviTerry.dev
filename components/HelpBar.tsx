@@ -1,335 +1,281 @@
 "use client";
-import React, { useEffect } from "react";
-import styles from "../styles/HelpBar.module.css";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as Dialog from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
+
+import styles from "../styles/HelpBar.module.css";
+
+interface KeyboardShortcut {
+  command: string;
+  keyBinding: string[];
+  description?: string;
+}
 
 const HelpBar = () => {
-  const [host, setHost] = React.useState<string>("localhost");
-  const [menuOptions, setMenuOptions] = React.useState({
-    file: false,
-    terminal: false,
-    help: false,
-  });
+  const [host, setHost] = useState<string>("localhost");
+  const [commandsDialogOpen, setCommandsDialogOpen] = useState(false);
+  const [shortcutsDialogOpen, setShortcutsDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const keyboardShortcuts: KeyboardShortcut[] = [
+    {
+      command: "Toggle Explorer",
+      keyBinding: ["Ctrl", "B"],
+      description: "Show/hide the file explorer sidebar",
+    },
+    {
+      command: "Toggle Terminal",
+      keyBinding: ["Ctrl", "`"],
+      description: "Open/close the integrated terminal",
+    },
+    {
+      command: "Show Commands",
+      keyBinding: ["Ctrl", "Shift", "P"],
+      description: "Open the command palette",
+    },
+    {
+      command: "Quick Open",
+      keyBinding: ["Ctrl", "P"],
+      description: "Quickly open files",
+    },
+  ];
+
+  const filteredShortcuts = keyboardShortcuts.filter((shortcut) =>
+    shortcut.command.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     setHost(window.location.host);
   }, []);
 
+  const navigateTo = (path: string) => {
+    router.push(path);
+  };
+
+  const toggleTerminal = () => {
+    const terminal = document.querySelector("[data-name=terminal]") as HTMLElement;
+    if (terminal) {
+      terminal.classList.toggle("hide");
+    }
+  };
+
   return (
     <div className={styles.header}>
-     
-        <div
-          className={styles.logoContainer}
-        >
-          <Image
-            src={"/images/headshot.jpg"}
-            alt="Levi Terry"
-            fill
-            sizes="100%"
-            className={styles.headshot}
-            priority
-          />
+      <div className={styles.logoContainer}>
+        <Image
+          src="/images/headshot.jpg"
+          alt="Levi Terry"
+          fill
+          sizes="100%"
+          className={styles.headshot}
+          priority
+        />
       </div>
 
       <div className={styles.mainContent}>
         {/* File Menu */}
-        <button
-          className={styles.hiddenButton}
-          onClick={() =>
-            setMenuOptions({ ...menuOptions, file: !menuOptions.file })
-          }
-        >
-          File
-        </button>
-        <div
-          style={menuOptions.file ? { display: "block" } : { display: "none" }}
-        >
-          <button>Index</button>
-          <button>About</button>
-          <button>Gallery</button>
-          <button>Exit</button>
-        </div>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger className={styles.hiddenButton}>
+            File
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.Content 
+              align="start" 
+              className={styles.dropdownContent}
+              sideOffset={5}
+            >
+              <DropdownMenu.Item 
+                className={styles.dropdownItem}
+                onClick={() => navigateTo("/")}
+              >
+                Home
+              </DropdownMenu.Item>
+              <DropdownMenu.Item 
+                className={styles.dropdownItem}
+                onClick={() => navigateTo("/about")}
+              >
+                About
+              </DropdownMenu.Item>
+              <DropdownMenu.Item 
+                className={styles.dropdownItem}
+                onClick={() => navigateTo("/gallery")}
+              >
+                Gallery
+              </DropdownMenu.Item>
+              <DropdownMenu.Separator className={styles.dropdownSeparator} />
+              <DropdownMenu.Item 
+                className={styles.dropdownItem}
+                onClick={() => window.close()}
+                style={{ color: 'var(--clr-danger, #ff6b6b)' }}
+              >
+                Exit
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Root>
 
         {/* Terminal Menu */}
-        <button
-          className={styles.hiddenButton}
-          onClick={() =>
-            setMenuOptions({ ...menuOptions, terminal: !menuOptions.terminal })
-          }
-        >
-          Terminal
-        </button>
-        <div
-          style={
-            menuOptions.terminal ? { display: "block" } : { display: "none" }
-          }
-        >
-          <p>Open</p>
-          <p>Close</p>
-        </div>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger className={styles.hiddenButton}>
+            Terminal
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.Content 
+              align="start" 
+              className={styles.dropdownContent}
+              sideOffset={5}
+            >
+              <DropdownMenu.Item 
+                className={styles.dropdownItem}
+                onClick={toggleTerminal}
+              >
+                Toggle Terminal
+                <span className={styles.shortcut}>Ctrl+`</span>
+              </DropdownMenu.Item>
+              <DropdownMenu.Separator className={styles.dropdownSeparator} />
+              <DropdownMenu.Item className={styles.dropdownItem}>
+                New Terminal
+              </DropdownMenu.Item>
+              <DropdownMenu.Item className={styles.dropdownItem}>
+                Clear Terminal
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Root>
 
         {/* Help Menu */}
-        <button
-          className={styles.hiddenButton}
-          onClick={() =>
-            setMenuOptions({ ...menuOptions, help: !menuOptions.help })
-          }
-        >
-          Help
-        </button>
-        <div
-          style={menuOptions.help ? { display: "block" } : { display: "none" }}
-        >
-          <p>Show Commands</p>
-          <p>Show Keyboard Shortcuts</p>
-        </div>
-        {/* <select
-          name="help"
-          id="help"
-          className={styles.item}
-          onChange={onHelpMenuChange}
-          defaultValue={"help"}
-        >
-          <option value="help" hidden>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger className={styles.hiddenButton}>
             Help
-          </option>
-          <option value="show_commands">Show Commands</option>
-          <option value="show_keyboard_shortcuts">
-            Show Keyboard Shortcuts
-          </option>
-        </select> */}
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.Content 
+              align="start" 
+              className={styles.dropdownContent}
+              sideOffset={5}
+            >
+              <DropdownMenu.Item 
+                className={styles.dropdownItem}
+                onClick={() => setCommandsDialogOpen(true)}
+              >
+                Show Commands
+              </DropdownMenu.Item>
+              <DropdownMenu.Item 
+                className={styles.dropdownItem}
+                onClick={() => setShortcutsDialogOpen(true)}
+              >
+                Keyboard Shortcuts
+                <span className={styles.shortcut}>Ctrl+K Ctrl+S</span>
+              </DropdownMenu.Item>
+              <DropdownMenu.Separator className={styles.dropdownSeparator} />
+              <DropdownMenu.Item className={styles.dropdownItem}>
+                About
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Root>
 
         <div className={styles.main}>
-          <p style={{ padding: "10rem" }}>
-            {
-              <span>
-                <FontAwesomeIcon icon={faSearch} />
-                {host}
-              </span>
-            }
+          <p style={{ padding: "0 10rem" }}>
+            <span>
+              <FontAwesomeIcon icon={faSearch} />
+              {" "}{host}
+            </span>
           </p>
         </div>
-
-        {/* Commands Modal */}
-        <dialog id="commands-modal" className={styles.commandsModal}>
-          {/* Close Button */}
-          <button onClick={closeCommandsModal} className={styles.closeModal}>
-            &times;
-          </button>
-
-          {/* Modal Header */}
-          <h1
-            style={{ color: "var(--clr-primary)", textDecoration: "underline" }}
-          >
-            Commands
-          </h1>
-          {/* Modal Content */}
-          <div
-            className={`${styles.grid}`}
-            style={{ border: "1px solid white" }}
-          >
-            <p className={styles.modalHeader}>Command</p>
-            <p className={styles.modalHeader}>Description</p>
-            <p className={styles.modalItem}>index</p>
-            <p className={styles.modalItem}>Navigates to the index page.</p>
-            <p className={styles.modalItem}>about</p>
-            <p className={styles.modalItem}>Navigates to the about page.</p>
-            <p className={styles.modalItem}>gallery</p>
-            <p className={styles.modalItem}>Navigates to the gallery page.</p>
-          </div>
-        </dialog>
-
-        {/* Keyboard Shortcut Modal */}
-        <dialog id="keyboard-shortcut-modal" className={styles.commandsModal}>
-          {/* Close Button */}
-          <button
-            onClick={closeKeyboardShortcutModal}
-            className={styles.closeModal}
-          >
-            &times;
-          </button>
-
-          {/* Modal Header */}
-          <h1
-            style={{ color: "var(--clr-primary)", textDecoration: "underline" }}
-          >
-            Keyboard Shortcuts
-          </h1>
-
-          {/* Modal Content */}
-          {/* <div className={`${styles.grid}`} style={{ border: "1px solid white" }}>
-            <p className={styles.modalHeader}>Command</p>
-            <p className={styles.modalHeader}>Description</p>
-            <span className={styles.group}>
-              <button className={styles.modalButton}>Control</button>
-              <p>&nbsp;+&nbsp;</p>{" "}
-              <button className={styles.modalButton}>B</button>{" "}
-            </span>
-            <p className={styles.modalItem}>Toggles the Explorer.</p>
-            <span className={styles.group}>
-              <button className={styles.modalButton}>Control</button>
-              <p>&nbsp;+&nbsp;</p>{" "}
-              <button className={styles.modalButton}>`</button>{" "}
-            </span>
-            <p className={styles.modalItem}>Navigates to the about page.</p>
-            <button className={styles.modalButton}>gallery</button>
-            <p className={styles.modalItem}>Navigates to the gallery page.</p>
-          </div> */}
-
-          <input
-            type="text"
-            placeholder="Search..."
-            className={styles.search}
-            autoFocus
-            name="search"
-          />
-
-          <table
-            className={`${styles.modalTable}`}
-            style={{ border: "1px solid var(--clr-secondary)" }}
-          >
-            <thead>
-              <tr>
-                <th>Command</th>
-                <th>Key Binding</th>
-                {/* <th>Description</th> */}
-              </tr>
-            </thead>
-
-            <tbody>
-              {/* Explorer Toggle */}
-              <tr>
-                <td>
-                  <p>Toggle Explorer</p>
-                </td>
-                <td className={styles.group}>
-                  <button className={styles.modalButton}>Control</button>{" "}
-                  <p>+</p> <button className={styles.modalButton}>B</button>
-                </td>
-
-                {/* <td>Toggles the Explorer.</td> */}
-              </tr>
-              {/* Terminal Toggle */}
-              <tr>
-                <td>Toggle Terminal</td>
-                <td className={styles.group}>
-                  <button className={styles.modalButton}>Control</button>{" "}
-                  <p>+</p> <button className={styles.modalButton}>`</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Toggles Terminal</td>
-                <td className={styles.group}>
-                  <button className={styles.modalButton}>Control</button>{" "}
-                  <p>+</p> <button className={styles.modalButton}>`</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </dialog>
       </div>
+
+      {/* Commands Dialog */}
+      <Dialog.Root open={commandsDialogOpen} onOpenChange={setCommandsDialogOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className={styles.dialogOverlay} />
+          <Dialog.Content className={styles.dialogContent}>
+            <Dialog.Title className={styles.dialogTitle}>Commands</Dialog.Title>
+            <Dialog.Close className={styles.dialogClose}>
+              <X size={16} />
+            </Dialog.Close>
+            
+            <div className={styles.commandsGrid}>
+              <div className={styles.commandsHeader}>Command</div>
+              <div className={styles.commandsHeader}>Description</div>
+              
+              <div className={styles.commandsItem}>index</div>
+              <div className={styles.commandsItem}>Navigate to the home page</div>
+              
+              <div className={styles.commandsItem}>about</div>
+              <div className={styles.commandsItem}>Navigate to the about page</div>
+              
+              <div className={styles.commandsItem}>gallery</div>
+              <div className={styles.commandsItem}>Navigate to the gallery page</div>
+              
+              <div className={styles.commandsItem}>clear</div>
+              <div className={styles.commandsItem}>Clear the terminal</div>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+
+      {/* Keyboard Shortcuts Dialog */}
+      <Dialog.Root open={shortcutsDialogOpen} onOpenChange={setShortcutsDialogOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className={styles.dialogOverlay} />
+          <Dialog.Content className={`${styles.dialogContent} ${styles.shortcutsDialog}`}>
+            <Dialog.Title className={styles.dialogTitle}>Keyboard Shortcuts</Dialog.Title>
+            <Dialog.Close className={styles.dialogClose}>
+              <X size={16} />
+            </Dialog.Close>
+            
+            <div className={styles.shortcutsContainer}>
+              <input
+                type="text"
+                placeholder="Search shortcuts..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+                autoFocus
+              />
+              
+              <div className={styles.shortcutsTable}>
+                <div className={styles.shortcutsTableHeader}>
+                  <div>Command</div>
+                  <div>Key Binding</div>
+                  <div>Description</div>
+                </div>
+                
+                {filteredShortcuts.map((shortcut, index) => (
+                  <div key={index} className={styles.shortcutsTableRow}>
+                    <div>{shortcut.command}</div>
+                    <div className={styles.keyBindings}>
+                      {shortcut.keyBinding.map((key, keyIndex) => (
+                        <React.Fragment key={keyIndex}>
+                          {keyIndex > 0 && <span>+</span>}
+                          <kbd className={styles.keyBadge}>{key}</kbd>
+                        </React.Fragment>
+                      ))}
+                    </div>
+                    <div>{shortcut.description}</div>
+                  </div>
+                ))}
+                
+                {filteredShortcuts.length === 0 && (
+                  <div className={styles.noResults}>
+                    No shortcuts found matching "{searchQuery}"
+                  </div>
+                )}
+              </div>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </div>
   );
 };
-
-function onFileMenuChange(event: React.ChangeEvent<HTMLSelectElement>) {
-  event.preventDefault();
-
-  switch (event.target.value) {
-    case "index.html":
-      window.location.href = "/";
-      event.target.value = "index.html";
-      break;
-    case "about.html":
-      window.location.href = "/about";
-      event.target.value = "about.html";
-      break;
-    case "gallery.html":
-      window.location.href = "/gallery";
-      event.target.value = "gallery.html";
-      break;
-    case "exit":
-      // window.exit();
-      break;
-  }
-}
-
-function onTerminalMenuChange(event: React.ChangeEvent<HTMLSelectElement>) {
-  event.preventDefault();
-
-  const terminal = document.querySelector(
-    "[data-name=terminal]"
-  ) as HTMLSelectElement;
-
-  switch (event.target.value) {
-    case "open":
-      // open terminal
-      terminal.classList.remove("hide");
-
-      break;
-    case "close":
-      // close terminal
-      terminal.classList.add("hide");
-      break;
-  }
-
-  event.target.value = "terminal";
-}
-
-function onHelpMenuChange(event: React.ChangeEvent<HTMLSelectElement>) {
-  event.preventDefault();
-
-  switch (event.target.value) {
-    case "show_commands":
-      // open terminal
-      openCommandsModal();
-    case "show_keyboard_shortcuts":
-      // close modal
-      openKeyboardShortcutModal();
-      break;
-  }
-  closeOtherModals(event.target.value);
-  event.target.value = "help";
-}
-
-function openCommandsModal() {
-  closeOtherModals("keyboard-shortcut-modal");
-  const modal = document.getElementById("commands-modal") as HTMLDialogElement;
-  modal?.showModal();
-}
-
-function closeCommandsModal() {
-  const modal = document.getElementById("commands-modal") as HTMLDialogElement;
-
-  modal?.close();
-}
-
-function openKeyboardShortcutModal() {
-  closeOtherModals("commands-modal");
-  const modal = document.getElementById(
-    "keyboard-shortcut-modal"
-  ) as HTMLDialogElement;
-  modal?.showModal();
-}
-
-function closeKeyboardShortcutModal() {
-  const modal = document.getElementById(
-    "keyboard-shortcut-modal"
-  ) as HTMLDialogElement;
-  modal?.close();
-}
-
-function closeOtherModals(modalId: string) {
-  switch (modalId) {
-    case "commands-modal":
-      closeKeyboardShortcutModal();
-      break;
-    case "keyboard-shortcut-modal":
-      closeCommandsModal();
-      break;
-  }
-}
 
 export default HelpBar;

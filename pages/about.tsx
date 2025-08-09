@@ -37,6 +37,9 @@ const About: NextPage = () => {
                 :&nbsp;
               </p>
               {formatJson(getValue(AboutData, key))}
+              {key !== Object.keys(AboutData)[Object.keys(AboutData).length - 1] && (
+                <p className={styles.json}>,</p>
+              )}
             </span>
           );
         })}
@@ -110,8 +113,6 @@ function formatJson(
 ) {
   let curIdx = 0;
 
-  console.log("Formatting JSON: ", json, idx);
-
   // Check if the json is an array
   if (Array.isArray(json)) {
     const arr = json as any[];
@@ -130,36 +131,32 @@ function formatJson(
         <p className={styles.json} style={{ color: "var(--clr-json-array)" }}>
           [
         </p>
-        {/* If the array doesn't has to wrap */}
+        {/* If the array doesn't have to wrap */}
         {!wrap &&
           arr.map((val, index) => (
-            <>
-              <span key={val}>
-                <p className={styles.json} style={setJsonStyle(val)}>
-                  &quot;{typeof val == 'string' && val.startsWith('http') ? <Link href={val} /> : val}&quot;
-                </p>
-              </span>
+            <span key={index}>
+              <p className={styles.json} style={setJsonStyle(val)}>
+                &quot;{typeof val === 'string' && val.startsWith('http') ? <Link href={val}>{val}</Link> : val}&quot;
+              </p>
               {index < arr.length - 1 && (
                 <p className={styles.json}>,&nbsp;</p>
               )}
-            </>
+            </span>
           ))}
 
         {/* If the array has to wrap */}
         {wrap &&
           arr.map((val, index) => (
-            <>
-              <span key={val}>
-                <br />
-                <p className={styles.json}>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </p>
-                <p className={styles.json} style={setJsonStyle(val)}>
-                  &quot;{typeof val == 'string' && val.startsWith('http') ? <Link href={val} /> : val}&quot;
-                </p>
-              </span>
+            <span key={index}>
+              <br />
+              <p className={styles.json}>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </p>
+              <p className={styles.json} style={setJsonStyle(val)}>
+                &quot;{typeof val === 'string' && val.startsWith('http') ? <Link href={val}>{val}</Link> : val}&quot;
+              </p>
               {index < arr.length - 1 && <p className={styles.json}>,</p>}
-            </>
+            </span>
           ))}
 
         {/* Add ] if the array didn't wrap */}
@@ -199,41 +196,36 @@ function formatJson(
         {Object.keys(obj).map((key, index) => {
           curIdx = index;
           return (
-            <>
-              <span key={key}>
-                <br />
-                <p className={styles.json}>&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <p
-                  className={styles.json}
-                  style={{ color: "var(--clr-json-key)" }}
-                >
-                  &quot;{key}&quot;
+            <span key={key}>
+              <br />
+              <p className={styles.json}>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              <p
+                className={styles.json}
+                style={{ color: "var(--clr-json-key)" }}
+              >
+                &quot;{key}&quot;
+              </p>
+
+              <p className={styles.json}>:&nbsp;</p>
+              {hasKey(obj, key) && typeof obj[key] === "object" && (
+                <div className={styles.json}>
+                  {formatJson(obj[key], idx + 1)}
+                </div>
+              )}
+
+              {hasKey(obj, key) && typeof obj[key] !== "object" && (
+                <p className={styles.json} style={setJsonStyle(obj[key])}>
+                  {typeof obj[key] === 'string' && obj[key].startsWith('http') ? 
+                    <span>&quot;<Link href={obj[key]} target="_blank">{obj[key]}</Link>&quot;</span> : 
+                    JSON.stringify(obj[key])
+                  }
                 </p>
-
-                <p className={styles.json}>:&nbsp;</p>
-                {hasKey(obj, key) && typeof obj[key] === "object" && (
-                  <>
-                    <div className={styles.json}>
-                      {formatJson(obj[key], idx + 1)}
-                    </div>
-                  </>
-                )}
-
-                {hasKey(obj, key) && typeof obj[key] !== "object" && (
-                  <p className={styles.json} style={setJsonStyle(obj[key])}></p>
-                )}
-
-                {hasKey(obj, key) && typeof obj[key] !== "object" && (
-                  <p className={styles.json} style={setJsonStyle(obj[key])}>
-                    {typeof obj[key] === 'string' && obj[key].startsWith('http') ? <span>&quot;<Link href={obj[key]} target="_blank">{obj[key]}</Link>&quot;</span> : JSON.stringify(obj[key])}
-                  </p>
-                )}
-                
-              </span>
+              )}
+              
               {index !== Object.keys(obj).length - 1 && (
                 <p className={styles.json}>,</p>
               )}
-            </>
+            </span>
           );
         })}
 
@@ -242,29 +234,25 @@ function formatJson(
         <p className={styles.json} style={{ color: "var(--clr-json-bracket)" }}>
           {"}"}
         </p>
-
-        {curIdx !== idx - 1 && <p className={styles.json}>,</p>}
       </span>
     );
   } else if (typeof json === "string") {
     return (
-      <>
-        <p className={styles.json} style={{ color: "var(--clr-json-string)" }}> 
+      <p className={styles.json} style={{ color: "var(--clr-json-string)" }}> 
         &quot;{json}&quot;
-        </p>
-        {curIdx !== idx - 1 && <p className={styles.json}>,</p>}
-      </>
+      </p>
     );
   } else if (typeof json === "boolean") {
-    return json ? "true" : "false";
+    return (
+      <p className={styles.json} style={{ color: "var(--clr-json-boolean)" }}>
+        {json ? "true" : "false"}
+      </p>
+    );
   } else if (typeof json === "number") {
     return (
-      <>
-        <p className={styles.json} style={{ color: "var(--clr-json-number)" }}>
-          {json}
-        </p>
-        {curIdx !== idx - 1 && <p className={styles.json}>,</p>}
-      </>
+      <p className={styles.json} style={{ color: "var(--clr-json-number)" }}>
+        {json}
+      </p>
     );
   } else {
     console.log("Unknown type: ", json);

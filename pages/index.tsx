@@ -2,18 +2,7 @@ import React from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-// import { config } from 'dotenv'
-import Header from "../components/Header";
 import styles from "../styles/Home.module.css";
-import { Card } from "../components/Card";
-import { TextInput } from "../components/TextInput";
-import { Button } from "../components/Button";
-import { Menu } from "../components/Menu";
-
-import { Link } from "../components/Link";
-import path from "path";
-
-// config({path: path.join(__dirname, "..", ".env")});
 
 const Home: NextPage = () => {
   const date = new Date(Date.now());
@@ -38,7 +27,7 @@ const Home: NextPage = () => {
       </Head>
 
       {/* Introduction */}
-      <h1 style={{ textAlign: "center" }}>Welcome to my Website</h1>
+      <h1 style={{ textAlign: "center" }}>Welcome to my Portfolio!</h1>
 
       <br />
 
