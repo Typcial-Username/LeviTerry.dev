@@ -212,45 +212,45 @@ export async function getStaticProps() {
 
   const allRepoQuery = `
   {
-        user(login: "Typcial-Username") {
-          id
-          repositories(first: 100) {
-            edges {
-              node {
-                ... on Repository {
+    user(login: "Typcial-Username") {
+    id
+    repositories(first: 100) {
+      edges {
+        node {
+          ... on Repository {
+            name
+            id
+            description
+            url
+            homepageUrl
+            pushedAt
+            languages(first: 5) {
+              totalSize
+              edges {
+                size
+                node {
                   name
-                  id
-                  description
-                  url
-                  homepageUrl
-                  pushedAt
-                  languages(first: 5) {
-                    totalSize
-                    edges {
-                      size
-                      node {
-                        name
-                        color
-                      }
-                    }
-                  }
-                  stargazerCount
-                  repositoryTopics(first: 5) {
-                    edges {
-                      node {
-                        topic {
-                          name
-                        }
-                      }
-                    }
-                  }
-                  isFork
+                  color
                 }
               }
+            }
+            stargazerCount
+            repositoryTopics(first: 5) {
+              edges {
+                node {
+                  topic {
+                    name
+                  }
+                }
+              }
+            }
+            isFork
             }
           }
         }
       }
+    }
+  }
   `;
 
   const pinnedRepoQuery = `
@@ -270,7 +270,67 @@ export async function getStaticProps() {
     }
   }
   `
-  const [allRepoResponce, pinnedRepoResponse] = await Promise.all([
+
+const orgContribQuery = `
+  {
+    user(login: "Typcial-Username") {
+      organizations(first: 10) {
+        nodes {
+          login
+          name
+          avatarUrl
+          url
+          repositories(first: 20) {
+            nodes {
+              name
+              url
+              description
+              id
+              languages(first: 5) {
+                edges {
+                  node {
+                    name
+                    color
+                  }
+                  size
+                }
+              }
+            }
+          }
+        }
+      }
+      repositoriesContributedTo(
+        first: 50
+        includeUserRepositories: false
+        contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY, PULL_REQUEST_REVIEW]
+      ) {
+        nodes {
+          name
+          id
+          owner {
+            login
+            avatarUrl
+            __typename
+          }
+          url
+          description
+          languages(first: 5) {
+            edges {
+              node {
+                name
+                color
+              }
+              size
+            }
+          }
+          stargazerCount
+        }
+      }
+    }
+  }
+`;
+
+  const [allRepoResponce, pinnedRepoResponse, orgContribResponse] = await Promise.all([
     fetch("https://api.github.com/graphql", {
     method: "POST",
     headers,
@@ -280,13 +340,21 @@ export async function getStaticProps() {
     method: "POST",
     headers,
     body: JSON.stringify({ query: pinnedRepoQuery }),
+  }),
+  fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ query: orgContribQuery }),
   })
   ])
 
-  const [userRepositories, pinnedRepos] = await Promise.all([
+  const [userRepositories, pinnedRepos, orgContributions] = await Promise.all([
     allRepoResponce.json(),
     pinnedRepoResponse.json(),
+    orgContribResponse.json(),
   ]);
+
+  console.dir(orgContributions, {depth: null});
 
   if (!userRepositories?.data?.user || !pinnedRepos?.data?.user?.pinnedItems) {
     throw new Error("Failed to fetch user repositories or pinned items from GitHub API")
