@@ -50,3 +50,10 @@ export interface PinnedItems {
     node: PinnedItemNode;
   }[];
 }
+
+export interface Hotkey {
+  title: string;
+  description: string;
+  mainKeys: string[];
+  modifiers?: string[];
+}
