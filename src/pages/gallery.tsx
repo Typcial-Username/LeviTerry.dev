@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import path from "path";
 import styles from '../styles/Gallery.module.css'
+import { updateRepoContext } from '../utils/context/Repo'
 
 import {
   PinnedItems,
@@ -271,64 +272,64 @@ export async function getStaticProps() {
   }
   `
 
-const orgContribQuery = `
-  {
-    user(login: "Typcial-Username") {
-      organizations(first: 10) {
-        nodes {
-          login
-          name
-          avatarUrl
-          url
-          repositories(first: 20) {
-            nodes {
-              name
-              url
-              description
-              id
-              languages(first: 5) {
-                edges {
-                  node {
-                    name
-                    color
+  const orgContribQuery = `
+    {
+      user(login: "Typcial-Username") {
+        organizations(first: 10) {
+          nodes {
+            login
+            name
+            avatarUrl
+            url
+            repositories(first: 20) {
+              nodes {
+                name
+                url
+                description
+                id
+                languages(first: 5) {
+                  edges {
+                    node {
+                      name
+                      color
+                    }
+                    size
                   }
-                  size
                 }
               }
             }
           }
         }
-      }
-      repositoriesContributedTo(
-        first: 50
-        includeUserRepositories: false
-        contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY, PULL_REQUEST_REVIEW]
-      ) {
-        nodes {
-          name
-          id
-          owner {
-            login
-            avatarUrl
-            __typename
-          }
-          url
-          description
-          languages(first: 5) {
-            edges {
-              node {
-                name
-                color
-              }
-              size
+        repositoriesContributedTo(
+          first: 50
+          includeUserRepositories: false
+          contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY, PULL_REQUEST_REVIEW]
+        ) {
+          nodes {
+            name
+            id
+            owner {
+              login
+              avatarUrl
+              __typename
             }
+            url
+            description
+            languages(first: 5) {
+              edges {
+                node {
+                  name
+                  color
+                }
+                size
+              }
+            }
+            stargazerCount
           }
-          stargazerCount
         }
       }
     }
-  }
-`;
+  `;
 
   const [allRepoResponce, pinnedRepoResponse, orgContribResponse] = await Promise.all([
     fetch("https://api.github.com/graphql", {
@@ -389,6 +390,10 @@ const orgContribQuery = `
     .sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
+
+  // Add repos to repo context
+  updateRepoContext([...filteredRepos, ...fullPinnedRepos]);
+  console.log("Repository context updated from Gallery page.");
 
   return {
     props: {

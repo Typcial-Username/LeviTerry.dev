@@ -3,7 +3,7 @@ export interface Language {
   color: string;
 }
 
-export interface RepositoryTopic {
+interface RepositoryTopic {
   topic: {
     name: string;
   };
@@ -49,4 +49,11 @@ export interface PinnedItems {
   edges: {
     node: PinnedItemNode;
   }[];
+}
+
+export interface Hotkey {
+  title: string;
+  description: string;
+  mainKeys: string[];
+  modifiers?: string[];
 }

@@ -6,26 +6,15 @@ import HelpBarModern from "./HelpBarModern";
 import { Terminal } from "./Terminal";
 import dynamic from "next/dynamic";
 import { useContext, useEffect, useRef, useState } from "react";
-import styles from "../styles/Explorer.module.css";
-
-type LayoutProps = {
-  children: React.ReactNode;
-};
+import styles from "../styles/Layout.module.css";
 
 const HeaderNoSSR = dynamic(() => import("./Header"), { ssr: false });
 const ExplorerNoSSR = dynamic(() => import("./Explorer"), { ssr: false });
 const SidebarNoSSR = dynamic(() => import("./Sidebar"), { ssr: false });
 
-const date = new Date(Date.now());
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+type LayoutProps = {
+  children: React.ReactNode;
+};
 
 export default function Layout({ children }: LayoutProps) {
   const explorerRef = useRef<HTMLDivElement | null>(null);
@@ -85,14 +74,6 @@ export default function Layout({ children }: LayoutProps) {
     const observer = new MutationObserver(findSelected);
 
     observer.observe(explorer, { childList: true, subtree: true, attributes: true });
-
-    console.log({
-      explorer: explorerRef.current,
-      selected: selectedRef.current,
-      selectedFileName,
-      selectedExtension,
-    });
-  
 
     return () => {
       observer.disconnect()

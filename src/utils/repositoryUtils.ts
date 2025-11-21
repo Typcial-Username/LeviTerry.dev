@@ -91,3 +91,7 @@ export function getRepositoryStats(repositories: RepositoryNode[]) {
     topLanguages,
   };
 }
+
+export function getRepoByName(name: string) {
+  return (repo: RepositoryNode) => repo.name.toLowerCase() === name.toLowerCase();
+}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Explorer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -71,6 +71,28 @@ const fileStructure: FileItem[] = [
             type: "file",
             icon: faHtml5,
             iconColor: "var(--clr-html-icon)"
+          },
+          {
+            name: "boards",
+            type: "folder",
+            icon: faAngleDown,
+            iconColor: "var(--clr-html-icon)",
+            children: [
+              {
+                name: 'robotics.html',
+                path: "/uat/boards/robotics",
+                type: "file",
+                icon: faHtml5,
+                iconColor: "var(--clr-html-icon)"
+              },
+              {
+                name: 'dmf.html',
+                path: "/uat/boards/dmf",
+                type: "file",
+                icon: faHtml5,
+                iconColor: "var(--clr-html-icon)"
+              }
+            ]
           }
         ]
       }
@@ -123,9 +145,9 @@ const fileStructure: FileItem[] = [
 ];
 
 const Explorer = () => {
-  const [headerOpen, setHeaderOpen] = React.useState(true);
-  const [host, setHost] = React.useState("localhost");
-  const [folderStates, setFolderStates] = React.useState<{[key: string]: boolean}>({});
+  const [headerOpen, setHeaderOpen] = useState(true);
+  const [host, setHost] = useState("localhost");
+  const [folderStates, setFolderStates] = useState<{[key: string]: boolean}>({});
   const router = useRouter();
 
   useEffect(() => {
@@ -163,23 +185,24 @@ const Explorer = () => {
     const isSelected = item.path && router.pathname === item.path;
 
     // Get depth class for consistent indentation
-    const getDepthClass = (itemDepth: number, isFolder: boolean) => {
-      if (isFolder) {
-        // Root folders stay at depth 0, nested folders get proper indentation
-        if (itemDepth === 0) return styles.depth0;
-        return itemDepth === 1 ? styles.depth1 : itemDepth === 2 ? styles.depth2 : styles.depth3;
-      } else {
-        // Files: depth 0 files use depth1, depth 1 files use depth2, etc.
-        return itemDepth === 0 ? styles.depth1 : itemDepth === 1 ? styles.depth2 : styles.depth3;
-      }
-    };
+    // const getDepthClass = (itemDepth: number, isFolder: boolean) => {
+    //   if (isFolder) {
+    //     // Root folders stay at depth 0, nested folders get proper indentation
+    //     if (itemDepth === 0) return styles.depth0;
+    //     return itemDepth === 1 ? styles.depth1 : itemDepth === 2 ? styles.depth2 : styles.depth3;
+    //   } else {
+    //     // Files: depth 0 files use depth1, depth 1 files use depth2, etc.
+    //     return itemDepth === 0 ? styles.depth1 : itemDepth === 1 ? styles.depth2 : styles.depth3;
+    //   }
+    // };
 
     if (item.type === 'folder') {
       return (
         <div key={currentPath}>
           <Folder
             enabled={isOpen}
-            className={`${styles.item} ${styles.dropdown} ${getDepthClass(depth, true)}`}
+            className={`${styles.item} ${styles.dropdown}`}
+            style={{ marginLeft: depth * 5 + "% !important" }}
             onClick={() => toggleFolder(currentPath)}
           >
             {item.name}
@@ -199,7 +222,8 @@ const Explorer = () => {
     // Render files and links
     const itemContent = (
       <div
-        className={`${styles.item} ${isSelected ? styles.selected : ''} ${styles.subMenu} ${getDepthClass(depth, false)}`}
+        className={`${styles.item} ${isSelected ? styles.selected : ''} ${styles.subMenu}`}
+        style={{ marginLeft: depth * 5 + '% !important' }}
         key={currentPath}
       >
         <span>
@@ -236,6 +260,7 @@ const Explorer = () => {
       <p className={styles.header}>Explorer</p>
       <button
         className={`${styles.content} ${styles.item} ${styles.dropdown}`}
+        style={{ width: 'var(--explorer-width) - 5%' }}
         onClick={() => setHeaderOpen(!headerOpen)}
       >
         <span>
