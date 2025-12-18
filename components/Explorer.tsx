@@ -210,18 +210,18 @@ const Explorer = () => {
         </span>
         
         {item.type === 'file' && item.path ? (
-          <Link href={item.path}>
-            <p style={{ display: "inline" }}>{item.name}</p>
+          <Link href={item.path} style={{ display: 'inline' }}>
+            {item.name}
           </Link>
         ) : item.type === 'link' && item.url ? (
-          <a
+          <Link
             href={item.url}
             target={item.target || "_blank"}
             aria-label={`Visit ${item.name}`}
             title={item.name}
           >
             {item.name}
-          </a>
+          </Link>
         ) : (
           <p style={{ display: "inline" }}>{item.name}</p>
         )}

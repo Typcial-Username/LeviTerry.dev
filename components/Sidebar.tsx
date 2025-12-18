@@ -19,6 +19,7 @@ const Sidebar = () => {
 
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
+  const [contactSubject, setSubject] = useState("");
   const [contactMessage, setContactMessage] = useState("");
 
   const { executeRecaptcha } = useReCaptcha(process.env.RECAPTCHA_SITE_KEY)
@@ -38,6 +39,7 @@ const Sidebar = () => {
         data: {
           name: contactName,
           email: contactEmail,
+          subject: contactSubject,
           message: contactMessage,
         },
         // token
@@ -108,6 +110,30 @@ const Sidebar = () => {
       document.removeEventListener('click', handleDialogClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
     };
+  }, [])
+
+  useEffect(() => {
+    const dialog = document.getElementById('contact-modal') as HTMLDialogElement;
+    if (!dialog) return
+
+    const handleClick = (event: MouseEvent) => {
+      if (event.target === dialog) dialog.close();
+    }
+
+    dialog?.addEventListener("click", handleClick);
+    return () => dialog?.removeEventListener("click", handleClick);
+  }, [])
+
+  useEffect(() => {
+    const dialog = document.getElementById('settings') as HTMLDialogElement;
+    if (!dialog) return
+
+    const handleClick = (event: MouseEvent) => {
+      if (event.target === dialog) dialog.close();
+    }
+
+    dialog?.addEventListener("click", handleClick);
+    return () => dialog?.removeEventListener("click", handleClick);
   }, [])
 
   return (
@@ -219,13 +245,14 @@ const Sidebar = () => {
       </div>
 
       {/* Contact Modal */}
-      <dialog id="contact" className={styles.contactMenu}>
+      <dialog id="contact-modal" className={styles.contactMenu}>
+        <div onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
         <button
           id="close-contact"
           onClick={closeContact}
           className={styles.modalButton}
-        >
+        > 
           &times;
         </button>
 
@@ -257,7 +284,19 @@ const Sidebar = () => {
               type="email"
               name="email"
               placeholder="you@yourdomain.com"
-              onChange={(e) => setContactEmail((e.target as HTMLInputElement).value)}
+              onChange={(e) => {setContactEmail((e.target as HTMLInputElement).value)}}
+              />
+            </div>
+            <br />
+
+            <div className={styles.formGroup}>
+              <label htmlFor="contact-subject">Subject: </label>
+              <TextInput
+                id="contact-subject"
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                onChange={(e) => {setSubject((e.target as HTMLInputElement).value)}}
             />
           </div>
 
@@ -279,6 +318,7 @@ const Sidebar = () => {
             Send Message
           </button>
         </form>
+        </div>
       </dialog>
 
       {/* Settings Modal*/}
@@ -373,14 +413,14 @@ function closeSettings() {
 
 function openContact() {
   // Retrieve the contact dialog
-  const contactMenu = document.getElementById("contact") as HTMLDialogElement;
+  const contactMenu = document.getElementById("contact-modal") as HTMLDialogElement;
 
   contactMenu?.showModal();
 }
 
 function closeContact() {
   // Retrieve the contact dialog
-  const contactMenu = document.getElementById("contact") as HTMLDialogElement;
+  const contactMenu = document.getElementById("contact-modal") as HTMLDialogElement;
 
   // Close the Modal
   contactMenu?.close();

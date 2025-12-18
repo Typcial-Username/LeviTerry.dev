@@ -170,6 +170,10 @@
   outline: none;
   transition: border-color 0.2s ease;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  /* padding: 1em; */
+  text-align: right;
 }
 
 .select:focus {

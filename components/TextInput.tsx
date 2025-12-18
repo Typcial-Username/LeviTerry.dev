@@ -25,7 +25,7 @@ type TextInputType =
   | "url"
   | "week";
 
-interface TextInputProps extends React.HTMLProps<HTMLInputElement> {
+interface TextInputProps extends React.HTMLAttributes<HTMLInputElement> {
   name?: string;
   type?: TextInputType;
   placeholder?: string;
@@ -39,6 +39,7 @@ export const TextInput = ({
   placeholder,
   autocomplete = "off",
   id,
+  ...rest
 }: TextInputProps) => {
   return (
     <input
@@ -46,8 +47,9 @@ export const TextInput = ({
       name={name ? name : ""}
       type={type ? type : "text"}
       placeholder={placeholder ? placeholder : ""}
-      autoCapitalize={autocomplete}
+      autoComplete={autocomplete}
       id={id ? id : ""}
+      {...rest}
     />
   );
 };

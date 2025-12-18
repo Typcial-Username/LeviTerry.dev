@@ -109,22 +109,25 @@ function getValue(obj: object, key: string) {
 
 function formatJson(
   json: object | string | number | boolean | null,
-  idx: number = 0
+  indentLevel: number = 0,
+  isLastItem: boolean = false
 ) {
   let curIdx = 0;
+
+  // console.log("Formatting JSON: ", json, idx);
 
   // Check if the json is an array
   if (Array.isArray(json)) {
     const arr = json as any[];
 
-    let wrap = false;
+    let wrap = arr.some((val) => typeof val === 'string' && val.length > 50);
 
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].length > 50) {
-        wrap = true;
-        break;
-      }
-    }
+    // for (let i = 0; i < arr.length; i++) {
+    //   if (arr[i].length > 50) {
+    //     wrap = true;
+    //     break;
+    //   }
+    // }
 
     return (
       <span className={styles.json}>
@@ -182,10 +185,12 @@ function formatJson(
             </p>
           </>
         )}
+        {curIdx !== indentLevel - 1 && <p className={styles.json}>,</p>}
       </span>
     );
   } else if (typeof json === "object") {
     const obj = json as { [key: string]: any };
+    const keys = Object.keys(obj);
 
     return (
       <span className={styles.json}>
@@ -193,8 +198,8 @@ function formatJson(
           {"{"}
         </p>
 
-        {Object.keys(obj).map((key, index) => {
-          curIdx = index;
+        {keys.map((key, index) => {
+          // curIdx = index;
           return (
             <span key={key}>
               <br />
@@ -209,7 +214,7 @@ function formatJson(
               <p className={styles.json}>:&nbsp;</p>
               {hasKey(obj, key) && typeof obj[key] === "object" && (
                 <div className={styles.json}>
-                  {formatJson(obj[key], idx + 1)}
+                  {formatJson(obj[key], index + 1)}
                 </div>
               )}
 
@@ -235,28 +240,74 @@ function formatJson(
           {"}"}
         </p>
       </span>
-    );
-  } else if (typeof json === "string") {
+    )
+  }
+  // } else if (typeof json === "string") {
+  //   return (
+  //     <>
+  //       <p className={styles.json} style={{ color: "var(--clr-json-string)" }}>
+  //       &quot;{json}&quot;
+  //       </p>
+  //       {curIdx !== indentLevel - 1 && <p className={styles.json}>,</p>}
+  //     </>
+  //   );
+  // } else if (typeof json === "boolean") {
+  //   return json ? "true" : "false";
+  // } else if (typeof json === "number") {
+  //   return (
+  //     <>
+  //       <p className={styles.json} style={{ color: "var(--clr-json-number)" }}>
+  //         {json}
+  //       </p>
+  //       {curIdx !== indentLevel - 1 && <p className={styles.json}>,</p>}
+  //     </>
+  //   );
+  // } else {
+  //   console.log("Unknown type: ", json);
+  //   return json;
+  // }
+  else {
+    const formattedValue = formatPrimitiveValue(json);
+    if (formattedValue) {
+      return (
+        <>
+          {formattedValue}
+          {curIdx !== indentLevel - 1 && <p className={styles.json}>,</p>}
+        </>
+      );
+    }
+    return null;
+  }
+}
+
+function formatPrimitiveValue(value: any) {
+  if (typeof value === "string") {
+    if (value.startsWith("http")) {
+      return (
+        <Link href={value} target="_blank">&quot;{value}&quot;</Link>
+      )
+    }
+
     return (
       <p className={styles.json} style={{ color: "var(--clr-json-string)" }}> 
-        &quot;{json}&quot;
+        &quot;{value}&quot;
       </p>
     );
-  } else if (typeof json === "boolean") {
+  } else if (typeof value === "boolean") {
     return (
       <p className={styles.json} style={{ color: "var(--clr-json-boolean)" }}>
-        {json ? "true" : "false"}
+        {value ? "true" : "false"}
       </p>
     );
-  } else if (typeof json === "number") {
+  } else if (typeof value === "number") {
     return (
       <p className={styles.json} style={{ color: "var(--clr-json-number)" }}>
-        {json}
+        {value}
       </p>
     );
   } else {
-    console.log("Unknown type: ", json);
-    return json;
+    console.log("Unknown type: ", value);
+    return value;
   }
 }
 

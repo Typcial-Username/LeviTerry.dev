@@ -6,9 +6,6 @@ import Head from "next/head";
 import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
 
-import { config } from "dotenv";
-import path from "path";
-
 // import { webcrypto } from 'node:crypto'
 // globalThis.crypto = webcrypto as any;
 
@@ -24,19 +21,32 @@ function MyApp({ Component, pageProps }: AppProps) {
   // Whether or not to allow new key presses
   let allowingNewKeyPresses: MutableRefObject<boolean> = useRef(true);
 
+  const keyPressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const handleKeypress = useCallback((event: KeyboardEvent) => {
-    if (!allowingNewKeyPresses.current) return;
+    const target = event.target as HTMLElement;
+    const tag = target.tagName.toLowerCase();
+    const isInput = tag === "input" || tag === "textarea" || target.getAttribute("contenteditable") === "true";
+
+    if (isInput || !allowingNewKeyPresses.current) return;
 
     allKeyPresses.current.push(event.key);
 
-    setTimeout(() => {
-      allowingNewKeyPresses.current = false;
+    if (keyPressTimeoutRef.current) clearTimeout(keyPressTimeoutRef.current);
 
+    keyPressTimeoutRef.current = setTimeout(() => {        
       handleKeyPressTimeout(allKeyPresses.current);
-
       allKeyPresses.current = [];
       allowingNewKeyPresses.current = true;
     }, keyPressTimeout);
+
+    //   allowingNewKeyPresses.current = false;
+
+    //   handleKeyPressTimeout(allKeyPresses.current);
+
+    //   allKeyPresses.current = [];
+    //   allowingNewKeyPresses.current = true;
+    // }, keyPressTimeout);
   }, []);
 
   useEffect(() => {
@@ -67,15 +77,18 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 function handleKeyPressTimeout(allKeyPresses: string[]) {
-  const keyPresses = allKeyPresses.join("+");
+  const normalized = [...new Set(allKeyPresses.map(normalizeKeyPress))];
+  const keyPresses = normalized.join("+");
 
-  if (keyPresses === "Control+b") {
+  if (keyPresses === "ctrl+b") {
     toggleExplorer();
-  } else if (keyPresses === "Control+`") {
+  } else if (keyPresses === "ctrl+`") {
     toggleTerminal();
-  } else {
-    console.log("No command found for: ", keyPresses);
   }
+}
+
+function normalizeKeyPress(key: string) {
+  return key.toLowerCase().replace("control", "ctrl");
 }
 
 function toggleExplorer() {
@@ -102,7 +115,19 @@ function toggleTerminal() {
 
   if (terminal) {
     terminal.classList.toggle("hide");
+  console.log({ terminal, display: terminal.classList });
+
+  if (
+    terminal &&
+    (terminal?.classList.contains("show"))
+  ) {
+    terminal?.classList.remove("show");
+    terminal?.classList.add("hide");
+  } else if (terminal && terminal?.classList.contains("hide")) {
+    terminal?.classList.remove("hide");
+    terminal?.classList.add("show");
   }
+}
 }
 
 export default MyApp;

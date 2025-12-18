@@ -9,6 +9,7 @@ import {
   RepositoryNode,
   User,
 } from "../utils/types";
+import { ProjectContext, ProjectContextProvider } from '../utils/ProjectContext'
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import Link from "next/link";
@@ -42,6 +43,8 @@ const Gallery: NextPage<GalleryProps> = ({
   filteredRepos: allRepos,
   fullPinnedRepos,
 }) => {
+  const { allProjects, pinnedProjects, setAllProjects, setPinnedProjects } = React.useContext(ProjectContext);
+
   let terminalOpen = useRef<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FilterOptions>({
@@ -76,6 +79,17 @@ const Gallery: NextPage<GalleryProps> = ({
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    // Set the pinned projects and all projects in the context
+    if (setPinnedProjects && setAllProjects) {
+      setPinnedProjects(fullPinnedRepos);
+      setAllProjects(allRepos);
+    }
+  }, [fullPinnedRepos, allRepos, setPinnedProjects, setAllProjects]);
+
+  const displayedPinnedRepos = pinnedProjects
+  const displayedAllRepos = allProjects;
   
   return (
     <>
@@ -124,6 +138,7 @@ const Gallery: NextPage<GalleryProps> = ({
         />
 
         {isLoading ? (
+        {displayedPinnedRepos?.length > 0 && (
           <>
             {/* Skeleton for Featured Projects */}
             <div className={styles.sectionHeader}>
@@ -150,7 +165,7 @@ const Gallery: NextPage<GalleryProps> = ({
                 </div>
 
                 <div className={styles.repositoryGrid}>
-                  {fullPinnedRepos.map((repo) => (
+                  {displayedPinnedRepos.map((repo) => (
                     <RepositoryCard
                       key={`pinned-${repo.id}`}
                       repository={repo}
@@ -161,6 +176,36 @@ const Gallery: NextPage<GalleryProps> = ({
               </>
             )}
 
+        <br />
+        <br />
+
+        <h1>More Work</h1>
+
+        <br />
+
+        <div
+          className="grid"
+          style={{
+            margin: "0 5% 0 5%",
+            gridTemplateColumns: "repeat(4, 1fr)",
+          }}
+        >
+          {displayedAllRepos
+            .sort((a, b) => {
+              return a.name.localeCompare(b.name);
+            })
+            .map((repo) => (
+              <Card
+                key={repo.id}
+                header={
+                  <span>
+                    {repo.isFork ? (
+                      <span>
+                        <FontAwesomeIcon icon={faCodeFork} /> {repo.name}
+                      </span>
+                    ) : (
+                      repo.name
+                    )}
             <div className={styles.sectionHeader}>
               <h1>
                 More Work{" "}
@@ -314,10 +359,12 @@ export async function getStaticProps() {
     )
     .filter(
       (repo) =>
-        !repo.repositoryTopics.edges.some((topic) =>
+        !repo.repositoryTopics.edges.some((topic) => {
           topic.node.topic.name.toLowerCase().includes("config")
+        || (!topic.node.topic.name.toLowerCase().includes("class") && !topic.node.topic.name.toLowerCase().includes("showcase")
         )
-    )
+      }
+    ))
     .sort((a, b) => {
       return a.name.localeCompare(b.name);
     });

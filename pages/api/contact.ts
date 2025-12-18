@@ -12,8 +12,6 @@ export default async function Handler(
 ) {
   const { data } = req.body;
 
-  console.log({ data });
-
   if (!data.name || !data.email || !data.message /*|| !body.token*/) {
     return res.status(400).json({
       message: 'Missing "name", "email", "message", or "token" field',
@@ -37,10 +35,13 @@ export default async function Handler(
     subject: `New message from ${data.name} via contact form`,
     to: process.env.PORTFOLIO_EMAIL,
     text: data.message,
-    html: `<p><strong>Name:</strong>${data.name}</p>
+    html: `<p><strong>Name:</strong> ${data.name}</p>
           <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>Subject:</strong> ${data.subject ? data.subject : 'No Subject Specified'}</p>
           <p><strong>Message</strong>:</p>
           <p>${data.message}</p>
+          <br />
+          <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Send Reply</button>
           `
   })
 
