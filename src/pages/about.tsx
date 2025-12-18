@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import styles from "../styles/About.module.css";
 import { useEffect } from "react";
 
-import { AboutData } from "../public/About.json";
+import { AboutData } from "../../public/About.json";
 import Head from "next/head";
 import Link from "next/link";
 

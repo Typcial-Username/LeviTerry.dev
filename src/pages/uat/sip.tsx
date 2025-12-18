@@ -6,12 +6,17 @@ import Head from "next/head";
 import React from "react";
 import { Document, Page } from 'react-pdf'
 import styles from "../../styles/sip.module.css";
+// import { pdfjs } from 'react-pdf'
 
-const DocumentViewer = dynamic(() => import('react-documents').then(mod => ({ default: mod.DocumentViewer })),
+const DocumentViewer = dynamic(() => import('../../components/DocumentViewer'),
  { ssr: false, loading: () => <p>Loading document...</p> });
+
 
 const SIPPage: NextPage = () => {
     const [documentError, setDocumentError] = React.useState<string | null>(null);
+    const [numPages, setNumPages] = React.useState<number | null>(null);
+    const [pageNumber, setPageNumber] = React.useState<number>(1);
+
     return (
         <>
         <Head>
@@ -45,11 +50,9 @@ const SIPPage: NextPage = () => {
         <br />
 
         <h2>Pitch</h2>
-        {/* <Document file="/docs/SIP311_Pitch_Directional_Alarm_Clock.pdf">
-          <Page pageNumber={1} />
-        </Document>
+        <DocumentViewer url="https://uatedu-my.sharepoint.com/:p:/g/personal/lterry80052_uat_edu/EQ3RNNma3RNNuQTws-xXR2UBVOBKst5CVeTGrpw6-TpUNg?e=mtLhL9" />
         
-        <DocumentViewer url="/docs/SIP311_Pitch_Directional_Alarm_Clock.pdf" /> */}
+        {/* <DocumentViewer url="/docs/SIP311_Pitch_Directional_Alarm_Clock.pdf" /> */}
         </>
     );
 }
