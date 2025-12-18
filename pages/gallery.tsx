@@ -3,6 +3,8 @@ import { NextPage } from "next";
 import Head from "next/head";
 import path from "path";
 import styles from '../styles/Gallery.module.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCodeFork } from "@fortawesome/free-solid-svg-icons";
 
 import {
   PinnedItems,
@@ -10,6 +12,7 @@ import {
   User,
 } from "../utils/types";
 import { ProjectContext, ProjectContextProvider } from '../utils/ProjectContext'
+import { Card } from "../components/Card";
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import Link from "next/link";
@@ -138,7 +141,6 @@ const Gallery: NextPage<GalleryProps> = ({
         />
 
         {isLoading ? (
-        {displayedPinnedRepos?.length > 0 && (
           <>
             {/* Skeleton for Featured Projects */}
             <div className={styles.sectionHeader}>
@@ -176,36 +178,6 @@ const Gallery: NextPage<GalleryProps> = ({
               </>
             )}
 
-        <br />
-        <br />
-
-        <h1>More Work</h1>
-
-        <br />
-
-        <div
-          className="grid"
-          style={{
-            margin: "0 5% 0 5%",
-            gridTemplateColumns: "repeat(4, 1fr)",
-          }}
-        >
-          {displayedAllRepos
-            .sort((a, b) => {
-              return a.name.localeCompare(b.name);
-            })
-            .map((repo) => (
-              <Card
-                key={repo.id}
-                header={
-                  <span>
-                    {repo.isFork ? (
-                      <span>
-                        <FontAwesomeIcon icon={faCodeFork} /> {repo.name}
-                      </span>
-                    ) : (
-                      repo.name
-                    )}
             <div className={styles.sectionHeader}>
               <h1>
                 More Work{" "}
