@@ -1,14 +1,14 @@
 'use client'
 
-import HelpBar from "./HelpBar";
-import { Terminal } from "./Terminal";
+import HelpBar from "./layout/HelpBar";
+import { Terminal } from "./layout/Terminal";
 import dynamic from "next/dynamic";
 import { useContext, useEffect, useRef, useState } from "react";
 // import styles from "../styles/";
 
-const HeaderNoSSR = dynamic(() => import("./Header"), { ssr: false });
-const ExplorerNoSSR = dynamic(() => import("./Explorer"), { ssr: false });
-const SidebarNoSSR = dynamic(() => import("./Sidebar"), { ssr: false });
+const HeaderNoSSR = dynamic(() => import("./layout/Header"), { ssr: false });
+const ExplorerNoSSR = dynamic(() => import("./layout/Explorer"), { ssr: false });
+const SidebarNoSSR = dynamic(() => import("./layout/Sidebar"), { ssr: false });
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -130,7 +130,7 @@ export default function Layout({ children }: LayoutProps) {
 }
 
 function pathName(path: string): string {
-  let newPath = path.split("/")[1];
+  let newPath = path.split("/").slice(-1)[0];
 
   if (newPath.toLowerCase() == "") {
     newPath = "index";

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import styles from "../styles/Explorer.module.css";
+import styles from "../../styles/Explorer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHtml5,
@@ -19,7 +19,7 @@ import {
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useRouter } from "next/router";
-import { Folder } from "./Folder";
+import { Folder } from "../Folder";
 
 // Dynamic file structure configuration
 interface FileItem {

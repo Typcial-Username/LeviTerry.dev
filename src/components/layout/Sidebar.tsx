@@ -5,11 +5,11 @@ import { faComments, faMessage } from "@fortawesome/free-regular-svg-icons";
 
 import styles from "../styles/Sidebar.module.css";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { Tooltip } from "./Tooltip";
-import { Dropdown } from "./Dropdown";
+import { Tooltip } from "../ui/Tooltip";
+import { Dropdown } from "../Dropdown";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { TextInput } from "./TextInput";
-import { Button } from "./Button";
+import { TextInput } from "../TextInput";
+import { Button } from "../ui/Button";
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 const Sidebar = () => {
