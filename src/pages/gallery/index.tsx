@@ -1,7 +1,7 @@
 //#region Imports
 import { NextPage } from "next";
 import Head from "next/head";
-import styles from '../../styles/Gallery.module.css'
+import styles from "../../styles/Gallery.module.css"
 import { updateRepoContext } from '../../utils/context/Repo'
 
 import {

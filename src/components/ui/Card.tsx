@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../styles/Card.module.css";
+import styles from "../../styles/Card.module.css";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";

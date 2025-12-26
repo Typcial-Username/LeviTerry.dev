@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faCog } from "@fortawesome/free-solid-svg-icons";
 import { faComments, faMessage } from "@fortawesome/free-regular-svg-icons";
 
-import styles from "../styles/Sidebar.module.css";
+import styles from "../../styles/Sidebar.module.css";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Tooltip } from "../ui/Tooltip";
 import { Dropdown } from "../Dropdown";

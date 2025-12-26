@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import styles from "../styles/Terminal.module.css";
+import styles from "../../styles/Terminal.module.css";
 import { Commands } from "../../../public/secret/commands";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";

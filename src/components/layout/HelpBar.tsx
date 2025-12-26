@@ -9,7 +9,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
-import styles from "../styles/HelpBar.module.css";
+import styles from "../../styles/HelpBar.module.css";
 
 interface KeyboardShortcut {
   command: string;
