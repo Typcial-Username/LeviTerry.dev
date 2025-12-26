@@ -73,7 +73,7 @@ const fileStructure: FileItem[] = [
             iconColor: "var(--clr-html-icon)"
           },
           {
-            name: "boards",
+            name: "Boards",
             type: "folder",
             icon: faAngleDown,
             iconColor: "var(--clr-html-icon)",

@@ -1,24 +1,22 @@
 //#region Imports
 import { NextPage } from "next";
 import Head from "next/head";
-import path from "path";
-import styles from '../styles/Gallery.module.css'
-import { updateRepoContext } from '../utils/context/Repo'
+import styles from '../../styles/Gallery.module.css'
+import { updateRepoContext } from '../../utils/context/Repo'
 
 import {
   PinnedItems,
   RepositoryNode,
   User,
-} from "../utils/types";
+} from "../../utils/types";
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import Link from "next/link";
-import { RepositoryCard } from "../components/RepositoryCard";
-import { SkeletonCards } from "../components/SkeletonCard";
-import { RepositoryFilter, FilterOptions } from "../components/RepositoryFilter";
-import { filterRepositories, getRepositoryStats } from "../utils/repositoryUtils";
-import RepoManager from "../components/RepoContext";
-import { withRepoProvider } from "../components/hocs/withRepoProvider";
+import { RepositoryCard } from "../../components/ui/RepositoryCard";
+import { SkeletonCards } from "../../components/SkeletonCard";
+import { RepositoryFilter, FilterOptions } from "../../components/RepositoryFilter";
+import { filterRepositories, getRepositoryStats } from "../../utils/repositoryUtils";
+import RepoManager from "../../components/RepoManager";
 //#endregion
 
 /**
