@@ -2,7 +2,15 @@ import { createContext, useContext } from 'react'
 import { RepositoryNode } from '../types';
 import { FilterOptions } from '../../components/RepositoryFilter';
 
-export const RepoContext = createContext([] as RepositoryNode[]);
+export interface RepoContextValue {
+    repos: RepositoryNode[];
+    setRepos: React.Dispatch<React.SetStateAction<RepositoryNode[]>>;
+    lastFetched: number | null;
+    setLastFetched: (timestamp: number) => void;
+    isCacheValid: () => boolean;
+}
+
+export const RepoContext = createContext<RepoContextValue | null>(null);
 export const useRepoContext = () => useContext(RepoContext);
 
 export function updateRepoContext(repoData: RepositoryNode[]) {

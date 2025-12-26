@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from 'next/router'
-import { getRepoByName } from '../../../../utils/repositoryUtils'
+import { getRepoByName } from '../../../../../utils/repositoryUtils'
 
 const BoardsInfo: NextPage = () => {
     const router = useRouter();

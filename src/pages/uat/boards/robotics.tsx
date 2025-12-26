@@ -1,13 +1,18 @@
 import { NextPage } from "next";
 import { filterRepositories } from "../../../utils/repositoryUtils";
 import { useRepoContext } from "../../../utils/context/Repo";
+import RepoManager from "../../../components/RepoContext";
+import { withRepoProvider } from "../../../components/hocs/withRepoProvider";
 
 const RoboticsBoardPage: NextPage = () => {
   const repos = useRepoContext();
   console.log({ repos });
   
-  return <div>Robotics Board UAT Page</div>;
-    
+  return (
+    <RepoManager>
+      <div>Robotics Board UAT Page</div>
+    </RepoManager>
+  )
 }
 
-export default RoboticsBoardPage;
+export default withRepoProvider(RoboticsBoardPage);

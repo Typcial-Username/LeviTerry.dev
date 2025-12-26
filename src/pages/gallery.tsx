@@ -17,6 +17,8 @@ import { RepositoryCard } from "../components/RepositoryCard";
 import { SkeletonCards } from "../components/SkeletonCard";
 import { RepositoryFilter, FilterOptions } from "../components/RepositoryFilter";
 import { filterRepositories, getRepositoryStats } from "../utils/repositoryUtils";
+import RepoManager from "../components/RepoContext";
+import { withRepoProvider } from "../components/hocs/withRepoProvider";
 //#endregion
 
 /**
@@ -39,7 +41,7 @@ interface GalleryProps {
   fullPinnedRepos: RepositoryNode[];
 }
 
-const Gallery: NextPage<GalleryProps> = ({
+const GalleryContent: React.FC<GalleryProps> = ({
   filteredRepos: allRepos,
   fullPinnedRepos,
 }) => {
@@ -84,6 +86,7 @@ const Gallery: NextPage<GalleryProps> = ({
         <title>Levi Terry&apos;s Developer Portfolio | Gallery</title>
       </Head>
 
+      <RepoManager>
       <div
         className={styles.galleryContainer}
         style={{
@@ -184,7 +187,7 @@ const Gallery: NextPage<GalleryProps> = ({
                   <button
                     className={styles.clearFiltersButton}
                     onClick={() =>
-                      setFilters({
+                      setFilters({  
                         searchTerm: "",
                         selectedLanguage: "",
                         selectedTopic: "",
@@ -201,9 +204,16 @@ const Gallery: NextPage<GalleryProps> = ({
           </>
         )}
       </div>
+      </RepoManager>
     </>
   );
 };
+
+const Gallery: NextPage<GalleryProps> = (props) => {
+  return <RepoManager>
+    <GalleryContent {...props} />
+  </RepoManager>
+}
 
 export async function getStaticProps() {
   const headers = {
@@ -392,8 +402,8 @@ export async function getStaticProps() {
     });
 
   // Add repos to repo context
-  updateRepoContext([...filteredRepos, ...fullPinnedRepos]);
-  console.log("Repository context updated from Gallery page.");
+  // updateRepoContext([...filteredRepos, ...fullPinnedRepos]);
+  // console.log("Repository context updated from Gallery page.");
 
   return {
     props: {

@@ -1,12 +1,10 @@
 'use client'
 
 import HelpBar from "./HelpBar";
-import HelpBarModern from "./HelpBarModern"; 
-// import { Sidebar } from "./Sidebar";
 import { Terminal } from "./Terminal";
 import dynamic from "next/dynamic";
 import { useContext, useEffect, useRef, useState } from "react";
-import styles from "../styles/Layout.module.css";
+// import styles from "../styles/";
 
 const HeaderNoSSR = dynamic(() => import("./Header"), { ssr: false });
 const ExplorerNoSSR = dynamic(() => import("./Explorer"), { ssr: false });
@@ -39,11 +37,11 @@ export default function Layout({ children }: LayoutProps) {
     explorerRef.current = explorer;
 
     if (explorerRef.current) {
-      selectedRef.current = explorerRef.current.querySelector(`.${styles.selected}`) as HTMLDivElement | null;
+      selectedRef.current = explorerRef.current.querySelector(`styles.selected`) as HTMLDivElement | null;
     }
 
      const findSelected = () => {
-        const selected = explorer.querySelector(`.${styles.selected}`) as HTMLDivElement | null;
+        const selected = explorer.querySelector(`styles.selected`) as HTMLDivElement | null;
         if (selected?.innerText) {
           const fullFileName = selected.innerText.trim();
           
@@ -90,7 +88,7 @@ export default function Layout({ children }: LayoutProps) {
         const urlFileName = pathName(window.location.pathname);
         // Only update if no file is currently selected in explorer
         const explorer = document.getElementById("explorer");
-        const selected = explorer?.querySelector(`.${styles.selected}`);
+        const selected = explorer?.querySelector(`.styles.selected`);
         
         if (!selected || !selected.textContent?.trim()) {
           setSelectedFileName(urlFileName);
