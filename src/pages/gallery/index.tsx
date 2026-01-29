@@ -400,8 +400,8 @@ export async function getStaticProps() {
     });
 
   // Add repos to repo context
-  // updateRepoContext([...filteredRepos, ...fullPinnedRepos]);
-  // console.log("Repository context updated from Gallery page.");
+  updateRepoContext([...filteredRepos, ...fullPinnedRepos]);
+  console.log("Repository context updated from Gallery page.");
 
   return {
     props: {

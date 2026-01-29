@@ -12,14 +12,14 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "../ui/dialog";
 
 import styles from "../styles/HelpBar.module.css";
 
@@ -270,7 +270,7 @@ const HelpBar = () => {
               
               {filteredShortcuts.length === 0 && (
                 <div className="px-4 py-8 text-center text-[var(--clr-text)] opacity-50">
-                  No shortcuts found matching "{searchQuery}"
+                  No shortcuts found matching &quot;{searchQuery}&quot;
                 </div>
               )}
             </div>

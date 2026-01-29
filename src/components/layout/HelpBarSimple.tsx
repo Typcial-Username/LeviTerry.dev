@@ -266,7 +266,7 @@ const HelpBar = () => {
                 
                 {filteredShortcuts.length === 0 && (
                   <div className={styles.noResults}>
-                    No shortcuts found matching "{searchQuery}"
+                    No shortcuts found matching &quot;{searchQuery}&quot;
                   </div>
                 )}
               </div>

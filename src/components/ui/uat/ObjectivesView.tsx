@@ -13,7 +13,7 @@ const ObjectivesView = ({ objectives, repos }: { objectives: Objective[], repos:
                 <ul>
                    { objectives.slice(0,3).map((obj) => {
                     return (
-                    <li>
+                    <li key={`${obj.id}-L`}>
                         <div>
                             <p>{obj.description}</p>
 
@@ -21,8 +21,8 @@ const ObjectivesView = ({ objectives, repos }: { objectives: Objective[], repos:
 
                             { repos.filter((repo) => repo.repositoryTopics.edges.some((rt) => rt.node.topic.name === obj.id)).map(repo => {
                                 return (
-                                    <div id={repo.id}>
-                                        <RepositoryCard repository={repo} />
+                                    <div id={repo.id} key={`${repo.id}`}>
+                                        <RepositoryCard repository={repo} key={`${repo.id}/${obj.id}`} />
                                     </div>
                                 )
                             } )
@@ -38,7 +38,7 @@ const ObjectivesView = ({ objectives, repos }: { objectives: Objective[], repos:
                 <ul>
                     { objectives.slice(3,6).map((obj) => {
                         return (
-                        <li>
+                        <li key={`${obj.id}-R`}>
                             <div>
                                 <p>{obj.description}</p>
 
@@ -46,8 +46,8 @@ const ObjectivesView = ({ objectives, repos }: { objectives: Objective[], repos:
 
                                 { repos.filter((repo) => repo.repositoryTopics.edges.some((rt) => rt.node.topic.name === obj.id)).map(repo => {
                                     return (
-                                        <div id={repo.id}>
-                                            <RepositoryCard repository={repo} />
+                                        <div id={repo.id} key={repo.id}>
+                                            <RepositoryCard repository={repo} key={`${repo.id}/${obj.id}`}/>
                                         </div>
                                     )
                                 } )
