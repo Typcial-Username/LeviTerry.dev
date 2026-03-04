@@ -1,0 +1,110 @@
+query portfolio($login: String!) {
+  user(login: $login) {
+  id
+  
+  repositories(
+    first: 100, 
+    ownerAffiliations: OWNER,
+    orderBy: { field: PUSHED_AT, direction: DESC }
+  ) {
+    edges {
+      node {
+        ... on Repository {
+          name
+          id
+          description
+          url
+          homepageUrl
+          pushedAt
+          languages(first: 5) {
+            totalSize
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
+          stargazerCount
+          repositoryTopics(first: 5) {
+            edges {
+              node {
+                topic {
+                  name
+                }
+              }
+            }
+          }
+          isFork
+          }
+        }
+      }
+    }
+
+  pinnedItems(first: 10) {
+  edges {
+      node {
+      ... on Repository {
+          name
+          id
+        }
+      }
+    }
+  }
+
+  organizations(first: 10) {
+    nodes {
+      login
+      name
+      avatarUrl
+      url
+      repositories(first: 20) {
+        nodes {
+          name
+          url
+          description
+          id
+          languages(first: 5) {
+            edges {
+              node {
+                name
+                color
+              }
+              size
+            }
+          }
+        }
+      }
+    }
+}
+
+repositoriesContributedTo(
+  first: 50
+  includeUserRepositories: false
+  contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY, PULL_REQUEST_REVIEW]
+) {
+  nodes {
+    name
+    id
+    owner {
+      login
+      avatarUrl
+      __typename
+    }
+      url
+      description
+      languages(first: 5) {
+        edges {
+          node {
+            name
+            color
+          }
+          size
+        }
+      }
+      stargazerCount
+    }
+    }
+  }
+}`;

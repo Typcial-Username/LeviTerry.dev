@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -60,7 +60,9 @@ const HelpBar = () => {
   };
 
   const toggleTerminal = () => {
-    const terminal = document.querySelector("[data-name=terminal]") as HTMLElement;
+    const terminal = document.querySelector(
+      "[data-name=terminal]"
+    ) as HTMLElement;
     if (terminal) {
       terminal.classList.toggle("hide");
     }
@@ -86,34 +88,34 @@ const HelpBar = () => {
             File
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
-            <DropdownMenu.Content 
-              align="start" 
+            <DropdownMenu.Content
+              align="start"
               className={styles.dropdownContent}
               sideOffset={5}
             >
-              <DropdownMenu.Item 
+              <DropdownMenu.Item
                 className={styles.dropdownItem}
                 onClick={() => navigateTo("/")}
               >
                 Home
               </DropdownMenu.Item>
-              <DropdownMenu.Item 
+              <DropdownMenu.Item
                 className={styles.dropdownItem}
                 onClick={() => navigateTo("/about")}
               >
                 About
               </DropdownMenu.Item>
-              <DropdownMenu.Item 
+              <DropdownMenu.Item
                 className={styles.dropdownItem}
                 onClick={() => navigateTo("/gallery")}
               >
                 Gallery
               </DropdownMenu.Item>
               <DropdownMenu.Separator className={styles.dropdownSeparator} />
-              <DropdownMenu.Item 
+              <DropdownMenu.Item
                 className={styles.dropdownItem}
                 onClick={() => window.close()}
-                style={{ color: 'var(--clr-danger, #ff6b6b)' }}
+                style={{ color: "var(--clr-danger, #ff6b6b)" }}
               >
                 Exit
               </DropdownMenu.Item>
@@ -127,12 +129,12 @@ const HelpBar = () => {
             Terminal
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
-            <DropdownMenu.Content 
-              align="start" 
+            <DropdownMenu.Content
+              align="start"
               className={styles.dropdownContent}
               sideOffset={5}
             >
-              <DropdownMenu.Item 
+              <DropdownMenu.Item
                 className={styles.dropdownItem}
                 onClick={toggleTerminal}
               >
@@ -156,18 +158,18 @@ const HelpBar = () => {
             Help
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
-            <DropdownMenu.Content 
-              align="start" 
+            <DropdownMenu.Content
+              align="start"
               className={styles.dropdownContent}
               sideOffset={5}
             >
-              <DropdownMenu.Item 
+              <DropdownMenu.Item
                 className={styles.dropdownItem}
                 onClick={() => setCommandsDialogOpen(true)}
               >
                 Show Commands
               </DropdownMenu.Item>
-              <DropdownMenu.Item 
+              <DropdownMenu.Item
                 className={styles.dropdownItem}
                 onClick={() => setShortcutsDialogOpen(true)}
               >
@@ -185,15 +187,17 @@ const HelpBar = () => {
         <div className={styles.main}>
           <p style={{ padding: "0 10rem" }}>
             <span>
-              <FontAwesomeIcon icon={faSearch} />
-              {" "}{host}
+              <FontAwesomeIcon icon={faSearch} /> {host}
             </span>
           </p>
         </div>
       </div>
 
       {/* Commands Dialog */}
-      <Dialog.Root open={commandsDialogOpen} onOpenChange={setCommandsDialogOpen}>
+      <Dialog.Root
+        open={commandsDialogOpen}
+        onOpenChange={setCommandsDialogOpen}
+      >
         <Dialog.Portal>
           <Dialog.Overlay className={styles.dialogOverlay} />
           <Dialog.Content className={styles.dialogContent}>
@@ -201,20 +205,26 @@ const HelpBar = () => {
             <Dialog.Close className={styles.dialogClose}>
               <X size={16} />
             </Dialog.Close>
-            
+
             <div className={styles.commandsGrid}>
               <div className={styles.commandsHeader}>Command</div>
               <div className={styles.commandsHeader}>Description</div>
-              
+
               <div className={styles.commandsItem}>index</div>
-              <div className={styles.commandsItem}>Navigate to the home page</div>
-              
+              <div className={styles.commandsItem}>
+                Navigate to the home page
+              </div>
+
               <div className={styles.commandsItem}>about</div>
-              <div className={styles.commandsItem}>Navigate to the about page</div>
-              
+              <div className={styles.commandsItem}>
+                Navigate to the about page
+              </div>
+
               <div className={styles.commandsItem}>gallery</div>
-              <div className={styles.commandsItem}>Navigate to the gallery page</div>
-              
+              <div className={styles.commandsItem}>
+                Navigate to the gallery page
+              </div>
+
               <div className={styles.commandsItem}>clear</div>
               <div className={styles.commandsItem}>Clear the terminal</div>
             </div>
@@ -223,15 +233,22 @@ const HelpBar = () => {
       </Dialog.Root>
 
       {/* Keyboard Shortcuts Dialog */}
-      <Dialog.Root open={shortcutsDialogOpen} onOpenChange={setShortcutsDialogOpen}>
+      <Dialog.Root
+        open={shortcutsDialogOpen}
+        onOpenChange={setShortcutsDialogOpen}
+      >
         <Dialog.Portal>
           <Dialog.Overlay className={styles.dialogOverlay} />
-          <Dialog.Content className={`${styles.dialogContent} ${styles.shortcutsDialog}`}>
-            <Dialog.Title className={styles.dialogTitle}>Keyboard Shortcuts</Dialog.Title>
+          <Dialog.Content
+            className={`${styles.dialogContent} ${styles.shortcutsDialog}`}
+          >
+            <Dialog.Title className={styles.dialogTitle}>
+              Keyboard Shortcuts
+            </Dialog.Title>
             <Dialog.Close className={styles.dialogClose}>
               <X size={16} />
             </Dialog.Close>
-            
+
             <div className={styles.shortcutsContainer}>
               <input
                 type="text"
@@ -241,14 +258,14 @@ const HelpBar = () => {
                 className={styles.searchInput}
                 autoFocus
               />
-              
+
               <div className={styles.shortcutsTable}>
                 <div className={styles.shortcutsTableHeader}>
                   <div>Command</div>
                   <div>Key Binding</div>
                   <div>Description</div>
                 </div>
-                
+
                 {filteredShortcuts.map((shortcut, index) => (
                   <div key={index} className={styles.shortcutsTableRow}>
                     <div>{shortcut.command}</div>
@@ -263,7 +280,7 @@ const HelpBar = () => {
                     <div>{shortcut.description}</div>
                   </div>
                 ))}
-                
+
                 {filteredShortcuts.length === 0 && (
                   <div className={styles.noResults}>
                     No shortcuts found matching &quot;{searchQuery}&quot;

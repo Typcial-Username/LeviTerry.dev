@@ -1,10 +1,21 @@
-import React from "react";
-import type { NextPage } from "next";
+import type { NextPage, Metadata } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import { getGithubRepos } from "../lib/github";
 
-const Home: NextPage = () => {
+export const metadata: Metadata = {
+  title: "Levi Terry's Developer Portfolio | Home",
+  openGraph: {
+    title: "Levi Terry",
+    type: "website",
+    locale: "en_us",
+  },
+};
+
+const Home = async () => {
+  const repos = await getGithubRepos();
+  console.dir({ repos });
   const date = new Date(Date.now());
   const days = [
     "Sunday",
@@ -19,11 +30,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Levi Terry&apos;s Developer Portfolio | Home</title>
+        {/* <title>Levi Terry&apos;s Developer Portfolio | Home</title> */}
         <link rel="icon" href="/images/headshot.jpg" />
-        <meta property="og:title" content="Levi Terry" />
+        {/* <meta property="og:title" content="Levi Terry" />
         <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en_us" />
+        <meta property="og:locale" content="en_us" /> */}
       </Head>
 
       {/* Introduction */}

@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import Layout from "../components/Layout";
+import Layout from "./layout";
 import Head from "next/head";
 import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
@@ -53,17 +53,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     //     console.log("ReCaptcha Loaded!");
     //   }}
     // >
-      <Layout>
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-        </Head>
-        <Component {...pageProps} />
-      </Layout>
-  ); 
-  {/* </ReCaptchaProvider> */}
+    <Layout>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+      <Component {...pageProps} />
+    </Layout>
+  );
+  {
+    /* </ReCaptchaProvider> */
+  }
 }
 
 function handleKeyPressTimeout(allKeyPresses: string[]) {

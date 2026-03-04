@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import styles from "../styles/About.module.css";
 import { useEffect } from "react";
 
-import { AboutData } from "../../public/About.json";
+import { AboutData } from "../../../public/About.json";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -37,7 +37,8 @@ const About: NextPage = () => {
                 :&nbsp;
               </p>
               {formatJson(getValue(AboutData, key))}
-              {key !== Object.keys(AboutData)[Object.keys(AboutData).length - 1] && (
+              {key !==
+                Object.keys(AboutData)[Object.keys(AboutData).length - 1] && (
                 <p className={styles.json}>,</p>
               )}
             </span>
@@ -136,11 +137,13 @@ function formatJson(
           arr.map((val, index) => (
             <span key={index}>
               <p className={styles.json} style={setJsonStyle(val)}>
-                &quot;{typeof val === 'string' && val.startsWith('http') ? <Link href={val}>{val}</Link> : val}&quot;
+                &quot;
+                {typeof val === "string" && val.startsWith("http") ?
+                  <Link href={val}>{val}</Link>
+                : val}
+                &quot;
               </p>
-              {index < arr.length - 1 && (
-                <p className={styles.json}>,&nbsp;</p>
-              )}
+              {index < arr.length - 1 && <p className={styles.json}>,&nbsp;</p>}
             </span>
           ))}
 
@@ -153,7 +156,11 @@ function formatJson(
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </p>
               <p className={styles.json} style={setJsonStyle(val)}>
-                &quot;{typeof val === 'string' && val.startsWith('http') ? <Link href={val}>{val}</Link> : val}&quot;
+                &quot;
+                {typeof val === "string" && val.startsWith("http") ?
+                  <Link href={val}>{val}</Link>
+                : val}
+                &quot;
               </p>
               {index < arr.length - 1 && <p className={styles.json}>,</p>}
             </span>
@@ -161,10 +168,7 @@ function formatJson(
 
         {/* Add ] if the array didn't wrap */}
         {!wrap && (
-          <p
-            className={styles.json}
-            style={{ color: "var(--clr-json-array)" }}
-          >
+          <p className={styles.json} style={{ color: "var(--clr-json-array)" }}>
             ]
           </p>
         )}
@@ -215,13 +219,18 @@ function formatJson(
 
               {hasKey(obj, key) && typeof obj[key] !== "object" && (
                 <p className={styles.json} style={setJsonStyle(obj[key])}>
-                  {typeof obj[key] === 'string' && obj[key].startsWith('http') ? 
-                    <span>&quot;<Link href={obj[key]} target="_blank">{obj[key]}</Link>&quot;</span> : 
-                    JSON.stringify(obj[key])
-                  }
+                  {typeof obj[key] === "string" && obj[key].startsWith("http") ?
+                    <span>
+                      &quot;
+                      <Link href={obj[key]} target="_blank">
+                        {obj[key]}
+                      </Link>
+                      &quot;
+                    </span>
+                  : JSON.stringify(obj[key])}
                 </p>
               )}
-              
+
               {index !== Object.keys(obj).length - 1 && (
                 <p className={styles.json}>,</p>
               )}
@@ -238,7 +247,7 @@ function formatJson(
     );
   } else if (typeof json === "string") {
     return (
-      <p className={styles.json} style={{ color: "var(--clr-json-string)" }}> 
+      <p className={styles.json} style={{ color: "var(--clr-json-string)" }}>
         &quot;{json}&quot;
       </p>
     );

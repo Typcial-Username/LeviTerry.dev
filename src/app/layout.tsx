@@ -1,20 +1,26 @@
-'use client'
+"use client";
 
-import HelpBar from "./layout/HelpBar";
-import { Terminal } from "./layout/Terminal";
+import HelpBar from "../components/layout/HelpBar";
+import { Terminal } from "../components/layout/Terminal";
 import dynamic from "next/dynamic";
 import { useContext, useEffect, useRef, useState } from "react";
 // import styles from "../styles/";
 
-const HeaderNoSSR = dynamic(() => import("./layout/Header"), { ssr: false });
-const ExplorerNoSSR = dynamic(() => import("./layout/Explorer"), { ssr: false });
-const SidebarNoSSR = dynamic(() => import("./layout/Sidebar"), { ssr: false });
+const HeaderNoSSR = dynamic(() => import("../components/layout/Header"), {
+  ssr: false,
+});
+const ExplorerNoSSR = dynamic(() => import("../components/layout/Explorer"), {
+  ssr: false,
+});
+const SidebarNoSSR = dynamic(() => import("../components/layout/Sidebar"), {
+  ssr: false,
+});
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
-export default function Layout({ children }: LayoutProps) {
+export default function RootLayout({ children }: LayoutProps) {
   const explorerRef = useRef<HTMLDivElement | null>(null);
   const selectedRef = useRef<HTMLDivElement | null>(null);
   const [selectedExtension, setSelectedExtension] = useState("html");
@@ -28,28 +34,35 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-    const explorer = document.getElementById("explorer") as HTMLDivElement;
-    if (!explorer) {
-      console.error("Explorer element not found");
-      return;
-    }
+      const explorer = document.getElementById("explorer") as HTMLDivElement;
+      if (!explorer) {
+        console.error("Explorer element not found");
+        return;
+      }
 
-    explorerRef.current = explorer;
+      explorerRef.current = explorer;
 
-    if (explorerRef.current) {
-      selectedRef.current = explorerRef.current.querySelector(`styles.selected`) as HTMLDivElement | null;
-    }
+      if (explorerRef.current) {
+        selectedRef.current = explorerRef.current.querySelector(
+          `styles.selected`
+        ) as HTMLDivElement | null;
+      }
 
-     const findSelected = () => {
-        const selected = explorer.querySelector(`styles.selected`) as HTMLDivElement | null;
+      const findSelected = () => {
+        const selected = explorer.querySelector(
+          `styles.selected`
+        ) as HTMLDivElement | null;
         if (selected?.innerText) {
           const fullFileName = selected.innerText.trim();
-          
+
           if (fullFileName.includes(".")) {
             // It's a file with extension
             const ext = fullFileName.split(".").pop();
-            const nameWithoutExt = fullFileName.split(".").slice(0, -1).join(".");
-            
+            const nameWithoutExt = fullFileName
+              .split(".")
+              .slice(0, -1)
+              .join(".");
+
             if (ext) setSelectedExtension(ext);
             setSelectedFileName(nameWithoutExt);
           } else {
@@ -67,15 +80,19 @@ export default function Layout({ children }: LayoutProps) {
         }
       };
 
-    findSelected();
+      findSelected();
 
-    const observer = new MutationObserver(findSelected);
+      const observer = new MutationObserver(findSelected);
 
-    observer.observe(explorer, { childList: true, subtree: true, attributes: true });
+      observer.observe(explorer, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      });
 
-    return () => {
-      observer.disconnect()
-    };
+      return () => {
+        observer.disconnect();
+      };
     }, 100); // Increased timeout to ensure explorer is fully loaded
 
     return () => clearTimeout(timeout);
@@ -89,7 +106,7 @@ export default function Layout({ children }: LayoutProps) {
         // Only update if no file is currently selected in explorer
         const explorer = document.getElementById("explorer");
         const selected = explorer?.querySelector(`.styles.selected`);
-        
+
         if (!selected || !selected.textContent?.trim()) {
           setSelectedFileName(urlFileName);
           setSelectedExtension("html");
@@ -98,34 +115,33 @@ export default function Layout({ children }: LayoutProps) {
 
       // Handle initial load and navigation
       handleLocationChange();
-      
+
       // Listen for browser navigation events
-      window.addEventListener('popstate', handleLocationChange);
-      
+      window.addEventListener("popstate", handleLocationChange);
+
       return () => {
-        window.removeEventListener('popstate', handleLocationChange);
+        window.removeEventListener("popstate", handleLocationChange);
       };
     }
   }, []);
 
   return (
-    <>
-      <ExplorerNoSSR />
-      <SidebarNoSSR />
-      <HelpBar />
+    <html>
+      <body>
+        <ExplorerNoSSR />
+        <SidebarNoSSR />
+        <HelpBar />
 
-      <HeaderNoSSR
-        file={selectedFileName}
-        extension={selectedExtension}
-      />
+        <HeaderNoSSR file={selectedFileName} extension={selectedExtension} />
 
-      <main className="container">
-        {children}
-        <br />
-      </main>
+        <main className="container">
+          {children}
+          <br />
+        </main>
 
-      <Terminal />
-    </>
+        <Terminal />
+      </body>
+    </html>
   );
 }
 

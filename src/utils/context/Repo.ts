@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react'
-import { RepositoryNode } from '../types';
+import { PinnedItemNode, RepositoryNode } from '../types';
 import { FilterOptions } from '../../components/RepositoryFilter';
 
 export interface RepoContextValue {
     repos: RepositoryNode[];
+    pinnedRepos: PinnedItemNode[]
     setRepos: React.Dispatch<React.SetStateAction<RepositoryNode[]>>;
     lastFetched: number | null;
     setLastFetched: (timestamp: number) => void;

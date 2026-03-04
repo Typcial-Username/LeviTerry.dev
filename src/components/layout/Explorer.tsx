@@ -18,7 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import { Folder } from "../Folder";
 
 // Dynamic file structure configuration
@@ -27,7 +27,7 @@ interface FileItem {
   path?: string;
   icon: IconProp;
   iconColor?: string;
-  type: 'file' | 'folder' | 'link';
+  type: "file" | "folder" | "link";
   children?: FileItem[];
   url?: string;
   target?: string;
@@ -44,21 +44,21 @@ const fileStructure: FileItem[] = [
         path: "/",
         type: "file",
         icon: faHtml5,
-        iconColor: "var(--clr-html-icon)"
+        iconColor: "var(--clr-html-icon)",
       },
       {
         name: "about.json",
         path: "/about",
         type: "file",
         icon: faFileCode,
-        iconColor: "var(--clr-html-icon)"
+        iconColor: "var(--clr-html-icon)",
       },
       {
         name: "gallery.html",
         path: "/gallery",
         type: "file",
         icon: faHtml5,
-        iconColor: "var(--clr-html-icon)"
+        iconColor: "var(--clr-html-icon)",
       },
       {
         name: "UAT",
@@ -70,7 +70,7 @@ const fileStructure: FileItem[] = [
             path: "/uat/sip",
             type: "file",
             icon: faHtml5,
-            iconColor: "var(--clr-html-icon)"
+            iconColor: "var(--clr-html-icon)",
           },
           {
             name: "Boards",
@@ -79,26 +79,26 @@ const fileStructure: FileItem[] = [
             iconColor: "var(--clr-html-icon)",
             children: [
               {
-                name: 'robotics.html',
+                name: "robotics.html",
                 path: "/uat/boards/robotics",
                 type: "file",
                 icon: faHtml5,
-                iconColor: "var(--clr-html-icon)"
+                iconColor: "var(--clr-html-icon)",
               },
               {
-                name: 'dmf.html',
+                name: "dmf.html",
                 path: "/uat/boards/dmf",
                 type: "file",
                 icon: faHtml5,
-                iconColor: "var(--clr-html-icon)"
-              }
-            ]
-          }
-        ]
-      }
-    ]
+                iconColor: "var(--clr-html-icon)",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
-    {
+  {
     name: "Tools",
     type: "folder",
     icon: faAngleDown,
@@ -108,9 +108,9 @@ const fileStructure: FileItem[] = [
         path: "/tools/sound-modulator",
         type: "file",
         icon: faWaveSquare,
-        iconColor: "var(--clr-icon)"
-      }
-    ]
+        iconColor: "var(--clr-icon)",
+      },
+    ],
   },
   {
     name: "Socials",
@@ -122,7 +122,7 @@ const fileStructure: FileItem[] = [
         type: "link",
         icon: faGithub,
         url: "https://github.com/Typcial-Username",
-        target: "_blank"
+        target: "_blank",
       },
       {
         name: "LinkedIn",
@@ -130,7 +130,7 @@ const fileStructure: FileItem[] = [
         icon: faLinkedin,
         iconColor: "#0a66c2",
         url: "https://linkedin.com/in/levi-terry-dev/",
-        target: "_blank"
+        target: "_blank",
       },
       {
         name: "Stack Overflow",
@@ -138,51 +138,62 @@ const fileStructure: FileItem[] = [
         icon: faStackOverflow,
         iconColor: "orange",
         url: "https://stackoverflow.com/users/15316502/typical-username",
-        target: "_blank"
-      }
-    ]
-  }
+        target: "_blank",
+      },
+    ],
+  },
 ];
 
 const Explorer = () => {
   const [headerOpen, setHeaderOpen] = useState(true);
   const [host, setHost] = useState("localhost");
-  const [folderStates, setFolderStates] = useState<{[key: string]: boolean}>({});
+  const [folderStates, setFolderStates] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     setHost(window.location.host);
-    
+
     // Initialize folder states - all folders closed by default, but Pages open
-    const initializeFolderStates = (items: FileItem[], path: string = '') => {
-      const states: {[key: string]: boolean} = {};
+    const initializeFolderStates = (items: FileItem[], path: string = "") => {
+      const states: { [key: string]: boolean } = {};
       items.forEach((item, index) => {
-        if (item.type === 'folder') {
+        if (item.type === "folder") {
           const folderPath = path ? `${path}.${index}` : `${index}`;
-            // Open "Pages" folder and its subdirectories by default
-            states[folderPath] = item.name === 'Pages' || path.startsWith('0');
+          // Open "Pages" folder and its subdirectories by default
+          states[folderPath] = item.name === "Pages" || path.startsWith("0");
           if (item.children) {
-            Object.assign(states, initializeFolderStates(item.children, folderPath));
+            Object.assign(
+              states,
+              initializeFolderStates(item.children, folderPath)
+            );
           }
         }
       });
       return states;
     };
-    
+
     setFolderStates(initializeFolderStates(fileStructure));
   }, []);
 
   const toggleFolder = (path: string) => {
-    setFolderStates(prev => ({
+    setFolderStates((prev) => ({
       ...prev,
-      [path]: !prev[path]
+      [path]: !prev[path],
     }));
   };
 
-  const renderFileItem = (item: FileItem, index: number, depth: number = 0, parentPath: string = '') => {
+  const renderFileItem = (
+    item: FileItem,
+    index: number,
+    depth: number = 0,
+    parentPath: string = ""
+  ) => {
     const currentPath = parentPath ? `${parentPath}.${index}` : `${index}`;
     const isOpen = folderStates[currentPath];
-    const isSelected = item.path && router.pathname === item.path;
+    const isSelected = item.path && pathname === item.path;
 
     // Get depth class for consistent indentation
     // const getDepthClass = (itemDepth: number, isFolder: boolean) => {
@@ -196,7 +207,7 @@ const Explorer = () => {
     //   }
     // };
 
-    if (item.type === 'folder') {
+    if (item.type === "folder") {
       return (
         <div key={currentPath}>
           <Folder
@@ -207,10 +218,10 @@ const Explorer = () => {
           >
             {item.name}
           </Folder>
-          
+
           {item.children && (
-            <div style={{ display: isOpen ? 'block' : 'none' }}>
-              {item.children.map((child, childIndex) => 
+            <div style={{ display: isOpen ? "block" : "none" }}>
+              {item.children.map((child, childIndex) =>
                 renderFileItem(child, childIndex, depth + 1, currentPath)
               )}
             </div>
@@ -222,22 +233,22 @@ const Explorer = () => {
     // Render files and links
     const itemContent = (
       <div
-        className={`${styles.item} ${isSelected ? styles.selected : ''} ${styles.subMenu}`}
-        style={{ marginLeft: depth * 5 + '% !important' }}
+        className={`${styles.item} ${isSelected ? styles.selected : ""} ${styles.subMenu}`}
+        style={{ marginLeft: depth * 5 + "% !important" }}
         key={currentPath}
       >
         <span>
-          <FontAwesomeIcon 
-            icon={item.icon} 
-            color={item.iconColor || "var(--clr-icon)"} 
+          <FontAwesomeIcon
+            icon={item.icon}
+            color={item.iconColor || "var(--clr-icon)"}
           />{" "}
         </span>
-        
-        {item.type === 'file' && item.path ? (
+
+        {item.type === "file" && item.path ?
           <Link href={item.path}>
             <p style={{ display: "inline" }}>{item.name}</p>
           </Link>
-        ) : item.type === 'link' && item.url ? (
+        : item.type === "link" && item.url ?
           <a
             href={item.url}
             target={item.target || "_blank"}
@@ -246,9 +257,7 @@ const Explorer = () => {
           >
             {item.name}
           </a>
-        ) : (
-          <p style={{ display: "inline" }}>{item.name}</p>
-        )}
+        : <p style={{ display: "inline" }}>{item.name}</p>}
       </div>
     );
 
@@ -260,28 +269,27 @@ const Explorer = () => {
       <p className={styles.header}>Explorer</p>
       <button
         className={`${styles.content} ${styles.item} ${styles.dropdown}`}
-        style={{ width: 'var(--explorer-width) - 5%' }}
+        style={{ width: "var(--explorer-width) - 5%" }}
         onClick={() => setHeaderOpen(!headerOpen)}
       >
         <span>
-          {headerOpen ? (
+          {headerOpen ?
             <>
               <FontAwesomeIcon icon={faAngleDown} />{" "}
             </>
-          ) : (
-            <>
+          : <>
               <FontAwesomeIcon icon={faAngleRight} />{" "}
             </>
-          )}
+          }
           <p style={{ display: "inline-block" }}>{host}</p>
         </span>
       </button>
 
       <div
         style={
-          headerOpen
-            ? { display: "block", marginTop: "2.5%" }
-            : { display: "none" }
+          headerOpen ?
+            { display: "block", marginTop: "2.5%" }
+          : { display: "none" }
         }
         className={`${styles.item} ${styles.dropdown}`}
       >
