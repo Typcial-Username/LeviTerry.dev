@@ -1,4 +1,4 @@
-import { RepositoryNode } from "../../../utils/types";
+import { PortfolioData } from "@/src/lib/github";
 import { RepositoryCard } from "../RepositoryCard";
 
 interface Objective {
@@ -11,7 +11,7 @@ const ObjectivesView = ({
   repos,
 }: {
   objectives: Objective[];
-  repos: RepositoryNode[];
+  repos: PortfolioData["repos"];
 }) => {
   return (
     <div
@@ -26,7 +26,7 @@ const ObjectivesView = ({
         <ul>
           {objectives.slice(0, 3).map((obj) => {
             return (
-              <li key={`${obj.id}-L`}>
+              <li key={`${obj.id}-L`} style={{ marginBottom: "1rem" }}>
                 <div>
                   <p>{obj.description}</p>
 
@@ -34,16 +34,22 @@ const ObjectivesView = ({
 
                   {repos
                     .filter((repo) =>
-                      repo.repositoryTopics.edges.some(
-                        (rt) => rt.node.topic.name === obj.id
+                      repo?.repositoryTopics?.some(
+                        (rt) =>
+                          rt?.node?.topic.name.toLowerCase() ===
+                          obj.id.toLowerCase()
                       )
                     )
                     .map((repo) => {
                       return (
-                        <div id={repo.id} key={`${repo.id}`}>
+                        <div
+                          id={repo?.node?.id}
+                          key={`${repo?.node?.id}`}
+                          style={{ display: "flex" }}
+                        >
                           <RepositoryCard
                             repository={repo}
-                            key={`${repo.id}/${obj.id}`}
+                            key={`${repo?.node?.id}/${obj.id}`}
                           />
                         </div>
                       );
@@ -70,16 +76,22 @@ const ObjectivesView = ({
 
                   {repos
                     .filter((repo) =>
-                      repo.repositoryTopics.edges.some(
-                        (rt) => rt.node.topic.name === obj.id
+                      repo.repositoryTopics.some(
+                        (rt) =>
+                          rt.node?.topic.name.toLowerCase() ===
+                          obj.id.toLowerCase()
                       )
                     )
                     .map((repo) => {
                       return (
-                        <div id={repo.id} key={repo.id}>
+                        <div
+                          id={repo.node?.id}
+                          key={repo.node?.id}
+                          style={{ display: "flex" }}
+                        >
                           <RepositoryCard
                             repository={repo}
-                            key={`${repo.id}/${obj.id}`}
+                            key={`${repo.node?.id}/${obj.id}`}
                           />
                         </div>
                       );

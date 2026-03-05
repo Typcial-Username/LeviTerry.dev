@@ -8,7 +8,8 @@ export const AboutData = {
   // age: age,
   education: {
     school: "University of Advancing Technology (UAT)",
-    degree: "Robotics Engineering (B.S.) - Digital Maker and Fabrication (B.S.)",
+    degree:
+      "Robotics and Embedded Systems (B.S.) - Digital Maker and Fabrication (B.S.)",
     universityWebsite: "https://www.uat.edu/",
     year: "Junior",
     expectedGraduation: "May 2026",
@@ -26,7 +27,7 @@ export const AboutData = {
     //   "Place prototype and builds within the Agile and MVP development frameworks.",
     //   "Create product designs that incorporate engineering factors using solid modeling and design tools.",
     //   "Build physical products while demonstrating technique and safety competency across commonly accepted prototyping devices and maker tools and techniques.",
-    //   "Produce products that balance form and function while reflecting current and future trends in design and human factors."
+    //   "Produce products that balance form and function while reflecting current and future trends in design and human factors.",
     // ],
   },
   hobbies: ["Programming", "Gaming"],

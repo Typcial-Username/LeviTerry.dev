@@ -1,5 +1,7 @@
+"use client";
+
 import { NextPage } from "next";
-import styles from "../styles/About.module.css";
+import styles from "../../styles/About.module.css";
 import { useEffect } from "react";
 
 import { AboutData } from "../../../public/About.json";

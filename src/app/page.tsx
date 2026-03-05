@@ -2,7 +2,7 @@ import type { NextPage, Metadata } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { getGithubRepos } from "../lib/github";
+import { fetchGitHubRepos } from "../lib/github";
 
 export const metadata: Metadata = {
   title: "Levi Terry's Developer Portfolio | Home",
@@ -14,8 +14,6 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
-  const repos = await getGithubRepos();
-  console.dir({ repos });
   const date = new Date(Date.now());
   const days = [
     "Sunday",

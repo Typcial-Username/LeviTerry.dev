@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import React from "react";
 import { Document, Page } from "react-pdf";
-import styles from "../../styles/sip.module.css";
+import styles from "../../../../styles/sip.module.css";
 // import { pdfjs } from 'react-pdf'
 
 const DocumentViewer = dynamic(

@@ -13,7 +13,7 @@ try {
 }
 
 // Create a temporary .env.build file with the token
-const envContent = fs.readFileSync('.env', 'utf8');
+const envContent = fs.readFileSync('.env.development.local', 'utf8');
 const updatedEnvContent = `${envContent}\nGITHUB_TOKEN=${githubToken}\n`;
 fs.writeFileSync('.env.build', updatedEnvContent);
 

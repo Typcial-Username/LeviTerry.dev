@@ -1,14 +1,13 @@
+"use client";
+
 import { NextPage } from "next";
-import { useRouter } from 'next/router'
-import { getRepoByName } from '../../../../utils/repositoryUtils'
+import { useParams, useSearchParams } from "next/navigation";
+import { getRepoByName } from "../../../../utils/repositoryUtils";
 
 const BoardsInfo: NextPage = () => {
-    const router = useRouter();
-    const { id } = router.query;
+  const params = useParams();
 
-    {console.log(getRepoByName(id as string))}
-
-    return <div>Boards Info Page for ID: {id}</div>;
-}
+  return <div>Boards Info Page for ID: {params?.id}</div>;
+};
 
 export default BoardsInfo;

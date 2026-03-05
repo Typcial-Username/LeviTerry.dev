@@ -1,138 +1,24 @@
-"use client";
-
 import HelpBar from "../components/layout/HelpBar";
 import { Terminal } from "../components/layout/Terminal";
-import dynamic from "next/dynamic";
-import { useContext, useEffect, useRef, useState } from "react";
-// import styles from "../styles/";
+import Header from "../components/layout/Header";
+import Sidebar from "../components/layout/Sidebar";
+import Explorer from "../components/layout/Explorer";
 
-const HeaderNoSSR = dynamic(() => import("../components/layout/Header"), {
-  ssr: false,
-});
-const ExplorerNoSSR = dynamic(() => import("../components/layout/Explorer"), {
-  ssr: false,
-});
-const SidebarNoSSR = dynamic(() => import("../components/layout/Sidebar"), {
-  ssr: false,
-});
+import "../styles/globals.css";
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
 export default function RootLayout({ children }: LayoutProps) {
-  const explorerRef = useRef<HTMLDivElement | null>(null);
-  const selectedRef = useRef<HTMLDivElement | null>(null);
-  const [selectedExtension, setSelectedExtension] = useState("html");
-  const [selectedFileName, setSelectedFileName] = useState(() => {
-    // Initialize with URL path as fallback
-    if (typeof window !== "undefined") {
-      return pathName(window.location.pathname);
-    }
-    return "index";
-  });
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const explorer = document.getElementById("explorer") as HTMLDivElement;
-      if (!explorer) {
-        console.error("Explorer element not found");
-        return;
-      }
-
-      explorerRef.current = explorer;
-
-      if (explorerRef.current) {
-        selectedRef.current = explorerRef.current.querySelector(
-          `styles.selected`
-        ) as HTMLDivElement | null;
-      }
-
-      const findSelected = () => {
-        const selected = explorer.querySelector(
-          `styles.selected`
-        ) as HTMLDivElement | null;
-        if (selected?.innerText) {
-          const fullFileName = selected.innerText.trim();
-
-          if (fullFileName.includes(".")) {
-            // It's a file with extension
-            const ext = fullFileName.split(".").pop();
-            const nameWithoutExt = fullFileName
-              .split(".")
-              .slice(0, -1)
-              .join(".");
-
-            if (ext) setSelectedExtension(ext);
-            setSelectedFileName(nameWithoutExt);
-          } else {
-            // It's a folder or file without extension
-            setSelectedFileName(fullFileName);
-            setSelectedExtension("html"); // Default extension
-          }
-        } else {
-          // Fallback to URL path if no file is selected
-          if (typeof window !== "undefined") {
-            const urlFileName = pathName(window.location.pathname);
-            setSelectedFileName(urlFileName);
-            setSelectedExtension("html");
-          }
-        }
-      };
-
-      findSelected();
-
-      const observer = new MutationObserver(findSelected);
-
-      observer.observe(explorer, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-      });
-
-      return () => {
-        observer.disconnect();
-      };
-    }, 100); // Increased timeout to ensure explorer is fully loaded
-
-    return () => clearTimeout(timeout);
-  }, [selectedFileName, selectedExtension]);
-
-  // Separate effect to handle URL changes
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleLocationChange = () => {
-        const urlFileName = pathName(window.location.pathname);
-        // Only update if no file is currently selected in explorer
-        const explorer = document.getElementById("explorer");
-        const selected = explorer?.querySelector(`.styles.selected`);
-
-        if (!selected || !selected.textContent?.trim()) {
-          setSelectedFileName(urlFileName);
-          setSelectedExtension("html");
-        }
-      };
-
-      // Handle initial load and navigation
-      handleLocationChange();
-
-      // Listen for browser navigation events
-      window.addEventListener("popstate", handleLocationChange);
-
-      return () => {
-        window.removeEventListener("popstate", handleLocationChange);
-      };
-    }
-  }, []);
-
   return (
     <html>
       <body>
-        <ExplorerNoSSR />
-        <SidebarNoSSR />
+        <Explorer />
+        <Sidebar />
         <HelpBar />
 
-        <HeaderNoSSR file={selectedFileName} extension={selectedExtension} />
+        <Header />
 
         <main className="container">
           {children}
@@ -143,14 +29,4 @@ export default function RootLayout({ children }: LayoutProps) {
       </body>
     </html>
   );
-}
-
-function pathName(path: string): string {
-  let newPath = path.split("/").slice(-1)[0];
-
-  if (newPath.toLowerCase() == "") {
-    newPath = "index";
-  }
-
-  return newPath;
 }

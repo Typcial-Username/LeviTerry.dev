@@ -8,7 +8,7 @@
     "start": "next start",
     "ws": "bun run websocket-server.ts",
     "dev:all": "concurrently \"npm run dev\" \"npm run ws\"",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "dotenv -e .env.development.local -- graphql-codegen --config codegen.yml --verbose"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
@@ -48,7 +48,6 @@
     "@graphql-codegen/client-preset": "5.2.3",
     "@graphql-codegen/introspection": "5.0.0",
     "@octokit/types": "^13.6.1",
-    "@parcel/watcher": "^2.5.6",
     "@types/bun": "^1.1.6",
     "@types/fluent-ffmpeg": "^2.1.27",
     "@types/formidable": "^3.4.5",

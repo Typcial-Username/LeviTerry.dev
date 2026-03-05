@@ -79,8 +79,8 @@ const fileStructure: FileItem[] = [
             iconColor: "var(--clr-html-icon)",
             children: [
               {
-                name: "robotics.html",
-                path: "/uat/boards/robotics",
+                name: "res.html",
+                path: "/uat/boards/res",
                 type: "file",
                 icon: faHtml5,
                 iconColor: "var(--clr-html-icon)",

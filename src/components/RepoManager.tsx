@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, PropsWithChildren, SetStateAction } from "react";
 import { RepoContext } from "../utils/context/Repo";
 import {

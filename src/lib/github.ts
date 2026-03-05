@@ -1,68 +1,102 @@
-import { PinnedItems, RepositoryNode, User } from "../utils/types";
+import {
+  PortfolioDocument,
+  PortfolioQuery,
+} from "../../generated/types/graphql";
+import { print } from "graphql";
 
-export async function getGithubRepos() {
+type GraphQLResponse<T> = {
+  data?: T;
+  errors?: { message: string }[];
+};
+
+type RepoNode = NonNullable<
+  NonNullable<
+    NonNullable<PortfolioQuery["user"]>["repositories"]["edges"]
+  >[number]
+>["node"];
+
+export type PortfolioData = ReturnType<typeof transformPortfolio>;
+
+export async function fetchGitHubRepos(): Promise<PortfolioData> {
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
   };
 
-  const allRepoQuery = `
-`;
-
-  const allRepoResponse = await fetch("https://api.github.com/graphql", {
+  const queryResponse = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers,
     body: JSON.stringify({
-      query: allRepoQuery,
+      query: print(PortfolioDocument),
       variables: { login: "Typcial-Username" },
     }),
+    next: { revalidate: 24 * 60 * 60 },
   });
 
-  //   console.log(allRepoResponse.body);
+  const json: GraphQLResponse<PortfolioQuery> = await queryResponse.json();
 
-  return allRepoResponse.json();
+  if (json.errors) {
+    throw new Error(json.errors[0].message);
+  }
+  if (!json.data) {
+    throw new Error("No data returned from GitHub");
+  }
 
-  //   const userRepositories = await allRepoResponse.json()
+  if (!json.data.user) {
+    throw new Error(
+      "Failed to fetch user repositories or pinned items from GitHub API"
+    );
+  }
 
-  //   if (!userRepositories?.data?.user || !pinnedRepos?.data?.user?.pinnedItems) {
-  //     throw new Error(
-  //       "Failed to fetch user repositories or pinned items from GitHub API"
-  //     );
-  //   }
-
-  //   const { user }: { user: User } = userRepositories.data;
-  //   const { pinnedItems }: { pinnedItems: PinnedItems } = pinnedRepos.data.user;
-
-  //   const allRepos: RepositoryNode[] = user.repositories.edges.map(
-  //     (edge) => edge.node
-  //   );
-
-  //   const pinnedRepoIds: string[] = pinnedItems.edges.map((edge) => edge.node.id);
-
-  //   const fullPinnedRepos = allRepos.filter((repo) =>
-  //     pinnedRepoIds.includes(repo.id)
-  //   );
-
-  //   // Filter out repos that have config tags or are pinned
-  //   const filteredRepos = allRepos
-  //     .filter(
-  //       (repo) => !fullPinnedRepos.some((pinnedRepo) => pinnedRepo.id === repo.id)
-  //     )
-  //     .filter(
-  //       (repo) =>
-  //         !repo.repositoryTopics.edges.some((topic) =>
-  //           topic.node.topic.name.toLowerCase().includes("config")
-  //         )
-  //     )
-  //     .sort((a, b) => {
-  //       return a.name.localeCompare(b.name);
-  //     });
-
-  //   return {
-  //     filteredRepos,
-  //     fullPinnedRepos,
-  //     revalidate: 60 * 60 * 24, // Revalidate every 24 hours
-  //   };
+  return transformPortfolio(json.data.user);
 }
 
-function transformRepos(repos: RepositoryNode[]) {}
+function transformPortfolio(user: NonNullable<PortfolioQuery["user"]>) {
+  const repos = unwrapEdges(user.repositories.edges).map((repo) => ({
+    ...repo,
+    languages: unwrapEdges(repo.node?.languages?.edges),
+    repositoryTopics: unwrapEdges(repo.node?.repositoryTopics.edges),
+    metadata: parseMetadata(repo.node),
+  }));
+
+  // user.repositories.edges
+  //   ?.map((edge) => edge?.node)
+  //   .filter(Boolean)
+  //   .map((repo) => ({
+  //     ...repo!,
+  //     languages: repo?.languages?.edges?.filter(Boolean) ?? [],
+  //     topics: repo?.repositoryTopics?.edges?.filter(Boolean) ?? [],
+  //   })) ?? [];
+
+  const contributed =
+    user.repositoriesContributedTo.nodes?.filter(Boolean) ?? [];
+
+  const pinned = unwrapEdges(user.pinnedItems.edges);
+  // user.pinnedItems.edges?.map((edge) => edge?.node).filter(Boolean) ?? [];
+
+  const orgs = user.organizations.nodes ?? [];
+
+  return {
+    organizations: orgs,
+    repos,
+    contributedRepos: contributed,
+    pinnedRepos: pinned,
+  };
+}
+
+function unwrapEdges<T>(edges?: (T | null)[] | null): T[] {
+  return (edges?.filter(Boolean) as T[]) ?? [];
+}
+
+function parseMetadata(repository: RepoNode): unknown | null {
+  if (!repository?.object) return null;
+  if (repository.object.__typename !== "Blob") return null;
+
+  console.log(repository.object.__typename);
+
+  try {
+    return JSON.parse(repository.object.text as string);
+  } catch {
+    return null;
+  }
+}
