@@ -11,6 +11,7 @@
     "codegen": "dotenv -e .env.development.local -- graphql-codegen --config codegen.yml --verbose"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1004.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.1.2",

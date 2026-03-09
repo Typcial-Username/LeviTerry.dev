@@ -1,13 +1,13 @@
+"use client";
+
 //#region Imports
 import { NextPage } from "next";
 import Head from "next/head";
 import styles from "../../styles/Gallery.module.css";
-import { updateRepoContext } from "../../utils/context/Repo";
 
-import { PinnedItems, RepositoryNode, User } from "../../utils/types";
+import { RepositoryNode } from "../../utils/types";
 
-import React, { useEffect, useRef, useState, useMemo } from "react";
-import Link from "next/link";
+import React, { useState, useMemo } from "react";
 import { RepositoryCard } from "../../components/ui/RepositoryCard";
 import { SkeletonCards } from "../../components/SkeletonCard";
 import {
@@ -45,7 +45,7 @@ const GalleryContent: React.FC<GalleryProps> = ({
   filteredRepos: allRepos,
   fullPinnedRepos,
 }) => {
-  let terminalOpen = useRef<boolean>(false);
+  // let terminalOpen = useRef<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FilterOptions>({
     searchTerm: "",
@@ -70,7 +70,7 @@ const GalleryContent: React.FC<GalleryProps> = ({
   //     "[data-name=terminal]"
   //   ) as HTMLDivElement;
 
-  //   terminalOpen.current = terminal?.style.display === "block" ? true : false;
+  //   terminalOpen.current = terminal?.style.display === "block";
 
   //   // Simulate loading time for demonstration
   //   const timer = setTimeout(() => {
@@ -89,11 +89,11 @@ const GalleryContent: React.FC<GalleryProps> = ({
       <RepoManager>
         <div
           className={styles.galleryContainer}
-          style={{
-            height: `calc(100% - var(--main-m-top) - ${
-              terminalOpen.current ? "5rem" : "0"
-            })`,
-          }}
+          // style={{
+          //   height: `calc(100% - var(--main-m-top) - ${
+          //     terminalOpen.current ? "5rem" : "0"
+          //   })`,
+          // }}
         >
           <br />
 
@@ -223,204 +223,204 @@ const Gallery: NextPage<GalleryProps> = (props) => {
   );
 };
 
-export async function getStaticProps() {
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-  };
+// export async function getStaticProps() {
+//   const headers = {
+//     "Content-Type": "application/json",
+//     Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+//   };
 
-  const allRepoQuery = `
-  {
-    user(login: "Typcial-Username") {
-    id
-    repositories(first: 100) {
-      edges {
-        node {
-          ... on Repository {
-            name
-            id
-            description
-            url
-            homepageUrl
-            pushedAt
-            languages(first: 5) {
-              totalSize
-              edges {
-                size
-                node {
-                  name
-                  color
-                }
-              }
-            }
-            stargazerCount
-            repositoryTopics(first: 5) {
-              edges {
-                node {
-                  topic {
-                    name
-                  }
-                }
-              }
-            }
-            isFork
-            }
-          }
-        }
-      }
-    }
-  }
-  `;
+//   const allRepoQuery = `
+//   {
+//     user(login: "Typcial-Username") {
+//     id
+//     repositories(first: 100) {
+//       edges {
+//         node {
+//           ... on Repository {
+//             name
+//             id
+//             description
+//             url
+//             homepageUrl
+//             pushedAt
+//             languages(first: 5) {
+//               totalSize
+//               edges {
+//                 size
+//                 node {
+//                   name
+//                   color
+//                 }
+//               }
+//             }
+//             stargazerCount
+//             repositoryTopics(first: 5) {
+//               edges {
+//                 node {
+//                   topic {
+//                     name
+//                   }
+//                 }
+//               }
+//             }
+//             isFork
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   `;
 
-  const pinnedRepoQuery = `
-  {
-    user(login: "Typcial-Username") {
-      id
-      pinnedItems(first: 10) {
-        edges {
-          node {
-            ... on Repository {
-              name
-              id
-            }
-          }
-        }
-      }
-    }
-  }
-  `;
+//   const pinnedRepoQuery = `
+//   {
+//     user(login: "Typcial-Username") {
+//       id
+//       pinnedItems(first: 10) {
+//         edges {
+//           node {
+//             ... on Repository {
+//               name
+//               id
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   `;
 
-  const orgContribQuery = `
-    {
-      user(login: "Typcial-Username") {
-        organizations(first: 10) {
-          nodes {
-            login
-            name
-            avatarUrl
-            url
-            repositories(first: 20) {
-              nodes {
-                name
-                url
-                description
-                id
-                languages(first: 5) {
-                  edges {
-                    node {
-                      name
-                      color
-                    }
-                    size
-                  }
-                }
-              }
-            }
-          }
-        }
-        repositoriesContributedTo(
-          first: 50
-          includeUserRepositories: false
-          contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY, PULL_REQUEST_REVIEW]
-        ) {
-          nodes {
-            name
-            id
-            owner {
-              login
-              avatarUrl
-              __typename
-            }
-            url
-            description
-            languages(first: 5) {
-              edges {
-                node {
-                  name
-                  color
-                }
-                size
-              }
-            }
-            stargazerCount
-          }
-        }
-      }
-    }
-  `;
+//   const orgContribQuery = `
+//     {
+//       user(login: "Typcial-Username") {
+//         organizations(first: 10) {
+//           nodes {
+//             login
+//             name
+//             avatarUrl
+//             url
+//             repositories(first: 20) {
+//               nodes {
+//                 name
+//                 url
+//                 description
+//                 id
+//                 languages(first: 5) {
+//                   edges {
+//                     node {
+//                       name
+//                       color
+//                     }
+//                     size
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//         repositoriesContributedTo(
+//           first: 50
+//           includeUserRepositories: false
+//           contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY, PULL_REQUEST_REVIEW]
+//         ) {
+//           nodes {
+//             name
+//             id
+//             owner {
+//               login
+//               avatarUrl
+//               __typename
+//             }
+//             url
+//             description
+//             languages(first: 5) {
+//               edges {
+//                 node {
+//                   name
+//                   color
+//                 }
+//                 size
+//               }
+//             }
+//             stargazerCount
+//           }
+//         }
+//       }
+//     }
+//   `;
 
-  const [allRepoResponce, pinnedRepoResponse, orgContribResponse] =
-    await Promise.all([
-      fetch("https://api.github.com/graphql", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ query: allRepoQuery }),
-      }),
-      fetch("https://api.github.com/graphql", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ query: pinnedRepoQuery }),
-      }),
-      fetch("https://api.github.com/graphql", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ query: orgContribQuery }),
-      }),
-    ]);
+//   const [allRepoResponce, pinnedRepoResponse, orgContribResponse] =
+//     await Promise.all([
+//       fetch("https://api.github.com/graphql", {
+//         method: "POST",
+//         headers,
+//         body: JSON.stringify({ query: allRepoQuery }),
+//       }),
+//       fetch("https://api.github.com/graphql", {
+//         method: "POST",
+//         headers,
+//         body: JSON.stringify({ query: pinnedRepoQuery }),
+//       }),
+//       fetch("https://api.github.com/graphql", {
+//         method: "POST",
+//         headers,
+//         body: JSON.stringify({ query: orgContribQuery }),
+//       }),
+//     ]);
 
-  const [userRepositories, pinnedRepos, orgContributions] = await Promise.all([
-    allRepoResponce.json(),
-    pinnedRepoResponse.json(),
-    orgContribResponse.json(),
-  ]);
+//   const [userRepositories, pinnedRepos, orgContributions] = await Promise.all([
+//     allRepoResponce.json(),
+//     pinnedRepoResponse.json(),
+//     orgContribResponse.json(),
+//   ]);
 
-  console.dir(orgContributions, { depth: null });
+//   console.dir(orgContributions, { depth: null });
 
-  if (!userRepositories?.data?.user || !pinnedRepos?.data?.user?.pinnedItems) {
-    throw new Error(
-      "Failed to fetch user repositories or pinned items from GitHub API"
-    );
-  }
+//   if (!userRepositories?.data?.user || !pinnedRepos?.data?.user?.pinnedItems) {
+//     throw new Error(
+//       "Failed to fetch user repositories or pinned items from GitHub API"
+//     );
+//   }
 
-  const { user }: { user: User } = userRepositories.data;
-  const { pinnedItems }: { pinnedItems: PinnedItems } = pinnedRepos.data.user;
+//   const { user }: { user: User } = userRepositories.data;
+//   const { pinnedItems }: { pinnedItems: PinnedItems } = pinnedRepos.data.user;
 
-  const allRepos: RepositoryNode[] = user.repositories.edges.map(
-    (edge) => edge.node
-  );
+//   const allRepos: RepositoryNode[] = user.repositories.edges.map(
+//     (edge) => edge.node
+//   );
 
-  const pinnedRepoIds: string[] = pinnedItems.edges.map((edge) => edge.node.id);
+//   const pinnedRepoIds: string[] = pinnedItems.edges.map((edge) => edge.node.id);
 
-  const fullPinnedRepos = allRepos.filter((repo) =>
-    pinnedRepoIds.includes(repo.id)
-  );
+//   const fullPinnedRepos = allRepos.filter((repo) =>
+//     pinnedRepoIds.includes(repo.id)
+//   );
 
-  // Filter out repos that have config tags or are pinned
-  const filteredRepos = allRepos
-    .filter(
-      (repo) => !fullPinnedRepos.some((pinnedRepo) => pinnedRepo.id === repo.id)
-    )
-    .filter(
-      (repo) =>
-        !repo.repositoryTopics.edges.some((topic) =>
-          topic.node.topic.name.toLowerCase().includes("config")
-        )
-    )
-    .sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    });
+//   // Filter out repos that have config tags or are pinned
+//   const filteredRepos = allRepos
+//     .filter(
+//       (repo) => !fullPinnedRepos.some((pinnedRepo) => pinnedRepo.id === repo.id)
+//     )
+//     .filter(
+//       (repo) =>
+//         !repo.repositoryTopics.edges.some((topic) =>
+//           topic.node.topic.name.toLowerCase().includes("config")
+//         )
+//     )
+//     .sort((a, b) => {
+//       return a.name.localeCompare(b.name);
+//     });
 
-  // Add repos to repo context
-  updateRepoContext([...filteredRepos, ...fullPinnedRepos]);
-  console.log("Repository context updated from Gallery page.");
+//   // Add repos to repo context
+//   updateRepoContext([...filteredRepos, ...fullPinnedRepos]);
+//   console.log("Repository context updated from Gallery page.");
 
-  return {
-    props: {
-      filteredRepos,
-      fullPinnedRepos,
-    },
-    revalidate: 60 * 60 * 24, // Revalidate every 24 hours
-  };
-}
+//   return {
+//     props: {
+//       filteredRepos,
+//       fullPinnedRepos,
+//     },
+//     revalidate: 60 * 60 * 24, // Revalidate every 24 hours
+//   };
+// }
 
 export default Gallery;
