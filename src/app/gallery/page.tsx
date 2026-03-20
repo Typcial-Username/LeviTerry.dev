@@ -8,7 +8,7 @@ import styles from "../../styles/Gallery.module.css";
 import { RepositoryNode } from "../../utils/types";
 
 import React, { useState, useMemo } from "react";
-import { RepositoryCard } from "../../components/ui/RepositoryCard";
+import { ProjectCard } from "../../components/ui/ProjectCard";
 import { SkeletonCards } from "../../components/SkeletonCard";
 import {
   RepositoryFilter,
@@ -162,7 +162,7 @@ const GalleryContent: React.FC<GalleryProps> = ({
 
                   <div className={styles.repositoryGrid}>
                     {fullPinnedRepos.map((repo) => (
-                      <RepositoryCard
+                      <ProjectCard
                         key={`pinned-${repo.id}`}
                         repository={repo}
                         isPinned={true}
@@ -186,7 +186,7 @@ const GalleryContent: React.FC<GalleryProps> = ({
               <div className={styles.repositoryGrid}>
                 {filteredRepositories.length > 0 ?
                   filteredRepositories.map((repo) => (
-                    <RepositoryCard key={repo.id} repository={repo} />
+                    <ProjectCard key={repo.id} repository={repo} />
                   ))
                 : <div className={styles.emptyState}>
                     <p>No repositories match your current filters.</p>

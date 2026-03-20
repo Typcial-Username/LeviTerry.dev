@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card } from "../ui/Card";
+import { Card } from "./Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExternalLinkAlt,
@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "../../styles/Gallery.module.css";
 import { PortfolioData } from "@/src/lib/github";
+import { StarIcon } from "lucide-react";
 
 interface RepositoryCardProps {
   repository: PortfolioData["repos"][number];
@@ -22,7 +23,7 @@ type LanguageInfo = {
   percent: number;
 };
 
-export const RepositoryCard: React.FC<RepositoryCardProps> = ({
+export const ProjectCard: React.FC<RepositoryCardProps> = ({
   repository: repo,
   isPinned = false,
 }) => {
@@ -143,7 +144,9 @@ export const RepositoryCard: React.FC<RepositoryCardProps> = ({
         <>
           <br />
           <p key={`${repo.node?.id}+stars`} className={styles.repositoryStats}>
-            <span className={styles.starIcon}>⭐ Stars </span>
+            <span className={styles.starIcon}>
+              <StarIcon /> Stars{" "}
+            </span>
             <span className={styles.starCount}>
               {repo.node?.stargazerCount}
             </span>

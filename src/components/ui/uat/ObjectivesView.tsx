@@ -1,5 +1,5 @@
 import { PortfolioData } from "@/src/lib/github";
-import { RepositoryCard } from "../RepositoryCard";
+import { ProjectCard } from "../ProjectCard";
 
 interface Objective {
   id: string;
@@ -47,7 +47,7 @@ const ObjectivesView = ({
                           key={`${repo?.node?.id}`}
                           style={{ display: "flex" }}
                         >
-                          <RepositoryCard
+                          <ProjectCard
                             repository={repo}
                             key={`${repo?.node?.id}/${obj.id}`}
                           />
@@ -89,7 +89,7 @@ const ObjectivesView = ({
                           key={repo.node?.id}
                           style={{ display: "flex" }}
                         >
-                          <RepositoryCard
+                          <ProjectCard
                             repository={repo}
                             key={`${repo.node?.id}/${obj.id}`}
                           />

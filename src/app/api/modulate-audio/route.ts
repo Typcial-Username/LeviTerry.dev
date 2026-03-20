@@ -1,10 +1,9 @@
 // import ffmpeg from 'fluent-ffmpeg'
-import { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
-import fs from "fs";
+import fs from "node:fs/promises";
 import ffmpeg from "fluent-ffmpeg";
-import ffmpegPath from "ffmpeg-static";
-import path from "path";
+import ffmpegStatic from "ffmpeg-static";
+import path from "node:path";
 
 import {
   S3Client,
@@ -22,50 +21,68 @@ const s3 = new S3Client({
   },
 });
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export const runtime = "nodejs";
+
+export async function POST(req: Request) {
+  const ffmpegPath = path.resolve(ffmpegStatic as string);
   if (!ffmpegPath) {
     throw new Error("ffmpeg path not found");
   }
 
-  ffmpeg.setFfmpegPath(ffmpegPath);
-  const form = formidable({ keepExtensions: true });
+  console.log({ ffmpegPath });
 
-  const { files, fields } = await new Promise<{
-    fields: formidable.Fields;
-    files: formidable.Files;
-  }>((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
-      if (err) reject(err);
-      else resolve({ fields, files });
-    });
-  });
+  const formData = await req.formData();
 
-  const file = files[0] || files.file; // Access the file from the parsed form data
-  const frequency = parseFloat(
-    fields.frequency && fields.frequency.length > 0 ?
-      (fields.frequency[0] as string)
-    : ""
-  );
+  ffmpeg.setFfmpegPath(ffmpegPath as string);
+  // const form = formidable({ keepExtensions: true });
+
+  const file = formData.get("file") as File;
+  const frequency = Number(formData.get("frequency"));
+  const sampleRate = Number(formData.get("sample_rate"));
+
+  const tmpDir = path.join(process.cwd(), "tmp");
+  await fs.mkdir(tmpDir, { recursive: true });
+
+  const ext = file.name.split(".").pop();
+  const inputPath = path.join(tmpDir, `input-${Date.now()}.${ext}`);
+  const wavPath = path.join(tmpDir, `output-${Date.now()}.wav`);
+
+  const buffer = await file.arrayBuffer();
+  await fs.writeFile(inputPath, new Uint8Array(buffer));
+
+  // const frequency = parseFloat(
+  //   fields.frequency && fields.frequency.length > 0 ?
+  //     (fields.frequency[0] as string)
+  //   : ""
+  // );
+  // const sampleRate = parseFloat(
+  //   fields.sample_rate && fields.sample_rate.length > 0 ?
+  //     (fields.sample_rate[0] as string)
+  //   : ""
+  // );
 
   if (!file) {
     console.error("No file found in form data");
-    return res.status(400).json({ error: "No file found in form data" });
+    return new Response(
+      JSON.stringify({ error: "No file found in form data." }),
+      {
+        status: 400,
+      }
+    );
   }
 
-  const realFile = file[0];
+  // const realFile = file[0];
 
-  if (!realFile || !realFile.filepath || !realFile.originalFilename) {
-    console.error("Invalid file data:", realFile);
-    return res.status(400).json({ error: "Invalid file data" });
-  }
+  // if (!realFile || !realFile.filepath || !realFile.originalFilename) {
+  //   console.error("Invalid file data:", realFile);
+  //   return new Response(JSON.stringify({ error: "Invalid file data" }), {
+  //     status: 400,
+  //   });
 
-  const inputPath = realFile.filepath;
+  // const inputPath = realFile.filepath;
 
   const sanitizedBaseName = path
-    .parse(realFile.originalFilename)
+    .parse(file.name)
     .name.replace(/[^a-z0-9]/gi, "_")
     .toLowerCase();
 
@@ -75,14 +92,14 @@ export default async function handler(
   const outputFileName = sanitizedBaseName + "-modulated.uaf";
   const wavFileName = sanitizedBaseName + ".uaf";
 
-  const wavPath = path.join(outputDir, wavFileName); //fs.mkdtempSync('modulated-') + '/' + realFile.originalFilename;
+  // const wavPath = path.join(outputDir, wavFileName); //fs.mkdtempSync('modulated-') + '/' + realFile.originalFilename;
   const modulatedPath = path.join(outputDir, outputFileName);
 
   // Convert to WAV format using ffmpeg
   await new Promise((resolve, reject) => {
     ffmpeg(inputPath)
       .audioChannels(1)
-      .audioFrequency(96000)
+      .audioFrequency(sampleRate)
       .audioCodec("pcm_s16le")
       .format("wav")
       .on("end", resolve)
@@ -96,21 +113,29 @@ export default async function handler(
   console.log("WAV file path:", wavPath);
 
   // Read PCM data from the WAV file
-  const pcm = fs.readFileSync(wavPath);
+  const pcm = await fs.readFile(wavPath);
   const dataOffset = 44;
   const audio = pcm.subarray(dataOffset);
 
   // Modulate the audio data
-  const finished = await modulateAudio(pcm, frequency);
+  const finished = await modulateAudio(pcm, frequency, sampleRate);
 
-  fs.writeFileSync(modulatedPath, new Uint8Array(finished));
+  fs.writeFile(modulatedPath, new Uint8Array(finished));
 
   console.log("Modulated audio saved to:", modulatedPath);
 
-  return res.status(200).json({
-    message: "File received successfully",
-    modulatedPath: `modulated/${outputFileName}`,
-  });
+  return new Response(
+    JSON.stringify({
+      message: "File received successfully",
+      modulatedPath: `modulated/${outputFileName}`,
+    }),
+    {
+      status: 200,
+      headers: {
+        "Content-Type": "audio/uaf",
+      },
+    }
+  );
 }
 
 function createUAFHeader(
@@ -133,7 +158,7 @@ function modulateAudio(
   carrierHz: number = 40000,
   sampleRate: number = 192000,
   depth: number = 0.8
-): Buffer {
+): Uint8Array<ArrayBuffer> {
   const carrierStep = (2 * Math.PI * carrierHz) / sampleRate;
 
   const sampleCount = file.length / 2;
