@@ -4,6 +4,15 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+
 type imageLocations = "left" | "right";
 type imageOptions = {
   src: string;
@@ -21,7 +30,7 @@ interface CardProps {
   footer?: React.ReactNode;
 }
 
-export const Card = ({
+export const InfoCard = ({
   header: title,
   isPinned,
   description,
@@ -29,7 +38,7 @@ export const Card = ({
   link,
   imageOptions,
   linkHoverText,
-  footer
+  footer,
 }: CardProps) => {
   if (description) {
     description = description.replaceAll("\n", "--");
@@ -37,53 +46,56 @@ export const Card = ({
   }
 
   return (
-    <div
-      className={`${styles.card}`}
-      style={{ border: "1px solid var(--clr-primary)" }}
+    <Card
+    // className={`${styles.card}`}
+    // style={{ border: "1px solid var(--clr-primary)" }}
     >
-      {imageOptions ?
-        imageOptions.location == "left" ?
-          <Image src={imageOptions.src} alt={imageOptions.alt} fill />
-        : null
-      : null}
-
-      <h2 className="border-bottom">
-        {isPinned ?
-          <span className={styles.pinned}>📌 </span>
+      <CardHeader>
+        {imageOptions ?
+          imageOptions.location == "left" ?
+            <Image src={imageOptions.src} alt={imageOptions.alt} fill />
+          : null
         : null}
-        {link ?
-          <span>
-            <Link
-              className={styles.link}
-              href={link}
-              target="_blank"
-              rel="noreferrer"
-              title={linkHoverText || "Link to project"}
-            >
-              {title}{" "}
-              <FontAwesomeIcon icon={faExternalLinkAlt} />
-            </Link>
-          </span>
-        : title}
-      </h2>
 
-      <p>{description}</p>
+        <CardTitle>
+          <h2 className="border-bottom">
+            {isPinned ?
+              <span className={styles.pinned}>📌 </span>
+            : null}
+            {link ?
+              <span>
+                <Link
+                  className={styles.link}
+                  href={link}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={linkHoverText || "Link to project"}
+                >
+                  {title} <FontAwesomeIcon icon={faExternalLinkAlt} />
+                </Link>
+              </span>
+            : title}
+          </h2>
+        </CardTitle>
+      </CardHeader>
 
-      {content ? content : null}
+      <CardDescription>
+        <p>{description}</p>
+      </CardDescription>
 
-      {imageOptions ?
-        imageOptions.location == "right" ?
-          <Image src={imageOptions.src} alt={imageOptions.alt} />
-        : null
-      : null}
+      <CardContent>
+        {content ? content : null}
 
-      {
-        footer ?
-          <div className={styles.footer}>
-            {footer}
-          </div>
-        : null
-      }
-    </div>
+        {imageOptions ?
+          imageOptions.location == "right" ?
+            <Image src={imageOptions.src} alt={imageOptions.alt} />
+          : null
+        : null}
+
+        {footer ?
+          <div className={styles.footer}>{footer}</div>
+        : null}
+      </CardContent>
+    </Card>
   );
 };

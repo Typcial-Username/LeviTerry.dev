@@ -164,7 +164,7 @@ const GalleryContent: React.FC<GalleryProps> = ({
                     {fullPinnedRepos.map((repo) => (
                       <ProjectCard
                         key={`pinned-${repo.id}`}
-                        repository={repo}
+                        project={repo}
                         isPinned={true}
                       />
                     ))}
@@ -186,7 +186,7 @@ const GalleryContent: React.FC<GalleryProps> = ({
               <div className={styles.repositoryGrid}>
                 {filteredRepositories.length > 0 ?
                   filteredRepositories.map((repo) => (
-                    <ProjectCard key={repo.id} repository={repo} />
+                    <ProjectCard key={repo.id} project={repo} />
                   ))
                 : <div className={styles.emptyState}>
                     <p>No repositories match your current filters.</p>
@@ -223,6 +223,7 @@ const Gallery: NextPage<GalleryProps> = (props) => {
   );
 };
 
+//#region Props
 // export async function getStaticProps() {
 //   const headers = {
 //     "Content-Type": "application/json",
@@ -422,5 +423,6 @@ const Gallery: NextPage<GalleryProps> = (props) => {
 //     revalidate: 60 * 60 * 24, // Revalidate every 24 hours
 //   };
 // }
+// #endregion
 
 export default Gallery;

@@ -2,7 +2,7 @@ import type { NextPage, Metadata } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { fetchGitHubRepos } from "../lib/github";
+import { getPortfolioData } from "../lib/portfolio-data";
 
 export const metadata: Metadata = {
   title: "Levi Terry's Developer Portfolio | Home",

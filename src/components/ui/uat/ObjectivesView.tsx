@@ -1,5 +1,6 @@
-import { PortfolioData } from "@/src/lib/github";
+import { IncomingProjectsSchema } from "@/src/lib/portfolio-data";
 import { ProjectCard } from "../ProjectCard";
+import { Project } from "@/src/lib/projects.schema";
 
 interface Objective {
   id: string;
@@ -8,10 +9,10 @@ interface Objective {
 
 const ObjectivesView = ({
   objectives,
-  repos,
+  projects,
 }: {
   objectives: Objective[];
-  repos: PortfolioData["repos"];
+  projects: Project[];
 }) => {
   return (
     <div
@@ -32,24 +33,23 @@ const ObjectivesView = ({
 
                   <br />
 
-                  {repos
-                    .filter((repo) =>
-                      repo?.repositoryTopics?.some(
-                        (rt) =>
-                          rt?.node?.topic.name.toLowerCase() ===
-                          obj.id.toLowerCase()
+                  {projects
+                    .filter((proj) =>
+                      proj?.objectives?.some(
+                        (proj) =>
+                          proj?.code.toLowerCase() === obj.id.toLowerCase()
                       )
                     )
                     .map((repo) => {
                       return (
                         <div
-                          id={repo?.node?.id}
-                          key={`${repo?.node?.id}`}
+                          id={repo.id}
+                          key={`${repo.id}`}
                           style={{ display: "flex" }}
                         >
                           <ProjectCard
-                            repository={repo}
-                            key={`${repo?.node?.id}/${obj.id}`}
+                            project={repo}
+                            key={`${repo.id}/${obj.id}`}
                           />
                         </div>
                       );
@@ -74,24 +74,22 @@ const ObjectivesView = ({
 
                   <br />
 
-                  {repos
-                    .filter((repo) =>
-                      repo.repositoryTopics.some(
-                        (rt) =>
-                          rt.node?.topic.name.toLowerCase() ===
-                          obj.id.toLowerCase()
+                  {projects
+                    .filter((proj) =>
+                      proj?.objectives?.some(
+                        (rt) => rt.code.toLowerCase() === obj.id.toLowerCase()
                       )
                     )
                     .map((repo) => {
                       return (
                         <div
-                          id={repo.node?.id}
-                          key={repo.node?.id}
+                          id={repo.id}
+                          key={repo.id}
                           style={{ display: "flex" }}
                         >
                           <ProjectCard
-                            repository={repo}
-                            key={`${repo.node?.id}/${obj.id}`}
+                            project={repo}
+                            key={`${repo.id}/${obj.id}`}
                           />
                         </div>
                       );

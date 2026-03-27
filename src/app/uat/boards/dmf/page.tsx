@@ -1,27 +1,23 @@
-import { NextPage } from "next";
 import RepoManager from "../../../../components/RepoManager";
-import { useRepoContext } from "../../../../utils/context/Repo";
 // import { withRepoProvider } from "../../../../components/hocs/withRepoProvider";
 import ObjectivesView from "../../../../components/ui/uat/ObjectivesView";
 import { RepositoryNode } from "@/src/utils/types";
-import { fetchGitHubRepos } from "@/src/lib/github";
+import { getPortfolioData } from "@/src/lib/portfolio-data";
 
 const DmfBoardsPage = async () => {
-  const { repos } = await fetchGitHubRepos();
+  const projects = await getPortfolioData();
   // console.log({ repos });
 
   const dmfRepos =
-    repos.filter((repo) =>
-      repo?.repositoryTopics?.some((rt) =>
-        rt?.node?.topic.name.startsWith("dmf-")
-      )
+    projects?.projects.filter((proj) =>
+      proj.objectives?.map((obj) => obj.code.startsWith("DMF"))
     ) ?? [];
 
   return (
     <RepoManager>
       <br />
 
-      <h1>DMF Board UAT Page</h1>
+      <h1>DMF Boards UAT Page</h1>
       <p>Found {dmfRepos.length} repositories</p>
 
       <br />
@@ -59,7 +55,7 @@ const DmfBoardsPage = async () => {
               "Produce products that balance form and function while reflecting current and future trends in design and human factors.",
           },
         ]}
-        repos={dmfRepos}
+        projects={dmfRepos}
       />
     </RepoManager>
   );

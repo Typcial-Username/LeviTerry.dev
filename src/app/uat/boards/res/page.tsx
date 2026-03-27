@@ -1,18 +1,16 @@
 import RepoManager from "../../../../components/RepoManager";
 import ObjectivesView from "../../../../components/ui/uat/ObjectivesView";
-import { fetchGitHubRepos } from "@/src/lib/github";
+import { getPortfolioData } from "@/src/lib/portfolio-data";
 
 const RoboticsBoardPage = async () => {
-  const { repos } = await fetchGitHubRepos();
+  const projects = await getPortfolioData();
 
   const resRepos =
-    repos.filter((repo) =>
-      repo?.repositoryTopics?.some((rt) =>
-        rt?.node?.topic.name.startsWith("res-")
-      )
+    projects?.projects.filter((proj) =>
+      proj?.objectives?.some((rt) => rt.code.toLowerCase().startsWith("res-"))
     ) ?? [];
 
-  console.log(resRepos[0].metadata);
+  // console.log(resRepos[0].metadata);
 
   return (
     <RepoManager>
@@ -56,7 +54,7 @@ const RoboticsBoardPage = async () => {
               "Implement and evaluate algorithms and methods enabling autonomy in a mobile robot.",
           },
         ]}
-        repos={resRepos}
+        projects={resRepos}
       />
     </RepoManager>
   );
