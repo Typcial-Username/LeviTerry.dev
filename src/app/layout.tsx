@@ -29,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps) {
           <br />
         </main>
 
-        <Terminal />
+        {/* <Terminal /> */}
       </body>
     </html>
   );

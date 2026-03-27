@@ -2,12 +2,12 @@ import RepoManager from "../../../../components/RepoManager";
 import ObjectivesView from "../../../../components/ui/uat/ObjectivesView";
 import { getPortfolioData } from "@/src/lib/portfolio-data";
 
-const RoboticsBoardPage = async () => {
+const RoboticsBoardsPage = async () => {
   const projects = await getPortfolioData();
 
   const resRepos =
     projects?.projects.filter((proj) =>
-      proj?.objectives?.some((rt) => rt.code.toLowerCase().startsWith("res-"))
+      proj?.objectives?.some((obj) => obj.code.startsWith("RES"))
     ) ?? [];
 
   // console.log(resRepos[0].metadata);
@@ -16,40 +16,40 @@ const RoboticsBoardPage = async () => {
     <RepoManager>
       <br />
 
-      <h1>Robotics Board UAT Page</h1>
-      <p>Found {resRepos.length} repositories</p>
+      <h1 className="text-3xl">Robotics Boards UAT Page</h1>
+      <p>Found {resRepos.length} project(s)</p>
 
       <br />
 
       <ObjectivesView
         objectives={[
           {
-            id: "res-1",
+            id: "RES-1",
             description:
               "Design and complete robotic and embedded systems solutions that apply to real-world situations and challenges.",
           },
           {
-            id: "res-2",
+            id: "RES-2",
             description:
               "Implement a simple microprocessor using digital logic design.",
           },
           {
-            id: "res-3",
+            id: "RES-3",
             description:
               "Demonstrate embedded system design skills including, but not limited to, microcontroller selection, schematic design, printed circuit board layout, design for electromagnetic compatibility and design for manufacturing.",
           },
           {
-            id: "res-4",
+            id: "RES-4",
             description:
               "Apply knowledge of transducers, actuators and simultaneous hardware and software development in the design of an embedded system.",
           },
           {
-            id: "res-5",
+            id: "RES-5",
             description:
               "Design and analyze real-time embedded systems, including advanced digital logic design, signal processing and high-speed digital systems.",
           },
           {
-            id: "res-6",
+            id: "RES-6",
             description:
               "Implement and evaluate algorithms and methods enabling autonomy in a mobile robot.",
           },
@@ -60,4 +60,4 @@ const RoboticsBoardPage = async () => {
   );
 };
 
-export default RoboticsBoardPage;
+export default RoboticsBoardsPage;

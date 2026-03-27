@@ -20,85 +20,83 @@ const ObjectivesView = ({
       className="flex justify-between m-left-2"
       style={{ margin: "1.25em 10% 0 10%" }}
     >
-      <div
-        className="float-left w-1/2 text-left"
-        style={{ float: "left", textAlign: "left", width: "48%" }}
-      >
-        <ul>
+      <div className="float-left text-left" style={{ width: "49%" }}>
+        <ol className="list-decimal">
           {objectives.slice(0, 3).map((obj) => {
             return (
-              <li key={`${obj.id}-L`} style={{ marginBottom: "1rem" }}>
-                <div>
+              <li key={`${obj.id}-L`}>
+                <div className="mb-4">
                   <p>{obj.description}</p>
 
                   <br />
 
-                  {projects
-                    .filter((proj) =>
-                      proj?.objectives?.some(
-                        (proj) =>
-                          proj?.code.toLowerCase() === obj.id.toLowerCase()
+                  <div className="grid ">
+                    {projects
+                      .filter((proj) =>
+                        proj?.objectives?.some(
+                          (proj) =>
+                            proj?.code.toLowerCase() === obj.id.toLowerCase()
+                        )
                       )
-                    )
-                    .map((repo) => {
-                      return (
-                        <div
-                          id={repo.id}
-                          key={`${repo.id}`}
-                          style={{ display: "flex" }}
-                        >
-                          <ProjectCard
-                            project={repo}
-                            key={`${repo.id}/${obj.id}`}
-                          />
-                        </div>
-                      );
-                    })}
+                      .map((repo) => {
+                        return (
+                          <div
+                            id={repo.id}
+                            key={`${repo.id}`}
+                            style={{ display: "flex" }}
+                          >
+                            <ProjectCard
+                              project={repo}
+                              key={`${repo.id}/${obj.id}`}
+                            />
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
               </li>
             );
           })}
-        </ul>
+        </ol>
       </div>
 
-      <div
-        className="float-right w-1/2 text-left"
-        style={{ float: "right", textAlign: "left", width: "48%" }}
-      >
-        <ul>
+      <div className="float-right text-left" style={{ width: "48%" }}>
+        <ol className="list-decimal" start={4}>
           {objectives.slice(3, 6).map((obj) => {
             return (
               <li key={`${obj.id}-R`}>
-                <div>
+                <div className="mb-4">
                   <p>{obj.description}</p>
 
                   <br />
 
-                  {projects
-                    .filter((proj) =>
-                      proj?.objectives?.some(
-                        (rt) => rt.code.toLowerCase() === obj.id.toLowerCase()
+                  <div className="grid grid-cols-2">
+                    {projects
+                      .filter((proj) =>
+                        proj?.objectives?.some(
+                          (rt) => rt.code.toLowerCase() === obj.id.toLowerCase()
+                        )
                       )
-                    )
-                    .map((repo) => {
-                      return (
-                        <div
-                          id={repo.id}
-                          key={repo.id}
-                          style={{ display: "flex" }}
-                        >
-                          <ProjectCard
-                            project={repo}
-                            key={`${repo.id}/${obj.id}`}
-                          />
-                        </div>
-                      );
-                    })}
+                      .map((repo) => {
+                        return (
+                          <div
+                            id={repo.id}
+                            key={repo.id}
+                            style={{ display: "flex" }}
+                          >
+                            <ProjectCard
+                              project={repo}
+                              key={`${repo.id}/${obj.id}`}
+                            />
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
               </li>
             );
           })}
-        </ul>
+        </ol>
       </div>
     </div>
   );

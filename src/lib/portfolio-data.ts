@@ -7,12 +7,12 @@ export async function getPortfolioData(): Promise<
   IncomingProjectsSchema | undefined
 > {
   const res = await fetch(
-    "https://cdn.jsdelivr.net/gh/Typcial-Username/portfolio-data@main/dist/projects.json",
-    {
-      next: {
-        revalidate: 60 * 60 * 24,
-      },
-    }
+    "https://cdn.jsdelivr.net/gh/Typcial-Username/portfolio-data@main/dist/projects.json"
+    // {
+    //   next: {
+    //     revalidate: 60 * 60 * 24,
+    //   },
+    // }
   );
 
   if (!res.ok) {

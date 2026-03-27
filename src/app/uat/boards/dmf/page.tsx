@@ -1,12 +1,9 @@
 import RepoManager from "../../../../components/RepoManager";
-// import { withRepoProvider } from "../../../../components/hocs/withRepoProvider";
 import ObjectivesView from "../../../../components/ui/uat/ObjectivesView";
-import { RepositoryNode } from "@/src/utils/types";
 import { getPortfolioData } from "@/src/lib/portfolio-data";
 
 const DmfBoardsPage = async () => {
   const projects = await getPortfolioData();
-  // console.log({ repos });
 
   const dmfRepos =
     projects?.projects.filter((proj) =>
@@ -17,8 +14,8 @@ const DmfBoardsPage = async () => {
     <RepoManager>
       <br />
 
-      <h1>DMF Boards UAT Page</h1>
-      <p>Found {dmfRepos.length} repositories</p>
+      <h1 className="text-3xl">DMF Boards UAT Page</h1>
+      <p>Found {dmfRepos.length} project(s)</p>
 
       <br />
 
