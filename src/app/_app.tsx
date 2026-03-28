@@ -78,19 +78,21 @@ function handleKeyPressTimeout(allKeyPresses: string[]) {
 }
 
 function toggleExplorer() {
+  const root = document.documentElement;
   const explorer = document.getElementById("explorer") as HTMLDivElement;
 
-  const root = document.querySelector(":root") as HTMLElement;
+  if (!explorer) return;
 
-  if (
-    explorer &&
-    (!explorer.style.display || explorer.style.display === "block")
-  ) {
-    explorer.style.display = "none";
-    root.style.setProperty("--main-m-left", "2.5rem");
-  } else if (explorer && explorer.style.display === "none") {
-    explorer.style.display = "block";
-    root.style.setProperty("--main-m-left", "17.5rem");
+  const isCollapsed = explorer.classList.contains("collapsed");
+
+  if (isCollapsed) {
+    // Expand
+    explorer.classList.remove("collapsed");
+    // root.style.setProperty("--explorer-width", "15rem");
+  } else {
+    // Collapse
+    explorer.classList.add("collapsed");
+    // root.style.setProperty("--explorer-width", "2.5rem"); // keep the column
   }
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { InfoCard } from "./Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,17 +18,17 @@ import {
   CarouselPrevious,
 } from "../../components/ui/carousel";
 
+import { Dialog, DialogContent } from "../../components/ui/dialog";
+
 interface RepositoryCardProps {
   project: Project;
   isPinned?: boolean;
 }
 
-type LanguageInfo = {
-  name: string;
-  color?: string | null;
-  size: number;
-  percent: number;
-};
+type MediaItem =
+  | { type: "image"; src: string }
+  | { type: "video"; src: string }
+  | { type: "model"; src: string };
 
 export const ProjectCard: React.FC<RepositoryCardProps> = ({
   project: repo,
@@ -38,54 +38,29 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
     throw new Error("No repo found");
   }
 
-  /*
-  const computeLanguages = (
-    languages: typeof repo.languages
-  ): LanguageInfo[] => {
-    const total = languages.reduce((sum, l) => sum + l.size, 0);
-
-    return languages
-      .map((lang) => ({
-        name: lang.node.name,
-        color: lang.node.color,
-        size: lang.size,
-        percent: total ? (lang.size / total) * 100 : 0,
-      }))
-      .sort((a, b) => b.size - a.size);
-  };
+  const [isOpen, setIsOpen] = useState(false);
 
   const renderLanguages = () => {
-    if (!repo || repo.languages.length === 0) {
-      return (
-        <p
-          style={{
-            fontSize: "0.75rem",
-            color: "var(--clr-text-secondary, #ccc)",
-          }}
-        >
-          No Known Languages
-        </p>
-      );
-    }
+    if (!repo || !repo.github?.languages) return;
 
-    const languages = computeLanguages(repo.languages);
+    const languages = repo.github.languages;
 
     return (
-      <div key={`${repo.node?.id}+languages`} className={styles.languages}>
+      <div key={`${repo.id}+languages`} className={styles.languages}>
         <div className={styles.languageBar}>
-          {languages.map((lang) => (
+          {languages.items.map((lang) => (
             <span
-              key={`${repo.node?.id}-bar-${lang.name}`}
+              key={`${repo.id}-bar-${lang.name}`}
               className={styles.languageBarSegment}
               style={{
-                width: `${lang.percent}%`,
+                width: `${lang.name}%`,
                 backgroundColor: lang.color || "#888",
               }}
             />
           ))}
         </div>
 
-        {languages.map((lang) => (
+        {languages.items.map((lang) => (
           <>
             <div
               key={`${lang.name}-color`}
@@ -103,22 +78,15 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
   };
 
   const renderTopics = () => {
-    if (!repo.repositoryTopics || repo.repositoryTopics.length === 0) {
-      return (
-        <p
-          style={{
-            fontSize: "0.75rem",
-            color: "var(--clr-text-secondary, #ccc)",
-          }}
-        >
-          No Topics
-        </p>
-      );
-    }
+    if (
+      !repo.github?.repositoryTopics ||
+      repo.github?.repositoryTopics.nodes.length === 0
+    )
+      return;
 
-    return repo.repositoryTopics.map((node) => (
+    return repo.github.repositoryTopics.nodes.map((node) => (
       <span
-        key={`${repo.node?.id}+${node.node?.topic.name}`}
+        key={`${repo.id}+${node.topic.name}`}
         className={styles.topic}
         onMouseOver={(e) => {
           e.currentTarget.style.color = "whitesmoke";
@@ -129,122 +97,195 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
           e.currentTarget.style.backgroundColor = "#121D2F";
         }}
       >
-        {node.node?.topic.name}
+        {node.topic.name}
       </span>
     ));
   };
-  */
 
-  const carouselItems = [];
+  const carouselItems: MediaItem[] = [];
   if (repo.media) {
     if (repo.media.modelViewer)
-      carouselItems.push(
-        <div className="w-full aspect-4/3">
-          <iframe src={repo.media.modelViewer} className="w-full h-80" />
-        </div>
-      );
+      carouselItems.push({ type: "model", src: repo.media.modelViewer });
 
     if (repo.media.images && repo.media.images?.length > 0) {
       for (const img of repo.media.images) {
-        carouselItems.push(
-          <img
-            src={`https://cdn.jsdelivr.net/gh/Typcial-Username/portfolio-data@main/projects/${repo.id}/images/${img}`}
-            className="w-full h-full"
-          />
-        );
+        carouselItems.push({
+          type: "image",
+          src: `https://cdn.jsdelivr.net/gh/Typcial-Username/portfolio-data@main/projects/${repo.id}/images/${img}`,
+        });
       }
     }
     if (repo.media.videos && repo.media.videos?.length > 0) {
       for (const vid of repo.media.videos) {
-        carouselItems.push(
-          <iframe src={vid} className="w-full h-full" allowFullScreen />
-        );
+        carouselItems.push({ type: "video", src: vid });
       }
     }
   }
 
+  const thumbnails = carouselItems.slice(0, 3);
+
   return (
-    <InfoCard
-      key={isPinned ? `pinned-${repo.id}` : repo.id}
-      isPinned={isPinned}
-      header={
-        <span>
-          {/* {repo.github?.isFork ?
+    <>
+      <InfoCard
+        key={isPinned ? `pinned-${repo.id}` : repo.id}
+        isPinned={isPinned}
+        header={
+          <span>
+            {repo.github?.isFork ?
               <span>
                 <FontAwesomeIcon icon={faCodeFork} /> {repo.title}
               </span>
-            : repo.title} */}
-          {repo.title}
-        </span>
-      }
-      description={repo.description || "No Given Description"}
-      content={
-        <>
-          <br />
-          {/* <p key={`${repo.id}+stars`} className={styles.repositoryStats}>
-              <span className={styles.starIcon}>
-                <StarIcon /> Stars{" "}
-              </span>
-          <span className={styles.starCount}>
-                {repo.stargazerCount}
-              </span>
-          </p> */}
+            : repo.title}
+          </span>
+        }
+        description={repo.description || "No Given Description"}
+        content={
+          <>
+            <br />
+            {renderTopics()}
 
-          <div
-            className="media w-full aspect-video p-2"
-            style={{ border: "1px solid red", height: "100%" }}
-          >
-            <Carousel
-              orientation="vertical"
-              opts={{
-                loop: true,
-              }}
+            <br />
+
+            {repo.github?.stargazerCount ?
+              <p key={`${repo.id}-stars`} className={styles.repositoryStats}>
+                <span className={styles.starIcon}>
+                  <StarIcon /> Stars{" "}
+                </span>
+                <span className={styles.starCount}>
+                  {repo.github?.stargazerCount}
+                </span>
+              </p>
+            : null}
+
+            <div className="flex gap-2 w-full max-h-64 p-2 overflow-hidden">
+              <Carousel opts={{ loop: true }}>
+                <CarouselContent>
+                  {thumbnails.map((item, idx) => (
+                    <CarouselItem
+                      key={`${repo.id}-thumb-${idx}`}
+                      className={`basis-1/${carouselItems.length}`}
+                    >
+                      <div
+                        className="w-20 h-20 overflow-hidden rounded-md cursor-pointer"
+                        onClick={() => setIsOpen(!isOpen)}
+                      >
+                        {item.type === "image" && (
+                          <img
+                            src={item.src}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+
+                        {item.type === "video" && (
+                          <div className="w-full h-full flex items-center justify-center bg-black text-white text-xs">
+                            ▶
+                          </div>
+                        )}
+
+                        {item.type === "model" && (
+                          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-black text-xs">
+                            3D
+                          </div>
+                        )}
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+
+                {carouselItems.length > 1 && (
+                  <div className="flex justify-center gap-4 mt-2">
+                    <CarouselPrevious className="static translate-y-0" />
+                    <CarouselNext className="static translate-y-0" />
+                  </div>
+                )}
+              </Carousel>
+
+              {carouselItems.length > 3 && (
+                <div className="w-20 h-20 flex items-center justify-center bg-black text-white text-sm rounded-md">
+                  +{carouselItems.length - 3}
+                </div>
+              )}
+            </div>
+
+            {/* <div
+              id="media"
+              className="w-full aspect-video max-h-64 p-2 overflow-hidden"
             >
+              {carouselItems.length > 0 && carouselItems.length > 1 ?
+                <Carousel
+                  orientation="horizontal"
+                  opts={{
+                    loop: true,
+                  }}
+                  className="h-full"
+                >
+                  <CarouselContent>
+                    {carouselItems.map((item, idx) => (
+                      <CarouselItem
+                        className={`basis-full flex items-center justify-center`}
+                        key={`${repo.id}-carousel-${idx}`}
+                      >
+                        <div className="w-full h-full">{item}</div>
+                      </CarouselItem>
+                    ))}
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </CarouselContent>
+                </Carousel>
+              : carouselItems[0]}
+            </div> */}
+
+            <br />
+            {renderLanguages()}
+            <br />
+          </>
+        }
+        link={repo.github?.homepageUrl || undefined}
+        footer={
+          repo.github?.url ?
+            <a href={repo.github?.url} target="_blank" rel="noreferrer">
+              View Source <FontAwesomeIcon icon={faExternalLinkAlt} />
+            </a>
+          : null
+        }
+      />
+
+      <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
+        <DialogContent className="w-full bg-red-500 mx-auto my-auto">
+          <div className="w-full aspect-video flex">
+            <Carousel opts={{ loop: true }}>
               <CarouselContent>
                 {carouselItems.map((item, idx) => (
-                  <CarouselItem
-                    className={`basis-full flex items-center justify-center`}
-                    key={`${repo.id}-carousel-${idx}`}
-                  >
-                    <div className="w-full h-full">{item}</div>
+                  <CarouselItem key={`${repo.id}-modal-${idx}`}>
+                    {item.type === "image" && (
+                      <img src={item.src} className="h-full object-contain" />
+                    )}
+
+                    {item.type === "video" && (
+                      <iframe
+                        src={item.src}
+                        className="w-full h-[70vh]"
+                        allowFullScreen
+                      />
+                    )}
+
+                    {item.type === "model" && (
+                      <iframe src={item.src} className="w-full h-full" />
+                    )}
                   </CarouselItem>
                 ))}
-                <br />
-                <CarouselPrevious />
-                <CarouselNext />
               </CarouselContent>
+
+              {carouselItems.length > 1 && (
+                <div className="flex justify-center gap-4 mt-2">
+                  <CarouselPrevious className="static translate-y-0" />
+                  <CarouselNext className="static translate-y-0" />
+                </div>
+              )}
             </Carousel>
           </div>
-
-          <br />
-          {/* {renderLanguages()} */}
-
-          <br />
-          {/* {renderTopics()} */}
-          <br />
-          <br />
-        </>
-      }
-      // link={repo.node?.homepageUrl || undefined}
-      // footer={
-      //   <a href={repo.url} target="_blank" rel="noreferrer">
-      //     View Source <FontAwesomeIcon icon={faExternalLinkAlt} />
-      //   </a>
-      // }
-    />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
-
-function getFullLanguagesSize(
-  languages: {
-    __typename?: "LanguageEdge" | undefined;
-    size: number;
-    node: {
-      __typename?: "Language" | undefined;
-      name: string;
-      color?: string | null | undefined;
-    };
-  }[]
-): number {
-  return languages.reduce((acc, cur) => acc + cur.size, 0);
-}

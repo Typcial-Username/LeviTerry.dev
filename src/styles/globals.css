@@ -35,6 +35,8 @@ Blue accent: #01111d
   --main-m-left: calc(var(--explorer-width) + 2.5rem);
   --main-m-top: 5rem;
   --elm-spacing: 2rem;
+
+  /* Shadcn colors */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -162,16 +164,23 @@ a:hover {
   border-bottom: 0.15rem solid var(--clr-primary);
 }
 
-.container {
-  top: calc(var(--main-m-top));
-  margin-left: var(--main-m-left);
+.app-layout {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  height: 100vh;
+  width: 100vh;
+  gap: 0;
+  grid-template-areas:
+    "helpbar helpbar helpbar"
+    "header header header"
+    "sidebar explorer main";
+  width: calc(100% - calc(var(--main-m-left)));
+  /* margin-left: var(--main-m-left); */
+  /* top: calc(var(--main-m-top));
   text-align: center;
   position: relative;
-  /* overflow-y: scroll; */
-  height: 100%;
-  width: calc(100% - calc(var(--main-m-left)));
-  z-index: 100;
-  /* overflow: scroll; */
+  min-height: 100%; */
 }
 
 .grid {
@@ -181,6 +190,39 @@ a:hover {
   flex-wrap: wrap;
   /* max-width: 100%; */
   gap: 1em;
+}
+
+.helpbar {
+  grid-column: 1 / -1; /* span all columns */
+  grid-row: 1;
+  border: 1px solid blue;
+}
+.header {
+  grid-column: 3 / -1; /* span all columns */
+  grid-row: 2;
+  border: 1px solid plum;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--elm-spacing);
+}
+.sidebar {
+  grid-column: 1;
+  grid-row: 2 / -1;
+  border: 1px solid yellow;
+}
+.explorer {
+  grid-column: 2;
+  grid-row: 2 / -1;
+  width: var(--explorer-width);
+  border: 1px solid red;
+}
+.main-content {
+  grid-column: 3;
+  grid-row: 3;
+  overflow-y: auto;
+  border: 1px solid green;
+  width: calc(100% - var(--main-m-left));
+  padding-left: 2.5rem;
 }
 
 @media (max-width: 600px) {

@@ -18,18 +18,25 @@ export default function RootLayout({ children }: LayoutProps) {
   return (
     <html className={cn("font-sans", inter.variable)}>
       <body>
-        <Explorer />
-        <Sidebar />
-        <HelpBar />
+        <div className="app-layout">
+          <div className="helpbar">
+            <HelpBar />
+          </div>
 
-        <Header />
+          <div className="header">
+            <Header />
+          </div>
 
-        <main className="container">
-          {children}
-          <br />
-        </main>
+          <div className="sidebar">
+            <Sidebar />
+          </div>
 
-        {/* <Terminal /> */}
+          <div className="explorer">
+            <Explorer />
+          </div>
+
+          <main className="main-content">{children}</main>
+        </div>
       </body>
     </html>
   );

@@ -9,8 +9,16 @@ import { Tooltip } from "../ui/Tooltip";
 import { Dropdown } from "../Dropdown";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { TextInput } from "../TextInput";
-import { Button } from "../ui/Button";
-import { useReCaptcha } from 'next-recaptcha-v3'
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogClose,
+  DialogDescription,
+  DialogHeader,
+  DialogFooter,
+} from "../ui/dialog";
+import { useReCaptcha } from "next-recaptcha-v3";
 
 const Sidebar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -21,29 +29,32 @@ const Sidebar = () => {
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
 
-  const { executeRecaptcha } = useReCaptcha(process.env.RECAPTCHA_SITE_KEY)
-  
-  const onContactFormSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    
-    console.log({key: process.env.RECAPTCHA_SITE_KEY})
-    // const token = await executeRecaptcha('contact_form')
+  const { executeRecaptcha } = useReCaptcha(process.env.RECAPTCHA_SITE_KEY);
 
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        data: {
-          name: contactName,
-          email: contactEmail,
-          message: contactMessage,
+  const onContactFormSubmit = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      // console.log({ key: process.env.RECAPTCHA_SITE_KEY });
+      // const token = await executeRecaptcha('contact_form')
+
+      fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        // token
-      })
-    })
-  }, [contactName, contactEmail, contactMessage, /*executeRecaptcha*/])
+        body: JSON.stringify({
+          data: {
+            name: contactName,
+            email: contactEmail,
+            message: contactMessage,
+          },
+          // token
+        }),
+      });
+    },
+    [contactName, contactEmail, contactMessage /*executeRecaptcha*/]
+  );
 
   useEffect(() => {
     // Get the default theme
@@ -70,15 +81,19 @@ const Sidebar = () => {
 
     // Add click-outside-to-close functionality for dialogs
     const handleDialogClickOutside = (e: MouseEvent) => {
-      const contactDialog = document.getElementById("contact") as HTMLDialogElement;
-      const settingsDialog = document.getElementById("settings") as HTMLDialogElement;
-      
+      const contactDialog = document.getElementById(
+        "contact"
+      ) as HTMLDialogElement;
+      const settingsDialog = document.getElementById(
+        "settings"
+      ) as HTMLDialogElement;
+
       // Check if contact dialog is open and click is outside
       if (contactDialog?.open && e.target === contactDialog) {
         contactDialog.close();
       }
-      
-      // Check if settings dialog is open and click is outside  
+
+      // Check if settings dialog is open and click is outside
       if (settingsDialog?.open && e.target === settingsDialog) {
         settingsDialog.close();
       }
@@ -86,10 +101,14 @@ const Sidebar = () => {
 
     // Add keyboard support (Escape key to close)
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        const contactDialog = document.getElementById("contact") as HTMLDialogElement;
-        const settingsDialog = document.getElementById("settings") as HTMLDialogElement;
-        
+      if (e.key === "Escape") {
+        const contactDialog = document.getElementById(
+          "contact"
+        ) as HTMLDialogElement;
+        const settingsDialog = document.getElementById(
+          "settings"
+        ) as HTMLDialogElement;
+
         if (contactDialog?.open) {
           contactDialog.close();
         }
@@ -100,15 +119,15 @@ const Sidebar = () => {
     };
 
     // Add event listeners
-    document.addEventListener('click', handleDialogClickOutside);
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("click", handleDialogClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
 
     // Cleanup event listeners on unmount
     return () => {
-      document.removeEventListener('click', handleDialogClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("click", handleDialogClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [])
+  }, []);
 
   return (
     <aside id={styles.sidebar}>
@@ -219,67 +238,75 @@ const Sidebar = () => {
       </div>
 
       {/* Contact Modal */}
-      <dialog id="contact" className={styles.contactMenu}>
-        {/* Close Button */}
-        <button
-          id="close-contact"
-          onClick={closeContact}
-          className={styles.modalButton}
-        >
-          &times;
-        </button>
-
-        <h1 className={styles.modalHeader}>Contact Me</h1>
-
-        {/* Contact Form */}
-        <form
-          className={styles.contactForm}
-          id="contact-form"
-          onSubmit={onContactFormSubmit}
-        >
-          {/* Name Input */}
-          <div className={styles.formGroup}>
-            <label htmlFor="contact-name">Name</label>
-            <TextInput
-              id="contact-name"
-              type="text"
-              name="name"
-              placeholder="Your name"
-              onChange={(e) => setContactName((e.target as HTMLInputElement).value)}
-            />
-          </div>
-
-          {/* Email Input */}
-          <div className={styles.formGroup}>
-            <label htmlFor="contact-email">Email</label>
-            <TextInput
-              id="contact-email"
-              type="email"
-              name="email"
-              placeholder="you@yourdomain.com"
-              onChange={(e) => setContactEmail((e.target as HTMLInputElement).value)}
-            />
-          </div>
-
-          {/* Message Input */}
-          <div className={styles.formGroup}>
-            <label htmlFor="contact-message">Message</label>
-            <textarea
-              id="contact-message"
-              className={styles.textarea}
-              name="message"
-              placeholder="Your message here..."
-              rows={5}
-              onChange={(e) => setContactMessage((e.target as HTMLTextAreaElement).value)}
-            />
-          </div>
-
-          {/* Submit Button */}
-          <button type="submit" className={styles.submitButton}>
-            Send Message
+      <Dialog open={contactOpen}>
+        <DialogContent>
+          {/* Close Button */}
+          <button
+            id="close-contact"
+            onClick={closeContact}
+            className={styles.modalButton}
+          >
+            &times;
           </button>
-        </form>
-      </dialog>
+
+          <h1 className={styles.modalHeader}>Contact Me</h1>
+
+          {/* Contact Form */}
+          <form
+            className={styles.contactForm}
+            id="contact-form"
+            onSubmit={onContactFormSubmit}
+          >
+            {/* Name Input */}
+            <div className={styles.formGroup}>
+              <label htmlFor="contact-name">Name</label>
+              <TextInput
+                id="contact-name"
+                type="text"
+                name="name"
+                placeholder="Your name"
+                onChange={(e) =>
+                  setContactName((e.target as HTMLInputElement).value)
+                }
+              />
+            </div>
+
+            {/* Email Input */}
+            <div className={styles.formGroup}>
+              <label htmlFor="contact-email">Email</label>
+              <TextInput
+                id="contact-email"
+                type="email"
+                name="email"
+                placeholder="you@yourdomain.com"
+                onChange={(e) =>
+                  setContactEmail((e.target as HTMLInputElement).value)
+                }
+              />
+            </div>
+
+            {/* Message Input */}
+            <div className={styles.formGroup}>
+              <label htmlFor="contact-message">Message</label>
+              <textarea
+                id="contact-message"
+                className={styles.textarea}
+                name="message"
+                placeholder="Your message here..."
+                rows={5}
+                onChange={(e) =>
+                  setContactMessage((e.target as HTMLTextAreaElement).value)
+                }
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button type="submit" className={styles.submitButton}>
+              Send Message
+            </button>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {/* Settings Modal*/}
       <dialog
@@ -302,7 +329,12 @@ const Sidebar = () => {
         <form className={styles.settingsForm}>
           <div className={styles.formGroup}>
             <label htmlFor="theme">Theme</label>
-            <select name="theme" id="theme" className={styles.select} onChange={onThemeChange}>
+            <select
+              name="theme"
+              id="theme"
+              className={styles.select}
+              onChange={onThemeChange}
+            >
               <option value="light">Light</option>
               <option value="dark">Dark</option>
               <option value="blue">Blue</option>
@@ -387,19 +419,21 @@ function closeContact() {
 }
 
 function toggleExplorer() {
+  const root = document.documentElement;
   const explorer = document.getElementById("explorer") as HTMLDivElement;
 
-  const root = document.querySelector(":root") as HTMLElement;
+  if (!explorer) return;
 
-  if (
-    explorer &&
-    (!explorer.style.display || explorer.style.display === "block")
-  ) {
-    explorer.style.display = "none";
-    root.style.setProperty("--main-m-left", "2.5rem");
-  } else if (explorer && explorer.style.display === "none") {
-    explorer.style.display = "block";
-    root.style.setProperty("--main-m-left", "17.5rem");
+  const isCollapsed = explorer.classList.contains("collapsed");
+
+  if (isCollapsed) {
+    // Expand
+    explorer.classList.remove("collapsed");
+    root.style.setProperty("--explorer-width", "15rem");
+  } else {
+    // Collapse
+    explorer.classList.add("collapsed");
+    root.style.setProperty("--explorer-width", "2.5rem"); // keep the column
   }
 }
 

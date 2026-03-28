@@ -1,18 +1,14 @@
 .header {
   /* border-bottom: 1px solid #272b3b; */
   display: flex;
-  /* align-items: flex-start; */
-  /* justify-content: center; */
-  /* flex-wrap: wrap; */
-  position: fixed;
+  position: sticky;
+  height: 3rem;
+  width: calc(100% - var(--main-m-left));
+
   background-color: var(--clr-explorer);
+
   align-items: flex-start;
   overflow: hidden;
-  top: 2rem;
-  height: 3rem;
-  margin-left: var(--main-m-left);
-  width: calc(100% - var(--main-m-left));
-  z-index: 999;
 }
 
 .file {

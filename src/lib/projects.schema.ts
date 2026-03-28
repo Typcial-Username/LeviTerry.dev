@@ -40,7 +40,7 @@ const Objectives = z
       });
     }
   });
-  
+
 const FILES_ROOT = path.resolve("docs");
 
 const Status = z.enum(["complete", "in-progress", "prototype", "archived"]);
@@ -49,20 +49,52 @@ const ImagePath = z.string().regex(/\.(png|jpg|jpeg|webp)$/i);
 const StlFilePath = z.string().regex(/\.stl$/i);
 const CadFilePath = z.string().regex(/\.(f3d|f3z)$/i);
 
-const Files = z
-  .object({
-    cad: z.array(CadFilePath).optional(),
-    stl: z.array(StlFilePath).optional(),
-  })
+const GitHubLanguages = z.object({
+  totalSize: z.number(),
+  items: z.array(
+    z.object({
+      name: z.string(),
+      color: z.string(),
+      percent: z.number(),
+    })
+  ),
+});
+export type GitHubLanguages = z.infer<typeof GitHubLanguages>;
+
+const GitHubTopics = z.object({
+  nodes: z.array(
+    z.object({
+      topic: z.object({
+        name: z.string(),
+      }),
+    })
+  ),
+});
+
+const GitHubInfo = z.object({
+  name: z.string(),
+  description: z.string().nullable(),
+  url: z.string(),
+  homepageUrl: z.string().nullable(),
+  pushedAt: z.string(),
+  stargazerCount: z.number(),
+  isFork: z.boolean(),
+  repositoryTopics: GitHubTopics,
+  languages: GitHubLanguages,
+});
+
+const Files = z.object({
+  cad: z.array(CadFilePath).optional(),
+  stl: z.array(StlFilePath).optional(),
+});
 //#endregion
 
-export const MediaSchema = z
-  .object({
-    images: z.array(ImagePath).optional(),
-    videos: z.array(z.url()).optional(),
-    docs: z.array(z.string()).optional(),
-    modelViewer: z.url().optional(),
-  })
+export const MediaSchema = z.object({
+  images: z.array(ImagePath).optional(),
+  videos: z.array(z.url()).optional(),
+  docs: z.array(z.string()).optional(),
+  modelViewer: z.url().optional(),
+});
 
 export const ProjectSchema = z.object({
   id: z.string(),
@@ -73,11 +105,19 @@ export const ProjectSchema = z.object({
   title: z.string().describe("Project title shown on portfolio cards"),
   description: z.string().optional(),
 
-  course: z.string().min(6).max(6).regex(/[A-Z]{3}[0-9]{3}/).optional().describe("Course this project was created for"),
+  course: z
+    .string()
+    .min(6)
+    .max(6)
+    .regex(/[A-Z]{3}[0-9]{3}/)
+    .optional()
+    .describe("Course this project was created for"),
   objectives: Objectives.optional(),
 
   media: MediaSchema.optional(),
   files: Files.optional(),
+
+  github: GitHubInfo.optional(),
 
   status: Status.optional(),
   visibility: z.enum(["public", "private"]).optional(),

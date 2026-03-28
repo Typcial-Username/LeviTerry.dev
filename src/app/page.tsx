@@ -28,11 +28,7 @@ const Home = async () => {
   return (
     <>
       <Head>
-        {/* <title>Levi Terry&apos;s Developer Portfolio | Home</title> */}
         <link rel="icon" href="/images/headshot.jpg" />
-        {/* <meta property="og:title" content="Levi Terry" />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en_us" /> */}
       </Head>
 
       {/* Introduction */}
@@ -40,44 +36,10 @@ const Home = async () => {
 
       <br />
 
-      <p>
-        Levi Terry, Developer
-        {/* Hello, I&apos;m Levi Terry, I am a software developer based in Southern
-        Nevada. I first started programming in 2012 when I discovered the
-        language/program known as
-        <Link href="https://scratch.mit.edu" target="_blank" text="Scratch" />.
-        Soon after I fell in love with programming and have since then taken
-        several classes in Computer Science and have self-taught myself
-        utilizing numerous online resources such as{" "}
-        <Link href="https://youtube.com" target="_blank" text="YouTube" />. I
-        have used several languages including but limited to HTML, CSS,
-        JavaScript, and Java */}
-      </p>
+      <p>Levi Terry, Developer</p>
 
       <br />
       <br />
-
-      {/* <div className={styles.wave}></div> */}
-
-      {/* Experience */}
-      {/* <section className="container"> */}
-      {/* <h2 id="experience">Experience</h2>
-      <div className={styles.grid}>
-        <Card
-          title="Code Ninjas - Code Sensei"
-          description={`March 2022 - August 2023
-          •Assisted children ages 5-14 in learning to code
-          •Helped instruct programming concepts to children.
-          •Helped debug programs created by students
-          •Taught various languages to students including Scratch, JavaScript, Lua, and C Sharp with Unity`}
-          link="https://codeninjas.com/"
-          imageOptions={{
-            src: "https://www.codeninjas.com/hubfs/Group%201.svg",
-            location: "left",
-            alt: "Code Ninjas Logo",
-          }}
-        />
-      </div> */}
 
       <div
         className="grid"
@@ -86,7 +48,6 @@ const Home = async () => {
           margin: "0 2.5rem 2.5rem",
           justifyContent: "center",
           alignContent: "center",
-          // aspectRatio: "1",
         }}
       >
         <div style={{ placeSelf: "center" }}>

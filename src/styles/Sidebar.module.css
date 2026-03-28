@@ -1,18 +1,19 @@
 #sidebar {
   top: calc(var(--main-m-top) - 2rem);
-  height: calc(100% - var(--main-m-top) + 2rem);
+  height: calc(100% - var(--main-m-top) + 5rem);
   width: 2.5rem;
   left: 0;
   background-color: var(--clr-sidebar);
   display: flex;
   flex-direction: column;
   font-size: 1.5em;
-  position: fixed;
+  position: sticky;
   padding: 0 0.25rem;
   margin-bottom: auto;
   align-items: center;
   justify-content: space-between;
   z-index: 2;
+  grid-area: sidebar;
 }
 
 .content {
@@ -258,7 +259,7 @@
     transform: none;
     top: calc(var(--main-m-top) + 1rem);
   }
-  
+
   .settingsMenu {
     min-width: 80vw;
     left: 10vw;
@@ -274,7 +275,7 @@
     right: 7.5vw;
     transform: none;
   }
-  
+
   .settingsMenu {
     min-width: 70vw;
     max-width: 70vw;

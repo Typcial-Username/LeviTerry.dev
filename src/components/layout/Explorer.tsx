@@ -9,11 +9,9 @@ import {
   faStackOverflow,
 } from "@fortawesome/free-brands-svg-icons";
 import {
-  faDownload,
   faAngleDown,
   faFileCode,
   faAngleRight,
-  faImage,
   faWaveSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -150,7 +148,6 @@ const Explorer = () => {
   const [folderStates, setFolderStates] = useState<{ [key: string]: boolean }>(
     {}
   );
-  const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -195,18 +192,6 @@ const Explorer = () => {
     const isOpen = folderStates[currentPath];
     const isSelected = item.path && pathname === item.path;
 
-    // Get depth class for consistent indentation
-    // const getDepthClass = (itemDepth: number, isFolder: boolean) => {
-    //   if (isFolder) {
-    //     // Root folders stay at depth 0, nested folders get proper indentation
-    //     if (itemDepth === 0) return styles.depth0;
-    //     return itemDepth === 1 ? styles.depth1 : itemDepth === 2 ? styles.depth2 : styles.depth3;
-    //   } else {
-    //     // Files: depth 0 files use depth1, depth 1 files use depth2, etc.
-    //     return itemDepth === 0 ? styles.depth1 : itemDepth === 1 ? styles.depth2 : styles.depth3;
-    //   }
-    // };
-
     if (item.type === "folder") {
       return (
         <div key={currentPath}>
@@ -234,7 +219,7 @@ const Explorer = () => {
     const itemContent = (
       <div
         className={`${styles.item} ${isSelected ? styles.selected : ""} ${styles.subMenu}`}
-        style={{ marginLeft: depth * 5 + "% !important" }}
+        style={{ marginLeft: depth * 7 + "% !important" }}
         key={currentPath}
       >
         <span>
@@ -265,7 +250,7 @@ const Explorer = () => {
   };
 
   return (
-    <div id="explorer" className={styles.explorer}>
+    <div id="explorer">
       <p className={styles.header}>Explorer</p>
       <button
         className={`${styles.content} ${styles.item} ${styles.dropdown}`}
