@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { InfoCard } from "./Card";
+import { InfoCard } from "./InfoCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExternalLinkAlt,
