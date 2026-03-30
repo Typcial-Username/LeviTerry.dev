@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "bun scripts/build.ts",
+    "build": "next build",
     "start": "next start",
     "ws": "bun run websocket-server.ts",
     "dev:all": "concurrently \"npm run dev\" \"npm run ws\"",
