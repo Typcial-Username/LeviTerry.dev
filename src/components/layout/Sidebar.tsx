@@ -3,18 +3,10 @@ import { FilesIcon, SettingsIcon, MessagesSquare } from "lucide-react";
 
 import styles from "../../styles/Sidebar.module.css";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { Tooltip } from "../ui/Tooltip";
-import { Dropdown } from "../Dropdown";
+// import { Tooltip } from "../ui/Tooltip";
+// import { Dropdown } from "../Dropdown";
 import { TextInput } from "../TextInput";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogClose,
-  DialogDescription,
-  DialogHeader,
-  DialogFooter,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogClose } from "../ui/dialog";
 // import { useReCaptcha } from "next-recaptcha-v3";
 
 const Sidebar = () => {
