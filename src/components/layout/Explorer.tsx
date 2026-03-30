@@ -1,0 +1,329 @@
+"use client";
+import { useEffect, useState } from "react";
+import styles from "../../styles/Explorer.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHtml5,
+  faGithub,
+  faLinkedin,
+  faStackOverflow,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faAngleDown,
+  faFileCode,
+  faAngleRight,
+  faWaveSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { usePathname } from "next/navigation";
+import { Folder } from "../Folder";
+
+// Dynamic file structure configuration
+interface FileItem {
+  name: string;
+  path?: string;
+  icon: IconProp;
+  iconColor?: string;
+  type: "file" | "folder" | "link";
+  children?: FileItem[];
+  url?: string;
+  target?: string;
+}
+
+const fileStructure: FileItem[] = [
+  {
+    name: "Pages",
+    type: "folder",
+    icon: faAngleDown,
+    children: [
+      {
+        name: "index.html",
+        path: "/",
+        type: "file",
+        icon: faHtml5,
+        iconColor: "var(--clr-html-icon)",
+      },
+      {
+        name: "about.json",
+        path: "/about",
+        type: "file",
+        icon: faFileCode,
+        iconColor: "var(--clr-html-icon)",
+      },
+      // {
+      //   name: "gallery.html",
+      //   path: "/gallery",
+      //   type: "file",
+      //   icon: faHtml5,
+      //   iconColor: "var(--clr-html-icon)",
+      // },
+      {
+        name: "UAT",
+        type: "folder",
+        icon: faAngleDown,
+        children: [
+          {
+            name: "sip.html",
+            path: "/uat/sip",
+            type: "file",
+            icon: faHtml5,
+            iconColor: "var(--clr-html-icon)",
+          },
+          {
+            name: "Boards",
+            type: "folder",
+            icon: faAngleDown,
+            iconColor: "var(--clr-html-icon)",
+            children: [
+              {
+                name: "res.html",
+                path: "/uat/boards/res",
+                type: "file",
+                icon: faHtml5,
+                iconColor: "var(--clr-html-icon)",
+              },
+              {
+                name: "dmf.html",
+                path: "/uat/boards/dmf",
+                type: "file",
+                icon: faHtml5,
+                iconColor: "var(--clr-html-icon)",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Tools",
+    type: "folder",
+    icon: faAngleDown,
+    children: [
+      {
+        name: "Sound Modulator",
+        path: "/tools/sound-modulator",
+        type: "file",
+        icon: faWaveSquare,
+        iconColor: "var(--clr-icon)",
+      },
+    ],
+  },
+  {
+    name: "Socials",
+    type: "folder",
+    icon: faAngleDown,
+    children: [
+      {
+        name: "GitHub",
+        type: "link",
+        icon: faGithub,
+        url: "https://github.com/Typcial-Username",
+        target: "_blank",
+      },
+      {
+        name: "LinkedIn",
+        type: "link",
+        icon: faLinkedin,
+        iconColor: "#0a66c2",
+        url: "https://linkedin.com/in/levi-terry-dev/",
+        target: "_blank",
+      },
+      {
+        name: "Stack Overflow",
+        type: "link",
+        icon: faStackOverflow,
+        iconColor: "orange",
+        url: "https://stackoverflow.com/users/15316502/typical-username",
+        target: "_blank",
+      },
+    ],
+  },
+];
+
+const Explorer = () => {
+  const [headerOpen, setHeaderOpen] = useState(true);
+  const [host, setHost] = useState("localhost");
+  const [folderStates, setFolderStates] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setHost(window.location.host);
+
+    // Initialize folder states - all folders closed by default, but Pages open
+    const initializeFolderStates = (items: FileItem[], path: string = "") => {
+      const states: { [key: string]: boolean } = {};
+      items.forEach((item, index) => {
+        if (item.type === "folder") {
+          const folderPath = path ? `${path}.${index}` : `${index}`;
+          // Open "Pages" folder and its subdirectories by default
+          states[folderPath] = item.name === "Pages" || path.startsWith("0");
+          if (item.children) {
+            Object.assign(
+              states,
+              initializeFolderStates(item.children, folderPath)
+            );
+          }
+        }
+      });
+      return states;
+    };
+
+    setFolderStates(initializeFolderStates(fileStructure));
+  }, []);
+
+  const toggleFolder = (path: string) => {
+    setFolderStates((prev) => ({
+      ...prev,
+      [path]: !prev[path],
+    }));
+  };
+
+  const renderFileItem = (
+    item: FileItem,
+    index: number,
+    depth: number = 0,
+    parentPath: string = ""
+  ) => {
+    const currentPath = parentPath ? `${parentPath}.${index}` : `${index}`;
+    const isOpen = folderStates[currentPath];
+    const isSelected = item.path && pathname === item.path;
+
+    if (item.type === "folder") {
+      return (
+        <div key={currentPath}>
+          <Folder
+            enabled={isOpen}
+            className={`${styles.item} ${styles.dropdown} gap-1`}
+            style={{ paddingLeft: depth * 4 + "%" }}
+            onClick={() => toggleFolder(currentPath)}
+          >
+            {item.name}
+          </Folder>
+
+          {item.children && (
+            <div style={{ display: isOpen ? "block" : "none" }}>
+              {item.children.map((child, childIndex) =>
+                renderFileItem(child, childIndex, depth + 1, currentPath)
+              )}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Render files and links
+    if (item.type === "file" && item.path) {
+      return (
+        <Link
+          href={item.path}
+          key={currentPath}
+          className={`${styles.item} ${isSelected ? styles.selected : ""} ${styles.subMenu} flex items-center`}
+          style={{ paddingLeft: depth + "%" }}
+        >
+          <span className="flex gap-2">
+            <FontAwesomeIcon
+              icon={item.icon}
+              color={item.iconColor || "var(--clr-icon)"}
+            />{" "}
+            {item.name}
+          </span>
+        </Link>
+      );
+    }
+
+    if (item.type === "link" && item.url) {
+      return (
+        <a
+          href={item.url}
+          target={item.target || "_blank"}
+          key={currentPath}
+          className={`${styles.item} ${styles.subMenu}`}
+          style={{ paddingLeft: depth + "%" }}
+        >
+          <span>
+            <FontAwesomeIcon
+              icon={item.icon}
+              color={item.iconColor || "var(--clr-icon)"}
+            />{" "}
+            {item.name}
+          </span>
+        </a>
+      );
+    }
+
+    // return (
+    //   <div
+    //     className={`${styles.item} ${isSelected ? styles.selected : ""} ${styles.subMenu}`}
+    //     style={{ marginLeft: depth * 7 + "% !important" }}
+    //     key={currentPath}
+    //   >
+    //     {item.type === "file" && item.path ?
+    //       <Link href={item.path} key={currentPath}>
+    //         <span>
+    //           <FontAwesomeIcon
+    //             icon={item.icon}
+    //             color={item.iconColor || "var(--clr-icon)"}
+    //           />{" "}
+    //         </span>
+    //         <span>{item.name}</span>
+    //       </Link>
+    //     : item.type === "link" && item.url ?
+    //       <a
+    //         href={item.url}
+    //         target={item.target || "_blank"}
+    //         aria-label={`Visit ${item.name}`}
+    //         title={item.name}
+    //       >
+    //         <span>
+    //           <FontAwesomeIcon
+    //             icon={item.icon}
+    //             color={item.iconColor || "var(--clr-icon)"}
+    //           />{" "}
+    //         </span>
+    //         <span>{item.name}</span>
+    //       </a>
+    //     : <p className="inline">{item.name}</p>}
+    //   </div>
+    // );
+  };
+
+  return (
+    <div id="explorer">
+      <p className={styles.header}>Explorer</p>
+      <button
+        className={`${styles.content} ${styles.item} ${styles.dropdown}`}
+        style={{ width: "var(--explorer-width) - 5%" }}
+        onClick={() => setHeaderOpen(!headerOpen)}
+      >
+        <span>
+          {headerOpen ?
+            <>
+              <FontAwesomeIcon icon={faAngleDown} />{" "}
+            </>
+          : <>
+              <FontAwesomeIcon icon={faAngleRight} />{" "}
+            </>
+          }
+          <p style={{ display: "inline-block" }}>{host}</p>
+        </span>
+      </button>
+
+      <div
+        style={
+          headerOpen ?
+            { display: "block", marginTop: "2.5%" }
+          : { display: "none" }
+        }
+        className={`${styles.item} ${styles.dropdown}`}
+      >
+        {fileStructure.map((item, index) => renderFileItem(item, index))}
+      </div>
+    </div>
+  );
+};
+
+export default Explorer;

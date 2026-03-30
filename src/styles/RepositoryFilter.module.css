@@ -1,0 +1,281 @@
+.filterContainer {
+  background: var(--clr-card-bg, #1e1e1e);
+  border: 1px solid var(--clr-border, #333);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 5% 0 5%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filterRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filterRow:last-child {
+  margin-bottom: 0;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0; /* Allow flex items to shrink */
+}
+
+.filterGroup label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--clr-text-primary, #fff);
+  white-space: nowrap;
+}
+
+.select {
+  padding: 0.5rem;
+  border: 1px solid var(--clr-border, #333);
+  border-radius: 4px;
+  background: var(--clr-input-bg, #2a2a2a);
+  color: var(--clr-text-primary, #fff);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+}
+
+.select:focus {
+  border-color: var(--clr-accent-bright, #0070f3);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.checkboxLabel {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: auto; /* Push to bottom of filter group */
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--clr-accent-bright, #0070f3);
+  flex-shrink: 0;
+}
+
+.clearButton {
+  padding: 0.5rem 1rem;
+  background: var(--clr-accent-bright, #0070f3);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: fit-content;
+  align-self: flex-end;
+  white-space: nowrap;
+}
+
+.clearButton:hover {
+  background: var(--clr-accent-bright, #0070f3);
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+.clearButton:active {
+  transform: translateY(1px);
+}
+
+/* Responsive Design */
+
+/* Large screens - more columns for filters */
+@media (min-width: 1200px) {
+  .filterContainer {
+    margin: 1rem 8% 0 8%;
+  }
+  
+  .filterRow {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+/* Medium-Large screens */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .filterRow {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 991px) {
+  .filterContainer {
+    margin: 1rem 4% 0 4%;
+    padding: 1.25rem;
+  }
+  
+  .filterRow {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.875rem;
+  }
+  
+  .filterGroup label {
+    font-size: 0.8rem;
+  }
+  
+  .select {
+    font-size: 0.8rem;
+    padding: 0.45rem;
+  }
+  
+  .clearButton {
+    font-size: 0.8rem;
+    padding: 0.45rem 0.875rem;
+  }
+}
+
+/* Small tablets and large phones */
+@media (min-width: 576px) and (max-width: 767px) {
+  .filterContainer {
+    margin: 1rem 3% 0 3%;
+    padding: 1rem;
+  }
+  
+  .filterRow {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .filterGroup {
+    min-width: 140px;
+  }
+  
+  .checkboxLabel {
+    font-size: 0.8rem;
+  }
+  
+  .clearButton {
+    grid-column: 1 / -1;
+    justify-self: center;
+    align-self: center;
+    width: fit-content;
+    min-width: 120px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 575px) {
+  .filterContainer {
+    margin: 1rem 2% 0 2%;
+    padding: 1rem;
+  }
+  
+  .filterRow {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .filterGroup {
+    min-width: unset;
+  }
+  
+  .filterGroup label {
+    font-size: 0.9rem;
+  }
+  
+  .select {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .checkboxLabel {
+    font-size: 0.9rem;
+    justify-content: center;
+    padding: 0.5rem;
+    background: var(--clr-card-content-bg, #2a2a2a);
+    border-radius: 4px;
+    border: 1px solid var(--clr-border, #333);
+  }
+  
+  .clearButton {
+    align-self: stretch;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 400px) {
+  .filterContainer {
+    margin: 1rem 1% 0 1%;
+    padding: 0.75rem;
+  }
+  
+  .filterRow {
+    gap: 0.75rem;
+  }
+  
+  .select {
+    padding: 0.5rem;
+  }
+  
+  .clearButton {
+    padding: 0.6rem;
+  }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .filterContainer {
+  background: #fff;
+  border-color: #e1e1e1;
+}
+
+[data-theme="light"] .select {
+  background: #fff;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+[data-theme="light"] .select:focus {
+  border-color: #0070f3;
+}
+
+[data-theme="light"] .filterGroup label {
+  color: #374151;
+}
+
+[data-theme="light"] .checkboxLabel {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+/* Focus and accessibility improvements */
+.select:focus-visible,
+.clearButton:focus-visible,
+.checkboxLabel input:focus-visible {
+  outline: 2px solid var(--clr-accent, #0070f3);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .select,
+  .clearButton {
+    transition: none;
+  }
+  
+  .clearButton:hover {
+    transform: none;
+  }
+  
+  .clearButton:active {
+    transform: none;
+  }
+}

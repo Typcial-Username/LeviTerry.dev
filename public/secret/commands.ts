@@ -44,6 +44,11 @@ export const Commands: Command[] = [
     synonyms: ["contact me", "contact page", "contact.html"],
   },
   {
+    name: 'terminal',
+    content: 'open terminal',
+    synonyms: ['console', 'command line', 'cmd']
+  },
+  {
     name: "GitHub",
     content: "redirect https://github.com/Typcial-Username",
     synonyms: ["git", "git hub", "source code", "source"],

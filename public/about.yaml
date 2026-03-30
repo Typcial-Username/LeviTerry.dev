@@ -1,0 +1,25 @@
+name: Levi Terry
+
+education:
+  school: University of Advancing Technology (UAT)
+  degree: Robotics and Embedded Systems (B.S.) - Digital Maker and Fabrication (B.S.)
+  universityWebsite: https://www.uat.edu/
+  year: Senior
+  expectedGraduation: May 2026
+
+  hobbies: ["Programming", "Gaming"]
+  skills:
+    programmingLanguages:
+      - JavaScript
+      - TypeScript
+      - Python
+      - Java
+      - C++
+      - C#
+      - HTML
+      - CSS
+
+    frameworks: ["React", "Next.js", "Node.js", "Express"]
+    databases: ["MongoDB"]
+    tools: ["Fusion 360", "Git", "GitHub", "VS Code", "Netlify", "Bun"]
+    operatingSystems: ["Windows", "Linux"]

@@ -1,0 +1,208 @@
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeletonCard {
+  background: var(--clr-card-bg, #1e1e1e);
+  border: 1px solid var(--clr-border, #333);
+  border-radius: 8px;
+  padding: 1rem;
+  min-height: 300px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.skeletonCard.pinned {
+  border-color: var(--clr-accent, #0070f3);
+  box-shadow: 0 0 10px rgba(0, 112, 243, 0.3);
+}
+
+.skeletonText {
+  height: 16px;
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeletonHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skeletonDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeletonLanguages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.skeletonLanguage {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skeletonDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite;
+  flex-shrink: 0;
+}
+
+.skeletonStars {
+  margin: 0.5rem 0;
+}
+
+.skeletonTopics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skeletonTopic {
+  width: 60px;
+  height: 24px;
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.skeletonFooter {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--clr-border, #333);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .skeletonCard {
+    padding: 0.875rem;
+    min-height: 280px;
+    gap: 0.875rem;
+  }
+  
+  .skeletonLanguages {
+    gap: 0.75rem;
+  }
+  
+  .skeletonTopics {
+    gap: 0.375rem;
+  }
+  
+  .skeletonTopic {
+    width: 50px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 576px) {
+  .skeletonCard {
+    padding: 0.75rem;
+    min-height: 260px;
+    gap: 0.75rem;
+  }
+  
+  .skeletonText {
+    height: 14px;
+  }
+  
+  .skeletonDot {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .skeletonLanguages {
+    gap: 0.5rem;
+  }
+  
+  .skeletonLanguage {
+    gap: 0.375rem;
+  }
+  
+  .skeletonTopics {
+    gap: 0.25rem;
+  }
+  
+  .skeletonTopic {
+    width: 45px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .skeletonCard {
+    padding: 0.625rem;
+    min-height: 240px;
+    gap: 0.625rem;
+  }
+  
+  .skeletonText {
+    height: 12px;
+  }
+  
+  .skeletonTopic {
+    width: 40px;
+    height: 18px;
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .skeletonText,
+[data-theme="dark"] .skeletonDot,
+[data-theme="dark"] .skeletonTopic {
+  background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+  background-size: 200px 100%;
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .skeletonCard {
+  background: #fff;
+  border-color: #e1e1e1;
+}
+
+[data-theme="light"] .skeletonText,
+[data-theme="light"] .skeletonDot,
+[data-theme="light"] .skeletonTopic {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+}
+
+[data-theme="light"] .skeletonFooter {
+  border-top-color: #e1e1e1;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .skeletonText,
+  .skeletonDot,
+  .skeletonTopic {
+    animation: none;
+    background: var(--clr-border, #333);
+  }
+  
+  [data-theme="light"] .skeletonText,
+  [data-theme="light"] .skeletonDot,
+  [data-theme="light"] .skeletonTopic {
+    background: #e0e0e0;
+  }
+}

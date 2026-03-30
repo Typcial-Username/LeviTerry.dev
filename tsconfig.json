@@ -1,20 +1,42 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    // "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@components": ["./src/components"],
+      "@styles": ["./src/styles"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "./components/*.tsx",
+    "./pages/*.ts",
+    "./pages/*.tsx",
+    "./public/secret/*.ts",
+    "next-env.d.ts",
+    "pages/tools/sound-modulator.tsx",
+    "pages/uat/sip.tsx",
+    ".next/types/**/*.ts",
+    "**/*.d.ts"
+  ],
   "exclude": ["node_modules"]
 }
