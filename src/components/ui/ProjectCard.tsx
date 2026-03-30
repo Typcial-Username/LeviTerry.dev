@@ -16,7 +16,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../../components/ui/carousel";
+} from "../ui/carousel";
 
 import { Dialog, DialogClose, DialogContent } from "../../components/ui/dialog";
 
