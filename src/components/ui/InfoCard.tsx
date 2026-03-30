@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
   // CardFooter,
-} from "../ui/card";
+} from "../ui/Card";
 
 type imageLocations = "left" | "right";
 type imageOptions = {
