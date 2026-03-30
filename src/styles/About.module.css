@@ -3,7 +3,6 @@
   font-weight: 700;
   color: #aaa;
   margin: 0 2rem 0 2rem;
-  left: 0;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -21,13 +20,10 @@
 }
 
 .code {
+  display: flex;
   font-size: 1rem;
-  /* font-weight: 700; */
   color: #aaa;
   margin-left: 5.5rem;
-  left: 0;
-  position: absolute;
-  display: flex;
   flex-direction: column;
   text-align: left;
   font-weight: normal;

@@ -41,8 +41,6 @@ const Objectives = z
     }
   });
 
-const FILES_ROOT = path.resolve("docs");
-
 const Status = z.enum(["complete", "in-progress", "prototype", "archived"]);
 
 const ImagePath = z.string().regex(/\.(png|jpg|jpeg|webp)$/i);
@@ -61,15 +59,7 @@ const GitHubLanguages = z.object({
 });
 export type GitHubLanguages = z.infer<typeof GitHubLanguages>;
 
-const GitHubTopics = z.object({
-  nodes: z.array(
-    z.object({
-      topic: z.object({
-        name: z.string(),
-      }),
-    })
-  ),
-});
+const GitHubTopics = z.array(z.string());
 
 const GitHubInfo = z.object({
   name: z.string(),
@@ -79,7 +69,7 @@ const GitHubInfo = z.object({
   pushedAt: z.string(),
   stargazerCount: z.number(),
   isFork: z.boolean(),
-  repositoryTopics: GitHubTopics,
+  topics: GitHubTopics,
   languages: GitHubLanguages,
 });
 

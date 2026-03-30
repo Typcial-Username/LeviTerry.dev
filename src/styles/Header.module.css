@@ -1,9 +1,8 @@
 .header {
-  /* border-bottom: 1px solid #272b3b; */
   display: flex;
   position: sticky;
   height: 3rem;
-  width: calc(100% - var(--main-m-left));
+  width: 100%;
 
   background-color: var(--clr-explorer);
 
@@ -13,7 +12,6 @@
 
 .file {
   background-color: var(--clr-tab);
-  /* border: 1px solid green; */
   padding: 1em;
   max-width: fit-content;
 }

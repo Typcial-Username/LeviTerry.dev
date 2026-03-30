@@ -11,11 +11,11 @@ const DmfBoardsPage = async () => {
     ) ?? [];
 
   return (
-    <RepoManager>
+    <>
       <br />
 
-      <h1 className="text-3xl">DMF Boards UAT Page</h1>
-      <p>Found {dmfRepos.length} project(s)</p>
+      <h1 className="text-3xl text-center">DMF Boards UAT Page</h1>
+      <p className="text-center">Found {dmfRepos.length} project(s)</p>
 
       <br />
 
@@ -54,7 +54,7 @@ const DmfBoardsPage = async () => {
         ]}
         projects={dmfRepos}
       />
-    </RepoManager>
+    </>
   );
 };
 

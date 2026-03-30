@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Folder } from "../Folder";
 
 // Dynamic file structure configuration
@@ -51,13 +51,13 @@ const fileStructure: FileItem[] = [
         icon: faFileCode,
         iconColor: "var(--clr-html-icon)",
       },
-      {
-        name: "gallery.html",
-        path: "/gallery",
-        type: "file",
-        icon: faHtml5,
-        iconColor: "var(--clr-html-icon)",
-      },
+      // {
+      //   name: "gallery.html",
+      //   path: "/gallery",
+      //   type: "file",
+      //   icon: faHtml5,
+      //   iconColor: "var(--clr-html-icon)",
+      // },
       {
         name: "UAT",
         type: "folder",
@@ -197,8 +197,8 @@ const Explorer = () => {
         <div key={currentPath}>
           <Folder
             enabled={isOpen}
-            className={`${styles.item} ${styles.dropdown}`}
-            style={{ marginLeft: depth * 5 + "% !important" }}
+            className={`${styles.item} ${styles.dropdown} gap-1`}
+            style={{ paddingLeft: depth * 4 + "%" }}
             onClick={() => toggleFolder(currentPath)}
           >
             {item.name}
@@ -216,37 +216,79 @@ const Explorer = () => {
     }
 
     // Render files and links
-    const itemContent = (
-      <div
-        className={`${styles.item} ${isSelected ? styles.selected : ""} ${styles.subMenu}`}
-        style={{ marginLeft: depth * 7 + "% !important" }}
-        key={currentPath}
-      >
-        <span>
-          <FontAwesomeIcon
-            icon={item.icon}
-            color={item.iconColor || "var(--clr-icon)"}
-          />{" "}
-        </span>
-
-        {item.type === "file" && item.path ?
-          <Link href={item.path}>
-            <p style={{ display: "inline" }}>{item.name}</p>
-          </Link>
-        : item.type === "link" && item.url ?
-          <a
-            href={item.url}
-            target={item.target || "_blank"}
-            aria-label={`Visit ${item.name}`}
-            title={item.name}
-          >
+    if (item.type === "file" && item.path) {
+      return (
+        <Link
+          href={item.path}
+          key={currentPath}
+          className={`${styles.item} ${isSelected ? styles.selected : ""} ${styles.subMenu} flex items-center`}
+          style={{ paddingLeft: depth + "%" }}
+        >
+          <span className="flex gap-2">
+            <FontAwesomeIcon
+              icon={item.icon}
+              color={item.iconColor || "var(--clr-icon)"}
+            />{" "}
             {item.name}
-          </a>
-        : <p style={{ display: "inline" }}>{item.name}</p>}
-      </div>
-    );
+          </span>
+        </Link>
+      );
+    }
 
-    return itemContent;
+    if (item.type === "link" && item.url) {
+      return (
+        <a
+          href={item.url}
+          target={item.target || "_blank"}
+          key={currentPath}
+          className={`${styles.item} ${styles.subMenu}`}
+          style={{ paddingLeft: depth + "%" }}
+        >
+          <span>
+            <FontAwesomeIcon
+              icon={item.icon}
+              color={item.iconColor || "var(--clr-icon)"}
+            />{" "}
+            {item.name}
+          </span>
+        </a>
+      );
+    }
+
+    // return (
+    //   <div
+    //     className={`${styles.item} ${isSelected ? styles.selected : ""} ${styles.subMenu}`}
+    //     style={{ marginLeft: depth * 7 + "% !important" }}
+    //     key={currentPath}
+    //   >
+    //     {item.type === "file" && item.path ?
+    //       <Link href={item.path} key={currentPath}>
+    //         <span>
+    //           <FontAwesomeIcon
+    //             icon={item.icon}
+    //             color={item.iconColor || "var(--clr-icon)"}
+    //           />{" "}
+    //         </span>
+    //         <span>{item.name}</span>
+    //       </Link>
+    //     : item.type === "link" && item.url ?
+    //       <a
+    //         href={item.url}
+    //         target={item.target || "_blank"}
+    //         aria-label={`Visit ${item.name}`}
+    //         title={item.name}
+    //       >
+    //         <span>
+    //           <FontAwesomeIcon
+    //             icon={item.icon}
+    //             color={item.iconColor || "var(--clr-icon)"}
+    //           />{" "}
+    //         </span>
+    //         <span>{item.name}</span>
+    //       </a>
+    //     : <p className="inline">{item.name}</p>}
+    //   </div>
+    // );
   };
 
   return (

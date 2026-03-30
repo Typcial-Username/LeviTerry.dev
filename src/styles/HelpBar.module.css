@@ -6,15 +6,14 @@
   overflow: visible;
   height: 2rem;
   width: 100%;
-  width: calc(100% - 17.5rem);
   gap: 1em;
   background-color: var(--clr-bg);
 }
 
 .logoContainer {
-  height: 2.5rem;
-  width: 2.5rem;
-  margin: 0.25rem;
+  height: 1.75rem;
+  width: 1.75rem;
+  /* margin: 0.25rem; */
   position: relative;
   border-radius: 50%;
   overflow: hidden;
@@ -27,8 +26,6 @@
 .headshot {
   width: 100%;
   height: 100%;
-  /* border-radius: 50%; */
-  /* align-self: center; */
   object-fit: cover;
   object-position: center;
 }

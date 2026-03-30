@@ -36,6 +36,9 @@ Blue accent: #01111d
   --main-m-top: 5rem;
   --elm-spacing: 2rem;
 
+  /* Border */
+  --clr-outline: #111;
+
   /* Shadcn colors */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -73,7 +76,7 @@ Blue accent: #01111d
 
 :root.dark {
   --clr-sidebar: #333;
-  --clr-explorer: #252526;
+  --clr-explorer: #181818;
 
   --clr-primary: #fff;
   --clr-secondary: #000;
@@ -145,11 +148,7 @@ body {
   background: var(--clr-bg); /*linear-gradient(#03182b, #084277); */
   color: var(--clr-primary);
   scroll-behavior: smooth;
-  /* overflow-y: {; */
 }
-/* body::overflow {
-  background-color: red;
-} */
 
 a {
   color: inherit;
@@ -169,13 +168,13 @@ a:hover {
   grid-template-columns: auto auto 1fr;
   grid-template-rows: auto auto 1fr;
   height: 100vh;
-  width: 100vh;
+  width: 100vw;
   gap: 0;
   grid-template-areas:
     "helpbar helpbar helpbar"
     "header header header"
     "sidebar explorer main";
-  width: calc(100% - calc(var(--main-m-left)));
+  /* width: calc(100% - calc(var(--main-m-left))); */
   /* margin-left: var(--main-m-left); */
   /* top: calc(var(--main-m-top));
   text-align: center;
@@ -195,34 +194,33 @@ a:hover {
 .helpbar {
   grid-column: 1 / -1; /* span all columns */
   grid-row: 1;
-  border: 1px solid blue;
+  border: 0.125rem solid var(--clr-outline);
 }
 .header {
   grid-column: 3 / -1; /* span all columns */
   grid-row: 2;
-  border: 1px solid plum;
   display: flex;
   align-items: center;
-  padding: 0 var(--elm-spacing);
+  border: 0.125rem solid var(--clr-outline);
 }
 .sidebar {
   grid-column: 1;
   grid-row: 2 / -1;
-  border: 1px solid yellow;
+  border: 0.125rem solid var(--clr-outline);
 }
 .explorer {
   grid-column: 2;
   grid-row: 2 / -1;
   width: var(--explorer-width);
-  border: 1px solid red;
+  border: 0.125rem solid var(--clr-outline);
 }
 .main-content {
   grid-column: 3;
   grid-row: 3;
   overflow-y: auto;
-  border: 1px solid green;
-  width: calc(100% - var(--main-m-left));
+  width: 100%;
   padding-left: 2.5rem;
+  border: 0.125rem solid var(--clr-outline);
 }
 
 @media (max-width: 600px) {

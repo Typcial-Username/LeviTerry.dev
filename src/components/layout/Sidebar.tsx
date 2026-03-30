@@ -1,13 +1,10 @@
 "use client";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile, faCog } from "@fortawesome/free-solid-svg-icons";
-import { faComments, faMessage } from "@fortawesome/free-regular-svg-icons";
+import { FilesIcon, SettingsIcon, MessagesSquare } from "lucide-react";
 
 import styles from "../../styles/Sidebar.module.css";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Tooltip } from "../ui/Tooltip";
 import { Dropdown } from "../Dropdown";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { TextInput } from "../TextInput";
 import {
   Dialog,
@@ -18,7 +15,7 @@ import {
   DialogHeader,
   DialogFooter,
 } from "../ui/dialog";
-import { useReCaptcha } from "next-recaptcha-v3";
+// import { useReCaptcha } from "next-recaptcha-v3";
 
 const Sidebar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -29,7 +26,7 @@ const Sidebar = () => {
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
 
-  const { executeRecaptcha } = useReCaptcha(process.env.RECAPTCHA_SITE_KEY);
+  // const { executeRecaptcha } = useReCaptcha(process.env.RECAPTCHA_SITE_KEY);
 
   const onContactFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -77,7 +74,7 @@ const Sidebar = () => {
 
     const themeChanger = document.getElementById("theme") as HTMLSelectElement;
 
-    themeChanger.value = selectedTheme;
+    if (themeChanger) themeChanger.value = selectedTheme;
 
     // Add click-outside-to-close functionality for dialogs
     const handleDialogClickOutside = (e: MouseEvent) => {
@@ -146,7 +143,7 @@ const Sidebar = () => {
                   aria-label="Files"
                   title="Explorer"
                 >
-                  <FontAwesomeIcon icon={faFile} />
+                  <FilesIcon size={32} />
                 </button>
                 {/* </Tooltip> */}
               </div>
@@ -193,11 +190,11 @@ const Sidebar = () => {
                 id="open-contact-modal"
                 className={styles.button}
                 onClick={() => {
-                  openContact();
+                  setContactOpen(!contactOpen);
                 }}
                 title="Contact"
               >
-                <FontAwesomeIcon icon={faMessage} />
+                <MessagesSquare size={32} />
               </button>
               {/* </Tooltip> */}
             </li>
@@ -225,11 +222,11 @@ const Sidebar = () => {
               <button
                 className={`${styles.button} `}
                 onClick={() => {
-                  openSettings();
+                  setSettingsOpen(!settingsOpen);
                 }}
                 title="Settings"
               >
-                <FontAwesomeIcon icon={faCog} />
+                <SettingsIcon size={32} />
               </button>
               {/* </Tooltip> */}
             </li>
@@ -240,14 +237,7 @@ const Sidebar = () => {
       {/* Contact Modal */}
       <Dialog open={contactOpen}>
         <DialogContent>
-          {/* Close Button */}
-          <button
-            id="close-contact"
-            onClick={closeContact}
-            className={styles.modalButton}
-          >
-            &times;
-          </button>
+          <DialogClose />
 
           <h1 className={styles.modalHeader}>Contact Me</h1>
 
@@ -309,39 +299,29 @@ const Sidebar = () => {
       </Dialog>
 
       {/* Settings Modal*/}
-      <dialog
-        id="settings"
-        className={styles.settingsMenu}
-        suppressHydrationWarning={true}
-      >
+      <Dialog open={settingsOpen}>
         {/* Close Button */}
-        <button
-          id="close-settings"
-          onClick={closeSettings}
-          className={styles.modalButton}
-        >
-          &times;
-        </button>
+        <DialogContent>
+          <h1 className={styles.modalHeader}>Settings</h1>
 
-        <h1 className={styles.modalHeader}>Settings</h1>
-
-        {/* Settings Form */}
-        <form className={styles.settingsForm}>
-          <div className={styles.formGroup}>
-            <label htmlFor="theme">Theme</label>
-            <select
-              name="theme"
-              id="theme"
-              className={styles.select}
-              onChange={onThemeChange}
-            >
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-              <option value="blue">Blue</option>
-            </select>
-          </div>
-        </form>
-      </dialog>
+          {/* Settings Form */}
+          <form className={styles.settingsForm}>
+            <div className={styles.formGroup}>
+              <label htmlFor="theme">Theme</label>
+              <select
+                name="theme"
+                id="theme"
+                className={styles.select}
+                onChange={onThemeChange}
+              >
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="blue">Blue</option>
+              </select>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </aside>
   );
 };
@@ -383,39 +363,12 @@ const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
   // e.target.value = elm.value;
 };
 
-// function titleCase(text: string) {
-//   return text[0].toUpperCase() + text.slice(1).toLowerCase();
-// }
-
 function openSettings() {
   // Retrieve the settings dialog
   const settings = document.getElementById("settings") as HTMLDialogElement;
 
   // Open the Modal
   settings?.showModal();
-}
-
-function closeSettings() {
-  // Retrieve the settings dialog
-  const settings = document.getElementById("settings") as HTMLDialogElement;
-
-  // Close the Modal
-  settings?.close();
-}
-
-function openContact() {
-  // Retrieve the contact dialog
-  const contactMenu = document.getElementById("contact") as HTMLDialogElement;
-
-  contactMenu?.showModal();
-}
-
-function closeContact() {
-  // Retrieve the contact dialog
-  const contactMenu = document.getElementById("contact") as HTMLDialogElement;
-
-  // Close the Modal
-  contactMenu?.close();
 }
 
 function toggleExplorer() {
@@ -436,23 +389,5 @@ function toggleExplorer() {
     root.style.setProperty("--explorer-width", "2.5rem"); // keep the column
   }
 }
-
-// function openModal(id: string) {
-//   // Retrieve all the modals
-//   const modals = document.querySelectorAll(
-//     "dialog"
-//   ) as NodeListOf<HTMLDialogElement>;
-
-//   console.log({ modals });
-
-//   for (const modal in modals) {
-//     console.log(modal, modals[modal]);
-//     if (modals[modal].id === id) {
-//       modals[modal]?.showModal();
-//     } else {
-//       modals[modal]?.close();
-//     }
-//   }
-// }
 
 export default Sidebar;

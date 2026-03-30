@@ -8,7 +8,6 @@ import { usePathname } from "next/navigation";
 
 export default function Header() {
   const pathname = usePathname().split("/").pop();
-  console.log({ pathname });
 
   const faHTMLIcon = faHtml5 as IconProp;
 

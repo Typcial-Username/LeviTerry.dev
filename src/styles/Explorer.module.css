@@ -1,14 +1,13 @@
 #explorer {
-  /* top: calc(var(--main-m-top) - 2rem); */
   background-color: var(--clr-explorer);
   width: var(--explorer-width);
-  /* height: calc(100% - 2rem); */
   margin-left: 2.5rem;
   position: sticky;
   resize: horizontal;
   display: flex;
   flex-direction: column;
   z-index: 2;
+  border: 1px solid red;
 }
 
 .explorer.collapsed {
@@ -40,12 +39,9 @@
   font-size: 0.75rem;
   background-color: transparent;
   font-weight: bold;
-}
-
-.subMenu:hover {
-  cursor: pointer;
-  color: var(--clr-primary);
-  background-color: var(--clr-highlight);
+  display: flex;
+  align-items: center;
+  width: 88%;
 }
 
 .item.selected {
@@ -56,25 +52,14 @@
   margin: 5% 0 0 18%;
 }
 
+.subMenu:hover {
+  cursor: pointer;
+  color: var(--clr-primary);
+  background-color: var(--clr-highlight);
+}
+
 .dropdown {
   border: 0;
   color: var(--clr-primary);
   background-color: transparent;
-}
-
-/* Depth-based indentation classes */
-.depth0 {
-  margin-left: 5% !important;
-}
-
-.depth1 {
-  margin-left: 10% !important;
-}
-
-.depth2 {
-  margin-left: 15% !important;
-}
-
-.depth3 {
-  margin-left: 20% !important;
 }

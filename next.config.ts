@@ -1,6 +1,6 @@
-const path = require("path");
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import path from "node:path";
+import type { NextConfig } from "next";
+const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   sassOptions: {
@@ -9,11 +9,6 @@ const nextConfig = {
 
   images: {
     dangerouslyAllowSVG: true,
-    remotePatterns: [
-      {
-        hostname: "placehold.co",
-      },
-    ],
   },
 };
 

@@ -7,7 +7,7 @@ export async function getPortfolioData(): Promise<
   IncomingProjectsSchema | undefined
 > {
   const res = await fetch(
-    "https://cdn.jsdelivr.net/gh/Typcial-Username/portfolio-data@main/dist/projects.json"
+    "https://raw.githubusercontent.com/Typcial-Username/portfolio-data/refs/heads/main/dist/projects.json"
     // {
     //   next: {
     //     revalidate: 60 * 60 * 24,

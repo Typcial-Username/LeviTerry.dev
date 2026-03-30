@@ -2,6 +2,7 @@
   "name": "leviterry-dev",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "bun scripts/build.ts",
@@ -42,6 +43,7 @@
     "react-documents": "^1.2.1",
     "react-dom": "18.2.0",
     "react-pdf": "^10.0.1",
+    "reactjs-file-preview": "^1.0.11",
     "shadcn": "^4.1.0",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2",
@@ -72,6 +74,6 @@
     "eslint-config-next": "12.2.2",
     "eslint-config-react": "^1.1.7",
     "eslint-config-react-app": "^7.0.1",
-    "typescript": "4.7.4"
+    "typescript": "^6.0.2"
   }
 }

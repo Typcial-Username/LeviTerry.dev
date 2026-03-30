@@ -18,21 +18,22 @@ import {
   CarouselPrevious,
 } from "../../components/ui/carousel";
 
-import { Dialog, DialogContent } from "../../components/ui/dialog";
+import { Dialog, DialogClose, DialogContent } from "../../components/ui/dialog";
+
+// import FilePreview from "reactjs-file-preview";
 
 interface RepositoryCardProps {
   project: Project;
   isPinned?: boolean;
+  objective?: { id: string; description: string };
 }
 
-type MediaItem =
-  | { type: "image"; src: string }
-  | { type: "video"; src: string }
-  | { type: "model"; src: string };
+type MediaItem = { type: "image" | "video" | "model" | "doc"; src: string };
 
 export const ProjectCard: React.FC<RepositoryCardProps> = ({
   project: repo,
   isPinned = false,
+  objective,
 }) => {
   if (!repo) {
     throw new Error("No repo found");
@@ -41,19 +42,19 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const renderLanguages = () => {
-    if (!repo || !repo.github?.languages) return;
+    if (!repo.github || !repo.github?.languages) return;
 
     const languages = repo.github.languages;
 
     return (
-      <div key={`${repo.id}+languages`} className={styles.languages}>
+      <div key={`${repo.id}-languages`} className={styles.languages}>
         <div className={styles.languageBar}>
           {languages.items.map((lang) => (
             <span
               key={`${repo.id}-bar-${lang.name}`}
               className={styles.languageBarSegment}
               style={{
-                width: `${lang.name}%`,
+                width: `${lang.percent}%`,
                 backgroundColor: lang.color || "#888",
               }}
             />
@@ -68,8 +69,11 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
               style={{ backgroundColor: lang.color || "#888" }}
             />
 
-            <p className={styles.languageName}>
-              {lang.name} {lang.percent.toFixed(1)}
+            <p
+              className={`${styles.languageName} text-7xl`}
+              key={`${lang.name}-legend`}
+            >
+              {lang.name} {lang.percent}%
             </p>
           </>
         ))}
@@ -78,15 +82,11 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
   };
 
   const renderTopics = () => {
-    if (
-      !repo.github?.repositoryTopics ||
-      repo.github?.repositoryTopics.nodes.length === 0
-    )
-      return;
+    if (!repo.github || !repo.github.topics) return;
 
-    return repo.github.repositoryTopics.nodes.map((node) => (
+    return repo.github.topics.map((topic) => (
       <span
-        key={`${repo.id}+${node.topic.name}`}
+        key={`${repo.id}+${topic}`}
         className={styles.topic}
         onMouseOver={(e) => {
           e.currentTarget.style.color = "whitesmoke";
@@ -97,7 +97,7 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
           e.currentTarget.style.backgroundColor = "#121D2F";
         }}
       >
-        {node.topic.name}
+        {topic}
       </span>
     ));
   };
@@ -111,13 +111,21 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
       for (const img of repo.media.images) {
         carouselItems.push({
           type: "image",
-          src: `https://cdn.jsdelivr.net/gh/Typcial-Username/portfolio-data@main/projects/${repo.id}/images/${img}`,
+          src: `https://raw.githubusercontent.com/Typcial-Username/portfolio-data/refs/heads/main/projects/${repo.id}/images/${img}`,
         });
       }
     }
     if (repo.media.videos && repo.media.videos?.length > 0) {
       for (const vid of repo.media.videos) {
         carouselItems.push({ type: "video", src: vid });
+      }
+    }
+    if (repo.media.docs && repo.media.docs.length > 0) {
+      for (const doc of repo.media.docs) {
+        carouselItems.push({
+          type: "doc",
+          src: `https://raw.githubusercontent.com/Typcial-Username/portfolio-data/refs/heads/main/projects/${repo.id}/files/${doc}`,
+        });
       }
     }
   }
@@ -133,7 +141,8 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
           <span>
             {repo.github?.isFork ?
               <span>
-                <FontAwesomeIcon icon={faCodeFork} /> {repo.title}
+                <FontAwesomeIcon icon={faCodeFork} /> {repo.title}{" "}
+                {repo.course ? repo.course : null}
               </span>
             : repo.title}
           </span>
@@ -142,10 +151,20 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
         content={
           <>
             <br />
-            {renderTopics()}
-
+            {repo.objectives ?
+              <p>
+                Objective Reasoning:{" "}
+                {
+                  repo.objectives.find(
+                    (obj) =>
+                      obj.code.toLowerCase() == objective?.id.toLowerCase()
+                  )?.reason
+                }
+              </p>
+            : null}
             <br />
-
+            {renderTopics()}
+            <br />
             {repo.github?.stargazerCount ?
               <p key={`${repo.id}-stars`} className={styles.repositoryStats}>
                 <span className={styles.starIcon}>
@@ -157,13 +176,15 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
               </p>
             : null}
 
-            <div className="flex gap-2 w-full max-h-64 p-2 overflow-hidden">
+            <div className="flex flex-col gap-2 w-full max-h-64 m-2 overflow-hidden">
+              <p>Media</p>
+
               <Carousel opts={{ loop: true }}>
-                <CarouselContent>
+                <CarouselContent className="p-2">
                   {thumbnails.map((item, idx) => (
                     <CarouselItem
                       key={`${repo.id}-thumb-${idx}`}
-                      className={`basis-1/${carouselItems.length}`}
+                      className={`basis-1/${carouselItems.length} p-2`}
                     >
                       <div
                         className="w-20 h-20 overflow-hidden rounded-md cursor-pointer"
@@ -187,6 +208,13 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
                             3D
                           </div>
                         )}
+
+                        {item.type === "doc" && (
+                          <div className="w-full">
+                            <a href={item.src}>{item.src.split("/").pop()}</a>
+                            {/* <FilePreview preview={item.src} /> */}
+                          </div>
+                        )}
                       </div>
                     </CarouselItem>
                   ))}
@@ -206,35 +234,6 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
                 </div>
               )}
             </div>
-
-            {/* <div
-              id="media"
-              className="w-full aspect-video max-h-64 p-2 overflow-hidden"
-            >
-              {carouselItems.length > 0 && carouselItems.length > 1 ?
-                <Carousel
-                  orientation="horizontal"
-                  opts={{
-                    loop: true,
-                  }}
-                  className="h-full"
-                >
-                  <CarouselContent>
-                    {carouselItems.map((item, idx) => (
-                      <CarouselItem
-                        className={`basis-full flex items-center justify-center`}
-                        key={`${repo.id}-carousel-${idx}`}
-                      >
-                        <div className="w-full h-full">{item}</div>
-                      </CarouselItem>
-                    ))}
-                    <CarouselPrevious />
-                    <CarouselNext />
-                  </CarouselContent>
-                </Carousel>
-              : carouselItems[0]}
-            </div> */}
-
             <br />
             {renderLanguages()}
             <br />
@@ -251,26 +250,41 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
       />
 
       <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
-        <DialogContent className="w-full bg-red-500 mx-auto my-auto">
-          <div className="w-full aspect-video flex">
+        <DialogClose />
+        <DialogContent className="w-1/2 h-1/2 mx-auto my-auto">
+          {/* Header */}
+          <div className="w-full text-center mt-2">{repo.title} Media</div>
+
+          {/* Main content */}
+          <div className="w-full aspect-video">
             <Carousel opts={{ loop: true }}>
               <CarouselContent>
                 {carouselItems.map((item, idx) => (
-                  <CarouselItem key={`${repo.id}-modal-${idx}`}>
+                  <CarouselItem
+                    key={`${repo.id}-modal-${idx}`}
+                    className="flex justify-center items-center"
+                  >
                     {item.type === "image" && (
-                      <img src={item.src} className="h-full object-contain" />
+                      <img src={item.src} className="w-[80%] object-contain" />
                     )}
 
                     {item.type === "video" && (
                       <iframe
                         src={item.src}
-                        className="w-full h-[70vh]"
+                        className="w-full h-full"
                         allowFullScreen
                       />
                     )}
 
                     {item.type === "model" && (
                       <iframe src={item.src} className="w-full h-full" />
+                    )}
+
+                    {item.type === "doc" && (
+                      <div className="w-full">
+                        <a href={item.src}>{item.src.split("/").pop()}</a>
+                        {/* <FilePreview preview={item.src} /> */}
+                      </div>
                     )}
                   </CarouselItem>
                 ))}

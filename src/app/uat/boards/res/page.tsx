@@ -1,4 +1,3 @@
-import RepoManager from "../../../../components/RepoManager";
 import ObjectivesView from "../../../../components/ui/uat/ObjectivesView";
 import { getPortfolioData } from "@/src/lib/portfolio-data";
 
@@ -10,14 +9,12 @@ const RoboticsBoardsPage = async () => {
       proj?.objectives?.some((obj) => obj.code.startsWith("RES"))
     ) ?? [];
 
-  // console.log(resRepos[0].metadata);
-
   return (
-    <RepoManager>
+    <>
       <br />
 
-      <h1 className="text-3xl">Robotics Boards UAT Page</h1>
-      <p>Found {resRepos.length} project(s)</p>
+      <h1 className="text-3xl text-center">Robotics Boards UAT Page</h1>
+      <p className="text-center">Found {resRepos.length} project(s)</p>
 
       <br />
 
@@ -56,7 +53,7 @@ const RoboticsBoardsPage = async () => {
         ]}
         projects={resRepos}
       />
-    </RepoManager>
+    </>
   );
 };
 

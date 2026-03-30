@@ -1,26 +1,29 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAngleDown,
-  faAngleRight,
-  faFolder,
-} from "@fortawesome/free-solid-svg-icons";
+  FolderOpenIcon,
+  FolderClosedIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from "lucide-react";
 
 type FolderProps = React.HTMLAttributes<HTMLButtonElement> & {
   enabled: boolean;
-  // children: React.ReactNode;
-  // className?: string;
-  // onClick?: () => void;
 };
 export const Folder = ({
   enabled,
   children,
   className,
   onClick,
+  style,
   ...props
 }: FolderProps) => {
   return (
-    <button className={className} onClick={onClick} {...props} style={{ cursor: 'pointer' }}>
+    <button
+      className={className}
+      onClick={onClick}
+      style={{ cursor: "pointer", ...style }}
+      {...props}
+    >
       {content(enabled)}
       {children}
     </button>
@@ -30,16 +33,16 @@ export const Folder = ({
 function content(enabled: boolean) {
   if (enabled)
     return (
-      <span>
-        <FontAwesomeIcon icon={faAngleDown} />{" "}
-        <FontAwesomeIcon icon={faFolder} color="orange" />{" "}
+      <span className="flex gap-1">
+        <ChevronDownIcon size={16} />
+        <FolderOpenIcon color="orange" size={16} />
       </span>
     );
   else
     return (
-      <span>
-        <FontAwesomeIcon icon={faAngleRight} />{" "}
-        <FontAwesomeIcon icon={faFolder} color="orange" />{" "}
+      <span className="flex gap-1">
+        <ChevronRightIcon size={16} />
+        <FolderClosedIcon color="orange" size={16} />
       </span>
     );
 }

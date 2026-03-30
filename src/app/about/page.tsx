@@ -4,8 +4,7 @@ import { NextPage } from "next";
 import styles from "../../styles/About.module.css";
 import { useEffect } from "react";
 
-import { AboutData } from "../../../public/About.json";
-import Head from "next/head";
+import { AboutData } from "../../../public/About.json.ts";
 import Link from "next/link";
 
 const About: NextPage = () => {
@@ -15,10 +14,6 @@ const About: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Levi Terry&apos;s Developer Portfolio | About</title>
-      </Head>
-
       <aside className={styles.line_numbers}>
         <ol></ol>
       </aside>

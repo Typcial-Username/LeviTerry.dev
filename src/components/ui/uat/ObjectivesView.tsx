@@ -13,35 +13,66 @@ const ObjectivesView = ({
   objectives: Objective[];
   projects: Project[];
 }) => {
-  return (
-    <div id="objectives" className="max-w-6xl mt-5 mx-auto px-4">
-      <ol className="list-decimal columns-2 gap-8 [column-fill:balance]">
-        {objectives.map((obj) => (
-          <li key={obj.id} className="break-inside-avoid">
-            <div className="mb-4">
-              <p className="text-left mb-2">{obj.description}</p>
+  const mid = Math.ceil(objectives.length / 2);
+  const left = objectives.slice(0, mid);
+  const right = objectives.slice(mid);
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  return (
+    <div className="max-w-6xl mx-auto px-4 mt-5 flex flex-row">
+      <ol className="list-decimal space-y-4">
+        {left.map((obj) => {
+          return (
+            <li key={obj.id}>
+              <p>{obj.description}</p>
+
+              <div className="grid grid-cols-2">
                 {projects
                   .filter((proj) =>
-                    proj?.objectives?.some(
-                      (rt) => rt.code.toLowerCase() === obj.id.toLowerCase()
+                    proj.objectives?.some(
+                      (pobj) => pobj.code.toLowerCase() === obj.id.toLowerCase()
                     )
                   )
-                  .map((repo) => {
+                  .map((project) => {
                     return (
-                      <div key={repo.id} className="flex justify-center">
-                        <ProjectCard
-                          project={repo}
-                          key={`${repo.id}-${obj.id}`}
-                        />
-                      </div>
+                      <ProjectCard
+                        project={project}
+                        key={`${project.id}-${obj.id}`}
+                        objective={obj}
+                      />
                     );
                   })}
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
+      </ol>
+
+      <ol className="list-decimal space-y-4" start={mid + 1}>
+        {right.map((obj) => {
+          return (
+            <li key={obj.id}>
+              <p>{obj.description}</p>
+
+              <div className="grid grid-cols-2">
+                {projects
+                  .filter((proj) =>
+                    proj.objectives?.some(
+                      (pobj) => pobj.code.toLowerCase() === obj.id.toLowerCase()
+                    )
+                  )
+                  .map((project) => {
+                    return (
+                      <ProjectCard
+                        project={project}
+                        key={`${project.id}-${obj.id}`}
+                        objective={obj}
+                      />
+                    );
+                  })}
+              </div>
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

@@ -70,7 +70,7 @@ const HelpBar = () => {
 
   return (
     <div className={styles.header}>
-      <div className={styles.logoContainer}>
+      <div className={`${styles.logoContainer} flex `}>
         <Image
           src="/images/headshot.jpg"
           alt="Levi Terry"

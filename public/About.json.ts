@@ -11,7 +11,7 @@ export const AboutData = {
     degree:
       "Robotics and Embedded Systems (B.S.) - Digital Maker and Fabrication (B.S.)",
     universityWebsite: "https://www.uat.edu/",
-    year: "Junior",
+    year: "Senior",
     expectedGraduation: "May 2026",
   },
   hobbies: ["Programming", "Gaming"],
