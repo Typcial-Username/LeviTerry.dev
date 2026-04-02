@@ -18,14 +18,14 @@ const ObjectivesView = ({
   const right = objectives.slice(mid);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 mt-5 flex flex-row">
-      <ol className="list-decimal space-y-4">
+    <div className="max-w-360 mx-auto px-4 mt-5 flex flex-row gap-16">
+      <ol className="list-decimal flex flex-col gap-4 w-1/2">
         {left.map((obj) => {
           return (
-            <li key={obj.id}>
+            <li key={obj.id} className="space-y-2">
               <p>{obj.description}</p>
 
-              <div className="grid grid-cols-2">
+              <div className="grid grid-cols-2 gap-4 mt-2">
                 {projects
                   .filter((proj) =>
                     proj.objectives?.some(
@@ -47,13 +47,13 @@ const ObjectivesView = ({
         })}
       </ol>
 
-      <ol className="list-decimal space-y-4" start={mid + 1}>
+      <ol className="list-decimal flex flex-col gap-4 w-1/2" start={mid + 1}>
         {right.map((obj) => {
           return (
-            <li key={obj.id}>
+            <li key={obj.id} className="space-y-2">
               <p>{obj.description}</p>
 
-              <div className="grid grid-cols-2">
+              <div className="grid grid-cols-2 gap-4 mt-2">
                 {projects
                   .filter((proj) =>
                     proj.objectives?.some(

@@ -18,7 +18,7 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 
-import { Dialog, DialogClose, DialogContent } from "../../components/ui/dialog";
+import { Dialog, DialogContent } from "../../components/ui/dialog";
 
 // import FilePreview from "reactjs-file-preview";
 
@@ -40,6 +40,7 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
   }
 
   const [isOpen, setIsOpen] = useState(false);
+  const [itemIdx, setItemIdx] = useState(0);
 
   const renderLanguages = () => {
     if (!repo.github || !repo.github?.languages) return;
@@ -130,8 +131,6 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
     }
   }
 
-  const thumbnails = carouselItems.slice(0, 3);
-
   return (
     <>
       <InfoCard
@@ -150,7 +149,6 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
         description={repo.description || "No Given Description"}
         content={
           <>
-            <br />
             {repo.objectives ?
               <p>
                 Objective Reasoning:{" "}
@@ -162,9 +160,11 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
                 }
               </p>
             : null}
+
             <br />
+
             {renderTopics()}
-            <br />
+
             {repo.github?.stargazerCount ?
               <p key={`${repo.id}-stars`} className={styles.repositoryStats}>
                 <span className={styles.starIcon}>
@@ -176,67 +176,70 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
               </p>
             : null}
 
-            <div className="flex flex-col gap-2 w-full max-h-64 m-2 overflow-hidden">
-              <p>Media</p>
+            {carouselItems.length > 0 ?
+              <div className="flex flex-col gap-2 w-full max-h-64 m-2 overflow-hidden items-center">
+                <br />
 
-              <Carousel opts={{ loop: true }}>
-                <CarouselContent className="p-2">
-                  {thumbnails.map((item, idx) => (
-                    <CarouselItem
-                      key={`${repo.id}-thumb-${idx}`}
-                      className={`basis-1/${carouselItems.length} p-2`}
-                    >
-                      <div
-                        className="w-20 h-20 overflow-hidden rounded-md cursor-pointer"
-                        onClick={() => setIsOpen(!isOpen)}
+                <p>Media</p>
+
+                <Carousel opts={{ loop: true }}>
+                  <CarouselContent>
+                    {carouselItems.map((item, idx) => (
+                      <CarouselItem
+                        key={`${repo.id}-thumb-${idx}`}
+                        className={`basis-1/${carouselItems.length >= 3 ? 3 : carouselItems.length}`}
                       >
-                        {item.type === "image" && (
-                          <img
-                            src={item.src}
-                            className="w-full h-full object-cover"
-                          />
-                        )}
+                        <div
+                          className="w-20 h-20 overflow-hidden rounded-md cursor-pointer"
+                          onClick={() => {
+                            setIsOpen(!isOpen);
+                            setItemIdx(idx);
+                          }}
+                        >
+                          {item.type === "image" && (
+                            <img
+                              src={item.src}
+                              className="w-full h-full object-cover"
+                            />
+                          )}
 
-                        {item.type === "video" && (
-                          <div className="w-full h-full flex items-center justify-center bg-black text-white text-xs">
-                            ▶
-                          </div>
-                        )}
+                          {item.type === "video" && (
+                            <div className="w-full h-full flex items-center justify-center bg-black text-white text-xs">
+                              ▶
+                            </div>
+                          )}
 
-                        {item.type === "model" && (
-                          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-black text-xs">
-                            3D
-                          </div>
-                        )}
+                          {item.type === "model" && (
+                            <div className="w-full h-full flex items-center justify-center bg-gray-200 text-black text-xs">
+                              3D
+                            </div>
+                          )}
 
-                        {item.type === "doc" && (
-                          <div className="w-full">
-                            <a href={item.src}>{item.src.split("/").pop()}</a>
-                            {/* <FilePreview preview={item.src} /> */}
-                          </div>
-                        )}
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
+                          {item.type === "doc" && (
+                            <div className="w-full h-full flex items-center justify-center bg-black text-white text-xs">
+                              {item.src.split(".").pop()?.toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
 
-                {carouselItems.length > 1 && (
-                  <div className="flex justify-center gap-4 mt-2">
-                    <CarouselPrevious className="static translate-y-0" />
-                    <CarouselNext className="static translate-y-0" />
-                  </div>
-                )}
-              </Carousel>
+                  <br />
 
-              {carouselItems.length > 3 && (
-                <div className="w-20 h-20 flex items-center justify-center bg-black text-white text-sm rounded-md">
-                  +{carouselItems.length - 3}
-                </div>
-              )}
-            </div>
+                  {carouselItems.length > 3 && (
+                    <div className="flex justify-center gap-4 mt-2">
+                      <CarouselPrevious className="static translate-y-0" />
+                      <CarouselNext className="static translate-y-0" />
+                    </div>
+                  )}
+                </Carousel>
+              </div>
+            : null}
+
             <br />
+
             {renderLanguages()}
-            <br />
           </>
         }
         link={repo.github?.homepageUrl || undefined}
@@ -250,39 +253,54 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
       />
 
       <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
-        <DialogClose />
-        <DialogContent className="w-1/2 h-1/2 mx-auto my-auto">
+        <DialogContent className="max-w-none! w-[80vh] h-[80vh] p-4 flex flex-col">
           {/* Header */}
-          <div className="w-full text-center mt-2">{repo.title} Media</div>
+          <div className="text-center mt-2 mb-4 text-lg font-medium border-b-4 shrink-0">
+            {repo.title} Media
+          </div>
 
           {/* Main content */}
-          <div className="w-full aspect-video">
-            <Carousel opts={{ loop: true }}>
-              <CarouselContent>
-                {carouselItems.map((item, idx) => (
+          <div className="flex-1 flex flex-col">
+            <Carousel
+              opts={{ loop: true }}
+              className="flex-1 flex flex-col w-full h-full justify-center"
+            >
+              <CarouselContent className="flex-1 h-full">
+                {selectedToFront(carouselItems, itemIdx).map((item, idx) => (
                   <CarouselItem
                     key={`${repo.id}-modal-${idx}`}
-                    className="flex justify-center items-center"
+                    className="flex items-center justify-center"
                   >
                     {item.type === "image" && (
-                      <img src={item.src} className="w-[80%] object-contain" />
+                      <img
+                        src={item.src}
+                        className="max-h-[70%] max-w-full object-contain"
+                      />
                     )}
 
                     {item.type === "video" && (
                       <iframe
                         src={item.src}
-                        className="w-full h-full"
+                        className="w-full max-w-[95%] max-h-[95%] h-full aspect-video rounded"
                         allowFullScreen
                       />
                     )}
 
                     {item.type === "model" && (
-                      <iframe src={item.src} className="w-full h-full" />
+                      <iframe
+                        src={item.src}
+                        className="w-full max-w-[95%] max-h-[95%] h-full rounded"
+                      />
                     )}
 
                     {item.type === "doc" && (
-                      <div className="w-full">
-                        <a href={item.src}>{item.src.split("/").pop()}</a>
+                      <div className="w-full max-w-2xl">
+                        <embed
+                          src={item.src}
+                          type="application/pdf"
+                          width={"100%"}
+                          height={"100%"}
+                        ></embed>
                         {/* <FilePreview preview={item.src} /> */}
                       </div>
                     )}
@@ -303,3 +321,12 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
     </>
   );
 };
+
+function selectedToFront(list: MediaItem[], idx: number) {
+  while (idx) {
+    [list[idx], list[idx - 1]] = [list[idx - 1], list[idx]];
+    idx--;
+  }
+
+  return list;
+}

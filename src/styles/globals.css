@@ -221,6 +221,7 @@ a:hover {
   width: 100%;
   padding-left: 2.5rem;
   border: 0.125rem solid var(--clr-outline);
+  place-items: center;
 }
 
 @media (max-width: 600px) {

@@ -8,10 +8,11 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
   // CardFooter,
-} from "../ui/Card";
+} from "../ui/card";
 
 type imageLocations = "left" | "right";
 type imageOptions = {
@@ -46,10 +47,7 @@ export const InfoCard = ({
   }
 
   return (
-    <Card
-    // className={`${styles.card}`}
-    // style={{ border: "1px solid var(--clr-primary)" }}
-    >
+    <Card>
       <CardHeader>
         {imageOptions ?
           imageOptions.location == "left" ?
@@ -83,7 +81,7 @@ export const InfoCard = ({
         <p>{description}</p>
       </CardDescription>
 
-      <CardContent>
+      <CardContent className="p-4">
         {content ? content : null}
 
         {imageOptions ?
@@ -91,11 +89,10 @@ export const InfoCard = ({
             <Image src={imageOptions.src} alt={imageOptions.alt} />
           : null
         : null}
-
-        {footer ?
-          <div className={styles.footer}>{footer}</div>
-        : null}
       </CardContent>
+      {footer ?
+        <CardFooter className={styles.footer}>{footer}</CardFooter>
+      : null}
     </Card>
   );
 };

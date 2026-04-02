@@ -1,0 +1,393 @@
+{
+  "projects": [
+    {
+      "id": "airplane_asselbly",
+      "title": "Airplane Assembly",
+      "description": "Template description",
+      "course": "DBM100",
+      "files": {
+        "cad": [],
+        "stl": []
+      },
+      "media": {
+        "docs": [],
+        "images": [],
+        "modelViewer": "https://a360.co/"
+      },
+      "objectives": [],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "belt_clip",
+      "title": "Modeling Belt Clip",
+      "description": "Designs a custom belt clip using McMaster part 91290A115.",
+      "course": "DBM100",
+      "files": {
+        "cad": [
+          "belt_clip.f3d"
+        ],
+        "stl": [
+          "belt_clip.stl"
+        ]
+      },
+      "media": {
+        "images": [
+          "belt_clip.png"
+        ],
+        "modelViewer": "https://a360.co/3XEdLau"
+      },
+      "objectives": [
+        {
+          "code": "DMF-6",
+          "reason": "Designed to clip onto a belt."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "cardboard_marble_run",
+      "title": "Cardboard Marble Run",
+      "description": "Build a marble run out of cardboard",
+      "course": "DBM215",
+      "media": {
+        "videos": [
+          "https://youtube.com/embed/_YLQQtTR3QI"
+        ],
+        "images": [
+          "empty.jpg",
+          "mid.jpg",
+          "end.jpg"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "DMF-1",
+          "reason": "This project was developed in cardboard using CAD (Cardboard-Aided Design). I learned techniques to manipulate and work with cardboard to complete projects."
+        },
+        {
+          "code": "DMF-5",
+          "reason": "Techniques such as scoring to bend, strategic use of hot-glue, and utilizing support structures to allow for specific routes were all used."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "core2_quotes",
+      "title": "Core2 Quotes",
+      "description": "Displays quotes on the M5Stack Core2.",
+      "course": "CSC230",
+      "media": {
+        "videos": [
+          "https://youtube.com/embed/HfrW362TI20"
+        ],
+        "docs": [
+          "core2_quotes.pdf"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-4",
+          "reason": "Showcases random quotes from the Quotable API and can automatically get new quotes on an interval."
+        }
+      ],
+      "repo": "Typcial-Username/CSC230-IoT",
+      "status": "complete",
+      "visibility": "public",
+      "github": {
+        "url": "https://github.com/Typcial-Username/CSC230-IoT",
+        "homepageUrl": "",
+        "pushedAt": "2026-03-09T18:28:12Z",
+        "stars": 0,
+        "topics": [
+          "class",
+          "programming",
+          "robotics",
+          "res-1"
+        ],
+        "languages": {
+          "totalSize": 66612,
+          "items": [
+            {
+              "name": "C++",
+              "color": "#f34b7d",
+              "percent": 92
+            },
+            {
+              "name": "HTML",
+              "color": "#e34c26",
+              "percent": 8
+            }
+          ]
+        },
+        "lastUpdated": "2026-03-09T18:28:12Z"
+      }
+    },
+    {
+      "id": "digital_derby",
+      "title": "Digital Derby",
+      "description": "Template description",
+      "course": "TMP000",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/7UnNRdInfSM"
+        ],
+        "images": [
+          "decals.jpg",
+          "road.jpg"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "DMF-4",
+          "reason": "Models a pinewood derby car."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "horn_control_board",
+      "title": "Horn Control Board",
+      "description": "Allows the user to create and use custom horn sounds on their vehicle.",
+      "course": "BUS200",
+      "media": {
+        "docs": [
+          "BUS200_Business_Plan.pdf"
+        ],
+        "modelViewer": "https://www.tinkercad.com/things/jqb4Gj4hLUl-horn-control-board?sharecode=JRmlAXKgU-VE7nYFVy-13k5lixM4_kgrI-JtGrqczg0"
+      },
+      "objectives": [
+        {
+          "code": "DMF-2",
+          "reason": "Designed to work in vehicles and would be offered as a product."
+        },
+        {
+          "code": "DMF-5",
+          "reason": "Uses a soundboard module, amplifier, and speaker to produce audible sound."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "motor_speed_controller",
+      "title": "Motor Speed Controller",
+      "description": "Create a circuit that uses PWM to control a DC motor via a motor controller.",
+      "course": "RBT211",
+      "media": {
+        "videos": [
+          "https://youtube.com/embed/LI2515mfMRE"
+        ],
+        "docs": [
+          "motor_speed_controller.pdf"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-2",
+          "reason": "Uses timers, PWM, and interupts to control a DC motor on a Arduino Uno."
+        }
+      ],
+      "repo": "Typcial-Username/rbt211",
+      "status": "complete",
+      "visibility": "public",
+      "github": {
+        "url": "https://github.com/Typcial-Username/rbt211",
+        "homepageUrl": null,
+        "pushedAt": "2026-03-30T05:15:47Z",
+        "stars": 0,
+        "topics": [],
+        "languages": {
+          "totalSize": 15085,
+          "items": [
+            {
+              "name": "C",
+              "color": "#555555",
+              "percent": 28
+            },
+            {
+              "name": "Makefile",
+              "color": "#427819",
+              "percent": 72
+            }
+          ]
+        },
+        "lastUpdated": "2026-03-30T05:15:47Z"
+      }
+    },
+    {
+      "id": "motor_step_down",
+      "title": "Motor Step Down",
+      "description": "Converts the output speed of a TT Motor to the average walking speed of a 20-29 year old human.",
+      "course": "RBT205",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/OW4VX4612bI"
+        ],
+        "docs": [
+          "Motor_Gear_Reduction.pdf"
+        ],
+        "images": [
+          "top.png"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-1",
+          "reason": "Demonstrates gear ratios"
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "project_pen_assembly",
+      "title": "Project Pen Assembly",
+      "description": "Create a pen with multiple components and form an assembly",
+      "course": "DBM100",
+      "files": {
+        "cad": [
+          "Pen.f3d"
+        ]
+      },
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/WOPf5bOiLoE"
+        ],
+        "images": [
+          "pen_bg.jpg"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "DMF-6",
+          "reason": "Re-creates a pen."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "reaction_game",
+      "title": "Reaction Game",
+      "description": "Creates a precision reaction game where the goal is to press a button at a specific time when a specific LED is lit up.",
+      "course": "RBT211",
+      "repo": "Typcial-Username/rbt211",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/7ajM6mpHS4o"
+        ],
+        "docs": [
+          "reaction_game_final.pdf"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-1",
+          "reason": "Designs and implements a real-time embedded system that requires precise timing, input detection, and output control. The system challenges users to respond to time-sensitive visual cues, demonstrating accurate synchronization between hardware timers, PWM-controlled outputs, and user inputs. This mirrors real-world robotics scenarios where deterministic timing and low-latency response are critical for coordinating sensors and actuators, such as in control systems, safety mechanisms, and human-machine interaction."
+        },
+        {
+          "code": "RES-2",
+          "reason": "Implements a microcontroller-based system using low-level programming techniques, including hardware timers, PWM signal generation, and precise event timing. The project demonstrates control over microprocessor resources by managing time-critical operations, handling user input, and synchronizing outputs without relying on high-level abstractions. Development in Microchip Studio highlights direct interaction with embedded hardware, reinforcing concepts such as register-level control, timing accuracy, and efficient program structure."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": {
+        "url": "https://github.com/Typcial-Username/rbt211",
+        "homepageUrl": null,
+        "pushedAt": "2026-03-30T05:15:47Z",
+        "stars": 0,
+        "topics": [],
+        "languages": {
+          "totalSize": 15085,
+          "items": [
+            {
+              "name": "C",
+              "color": "#555555",
+              "percent": 28
+            },
+            {
+              "name": "Makefile",
+              "color": "#427819",
+              "percent": 72
+            }
+          ]
+        },
+        "lastUpdated": "2026-03-30T05:15:47Z"
+      }
+    },
+    {
+      "id": "ultrasonic_alarm_clock",
+      "title": "Ultrasonic Alarm Clock",
+      "description": "An alarm clock using ultrasonic transducers to produce directional sound to specifically wake specific people instead of the entire room.",
+      "course": "SIP405",
+      "objectives": [
+        {
+          "code": "DMF-2",
+          "reason": "Uses a ESP32 microcontroller and ultrasonic transducers to produce directional sound."
+        },
+        {
+          "code": "RES-3",
+          "reason": "Uses servos to precisely aim at a target."
+        }
+      ],
+      "repo": "Typcial-Username/SIP",
+      "status": "in-progress",
+      "visibility": "public",
+      "github": {
+        "url": "https://github.com/Typcial-Username/SIP",
+        "homepageUrl": null,
+        "pushedAt": "2026-03-20T07:07:23Z",
+        "stars": 0,
+        "topics": [],
+        "languages": {
+          "totalSize": 56567,
+          "items": [
+            {
+              "name": "C",
+              "color": "#555555",
+              "percent": 88
+            },
+            {
+              "name": "C++",
+              "color": "#f34b7d",
+              "percent": 12
+            }
+          ]
+        },
+        "lastUpdated": "2026-03-20T07:07:23Z"
+      }
+    },
+    {
+      "id": "vex",
+      "title": "Vex",
+      "description": "Designed a robot to compete in the Vex robotics competition.",
+      "course": "PDS300",
+      "media": {
+        "videos": [],
+        "docs": [],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "DMF-3",
+          "reason": "Worked in a team to design and build a robot"
+        }
+      ],
+      "status": "in-progress",
+      "visibility": "public",
+      "github": null
+    }
+  ]
+}
