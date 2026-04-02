@@ -126,7 +126,7 @@ const Home = async () => {
       <br />
 
       <div className="typing">
-        <div className="blinker"></div>
+        <div className="blinker" />
         {" " + days[date.getDay()]}!
       </div>
       <a

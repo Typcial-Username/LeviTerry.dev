@@ -209,11 +209,11 @@ const Explorer = () => {
 
     if (item.type === "folder") {
       return (
-        <div key={currentPath}>
+        <div key={currentPath} style={{ paddingLeft: depth * 0.5 + "rem" }}>
           <Folder
             enabled={isOpen}
             className={`${styles.item} ${styles.dropdown}`}
-            style={{ marginLeft: depth * 5 + "% !important" }}
+            style={{ marginTop: "10%" }}
             onClick={() => toggleFolder(currentPath)}
           >
             {item.name}
@@ -245,9 +245,7 @@ const Explorer = () => {
         </span>
 
         {item.type === "file" && item.path ?
-          <Link href={item.path}>
-            <p style={{ display: "inline" }}>{item.name}</p>
-          </Link>
+          <Link href={item.path}>{item.name}</Link>
         : item.type === "link" && item.url ?
           <a
             href={item.url}
@@ -258,6 +256,7 @@ const Explorer = () => {
             {item.name}
           </a>
         : <p style={{ display: "inline" }}>{item.name}</p>}
+        {/* </span> */}
       </div>
     );
 
@@ -268,8 +267,8 @@ const Explorer = () => {
     <div id="explorer" className={styles.explorer}>
       <p className={styles.header}>Explorer</p>
       <button
-        className={`${styles.content} ${styles.item} ${styles.dropdown}`}
-        style={{ width: "var(--explorer-width) - 5%" }}
+        className={`${styles.content} ${styles.dropdown}`}
+        style={{ width: "var(--explorer-width) - 5%", fontSize: "0.75rem" }}
         onClick={() => setHeaderOpen(!headerOpen)}
       >
         <span>

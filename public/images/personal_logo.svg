@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="personal_logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.4877245"
+     inkscape:cx="377.75812"
+     inkscape:cy="388.84889"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 148.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="210 : 148.5 : 1"
+       inkscape:persp3d-origin="105 : 99 : 1"
+       id="perspective2" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:19.7556px;line-height:0;font-family:sans-serif;-inkscape-font-specification:Normal;text-align:center;text-anchor:middle;white-space:pre;inline-size:95.5651;fill:#fefefe;stroke-width:0.1;stroke-linecap:square"
+       x="70.422752"
+       y="125.50341"
+       id="text7"
+       transform="matrix(2.4226691,0,0,2.4226691,-62.587695,-169.01706)"><tspan
+         x="70.422752"
+         y="125.50341"
+         id="tspan2"><tspan
+           style="font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono'"
+           id="tspan1">LT</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:69.7067px;line-height:0;font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono';text-align:center;text-anchor:middle;fill:#fefefe;stroke-width:0.352845;stroke-linecap:square"
+       x="66.334236"
+       y="140.55948"
+       id="text8"
+       transform="scale(0.98532919,1.0148893)"><tspan
+         sodipodi:role="line"
+         id="tspan8"
+         style="stroke-width:0.352845"
+         x="66.334236"
+         y="140.55948">&lt;</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:69.7067px;line-height:0;font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono';text-align:center;text-anchor:middle;fill:#fefefe;stroke-width:0.352845;stroke-linecap:square"
+       x="-180.7905"
+       y="141.08195"
+       id="text8-7"
+       transform="scale(-0.98532914,1.0148893)"><tspan
+         sodipodi:role="line"
+         id="tspan8-9"
+         style="stroke-width:0.352845"
+         x="-180.7905"
+         y="141.08195">&lt;</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48.6812px;line-height:0;font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono';text-align:center;text-anchor:middle;fill:#fefefe;stroke-width:0.246417;stroke-linecap:square"
+       x="115.93887"
+       y="166.46959"
+       id="text9"
+       transform="scale(1.259789,0.79378372)"><tspan
+         sodipodi:role="line"
+         id="tspan9"
+         style="stroke-width:0.246417"
+         x="115.93887"
+         y="166.46959">/</tspan></text>
+  </g>
+</svg>

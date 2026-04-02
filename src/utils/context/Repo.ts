@@ -7,6 +7,8 @@ export interface RepoContextValue {
     pinnedRepos: PinnedItemNode[]
     setRepos: React.Dispatch<React.SetStateAction<RepositoryNode[]>>;
     lastFetched: number | null;
+    loading: boolean;
+    error: Error | null;
     setLastFetched: (timestamp: number) => void;
     isCacheValid: () => boolean;
 }

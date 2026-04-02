@@ -33,11 +33,12 @@
 }
 
 .item {
-  margin: 5% 0 0 5%;
+  padding-top: 5%;
+  margin-left: 5%;
   padding: 0;
   font-size: 0.75rem;
   background-color: transparent;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .subMenu:hover {
@@ -51,7 +52,7 @@
 }
 
 .subMenu {
-  margin: 5% 0 0 18%;
+  margin-left: 18%;
 }
 
 .dropdown {

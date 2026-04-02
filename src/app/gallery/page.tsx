@@ -18,7 +18,7 @@ import {
   filterRepositories,
   getRepositoryStats,
 } from "../../utils/repositoryUtils";
-import RepoManager from "../../components/RepoManager";
+import { RepoManager } from "../../components/RepoManager";
 //#endregion
 
 /**
