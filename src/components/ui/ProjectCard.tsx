@@ -63,10 +63,10 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
         </div>
 
         {languages.items.map((lang) => (
-          <>
+          <span key={`${lang.name}-section`}>
             <div
               key={`${lang.name}-color`}
-              className={styles.languageColor}
+              className={`${styles.languageColor} mr-0`}
               style={{ backgroundColor: lang.color || "#888" }}
             />
 
@@ -76,7 +76,7 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
             >
               {lang.name} {lang.percent}%
             </p>
-          </>
+          </span>
         ))}
       </div>
     );
@@ -105,8 +105,9 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
 
   const carouselItems: MediaItem[] = [];
   if (repo.media) {
-    if (repo.media.modelViewer)
+    if (repo.media.modelViewer) {
       carouselItems.push({ type: "model", src: repo.media.modelViewer });
+    }
 
     if (repo.media.images && repo.media.images?.length > 0) {
       for (const img of repo.media.images) {
@@ -295,12 +296,7 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
 
                     {item.type === "doc" && (
                       <div className="w-full max-w-2xl">
-                        <embed
-                          src={item.src}
-                          type="application/pdf"
-                          width={"100%"}
-                          height={"100%"}
-                        ></embed>
+                        <iframe src={item.src} />
                         {/* <FilePreview preview={item.src} /> */}
                       </div>
                     )}

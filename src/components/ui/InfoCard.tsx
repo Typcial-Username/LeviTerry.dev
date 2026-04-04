@@ -81,7 +81,7 @@ export const InfoCard = ({
         <p>{description}</p>
       </CardDescription>
 
-      <CardContent className="p-4">
+      <CardContent className="p-1">
         {content ? content : null}
 
         {imageOptions ?

@@ -194,6 +194,10 @@
         {
           "code": "RES-2",
           "reason": "Uses timers, PWM, and interupts to control a DC motor on a Arduino Uno."
+        },
+        {
+          "code": "RES-6",
+          "reason": "Goes through a pre-defined sequence of motor speeds"
         }
       ],
       "repo": "Typcial-Username/rbt211",
