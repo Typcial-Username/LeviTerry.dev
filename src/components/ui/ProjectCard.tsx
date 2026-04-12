@@ -142,9 +142,13 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
             {repo.github?.isFork ?
               <span>
                 <FontAwesomeIcon icon={faCodeFork} /> {repo.title}{" "}
-                {repo.course ? repo.course : null}
+                {repo.course ? `[${repo.course}]` : null}
               </span>
-            : repo.title}
+            : <p>
+                {" "}
+                {repo.title} {repo.course ? `[${repo.course}]` : null}
+              </p>
+            }
           </span>
         }
         description={repo.description || "No Given Description"}
@@ -166,14 +170,12 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
 
             {renderTopics()}
 
-            {repo.github?.stargazerCount ?
+            {repo.github?.stars ?
               <p key={`${repo.id}-stars`} className={styles.repositoryStats}>
                 <span className={styles.starIcon}>
                   <StarIcon /> Stars{" "}
                 </span>
-                <span className={styles.starCount}>
-                  {repo.github?.stargazerCount}
-                </span>
+                <span className={styles.starCount}>{repo.github?.stars}</span>
               </p>
             : null}
 
@@ -261,28 +263,28 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
           </div>
 
           {/* Main content */}
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex items-center justify-around">
             <Carousel
               opts={{ loop: true }}
-              className="flex-1 flex flex-col w-full h-full justify-center"
+              className="w-full h-full items-center"
             >
-              <CarouselContent className="flex-1 h-full">
+              <CarouselContent className="ml-0!">
                 {selectedToFront(carouselItems, itemIdx).map((item, idx) => (
                   <CarouselItem
                     key={`${repo.id}-modal-${idx}`}
-                    className="flex items-center justify-center"
+                    className="p-0 items-center m-auto"
                   >
                     {item.type === "image" && (
                       <img
                         src={item.src}
-                        className="max-h-[70%] max-w-full object-contain"
+                        className="h-full w-[50%] object-contain"
                       />
                     )}
 
                     {item.type === "video" && (
                       <iframe
                         src={item.src}
-                        className="w-full max-w-[95%] max-h-[95%] h-full aspect-video rounded"
+                        className="w-full h-full aspect-video rounded"
                         allowFullScreen
                       />
                     )}
@@ -290,13 +292,17 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
                     {item.type === "model" && (
                       <iframe
                         src={item.src}
-                        className="w-full max-w-[95%] max-h-[95%] h-full rounded"
+                        width={"100%"}
+                        height={"100%"}
+                        className="rounded"
                       />
                     )}
 
                     {item.type === "doc" && (
-                      <div className="w-full max-w-2xl">
-                        <iframe src={item.src} />
+                      <div className="w-full h-full">
+                        <iframe
+                          src={`http://docs.google.com/gview?url=${item.src}&embedded=true`}
+                        />
                         {/* <FilePreview preview={item.src} /> */}
                       </div>
                     )}
@@ -305,7 +311,7 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
               </CarouselContent>
 
               {carouselItems.length > 1 && (
-                <div className="flex justify-center gap-4 mt-2">
+                <div className="flex-1 flex items-center justify-center gap-4 mt-2">
                   <CarouselPrevious className="static translate-y-0" />
                   <CarouselNext className="static translate-y-0" />
                 </div>

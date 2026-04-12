@@ -49,6 +49,30 @@
       "github": null
     },
     {
+      "id": "business_card_pcb",
+      "title": "Business Card PCB",
+      "description": "Designs a custom PCB to be used as a business card.",
+      "course": "RBT353",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/rguVzqBqxHY"
+        ],
+        "docs": [
+          "business_card_pcb.pdf"
+        ],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "RES-3",
+          "reason": "Designs a custom PCB."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
       "id": "cardboard_marble_run",
       "title": "Cardboard Marble Run",
       "description": "Build a marble run out of cardboard",
@@ -71,6 +95,32 @@
         {
           "code": "DMF-5",
           "reason": "Techniques such as scoring to bend, strategic use of hot-glue, and utilizing support structures to allow for specific routes were all used."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "competition_base",
+      "title": "Competition Base",
+      "description": "Designs a custom robotic base for a competition-style robot. Powered by a Particle Argon.",
+      "course": "RBT353",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/rguVzqBqxHY"
+        ],
+        "docs": [],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "RES-4",
+          "reason": "four"
+        },
+        {
+          "code": "RES-6",
+          "reason": "Designs a custom PCB."
         }
       ],
       "status": "complete",
@@ -145,7 +195,7 @@
       "objectives": [
         {
           "code": "DMF-4",
-          "reason": "Models a pinewood derby car."
+          "reason": "Evaluates material and fabrication considerations by designing and producing a pinewood derby car optimized for 3D printing. The project accounts for additive manufacturing constraints such as layer orientation, structural strength, and tolerance for axle and wheel interfaces. Design decisions balance performance goals, such as weight distribution and stability, with the limitations and advantages of the chosen material and printing process. This demonstrates the ability to align material properties and manufacturing techniques with functional design requirements in a complete prototyping workflow."
         }
       ],
       "status": "complete",
@@ -161,7 +211,7 @@
         "docs": [
           "BUS200_Business_Plan.pdf"
         ],
-        "modelViewer": "https://www.tinkercad.com/things/jqb4Gj4hLUl-horn-control-board?sharecode=JRmlAXKgU-VE7nYFVy-13k5lixM4_kgrI-JtGrqczg0"
+        "modelViewer": "https://www.tinkercad.com/embed/jqb4Gj4hLUl"
       },
       "objectives": [
         {
@@ -193,11 +243,11 @@
       "objectives": [
         {
           "code": "RES-2",
-          "reason": "Uses timers, PWM, and interupts to control a DC motor on a Arduino Uno."
+          "reason": "Implements microcontroller-based control of a DC motor using hardware timers, PWM signal generation, and interrupt-driven logic. The system demonstrates precise regulation of motor speed by adjusting duty cycles, allowing for smooth and consistent actuator behavior. Efficient use of embedded resources enables accurate timing control while avoiding blocking delays, supporting real-time responsiveness. Development within Microchip Studio reinforces low-level interaction with hardware and highlights an understanding of microprocessor-driven control systems."
         },
         {
           "code": "RES-6",
-          "reason": "Goes through a pre-defined sequence of motor speeds"
+          "reason": "Executes an autonomous control sequence that modulates motor speed over time without requiring direct user input. The system progresses through a predefined set of states, using timing conditions to control transitions between different motor speeds. This structured sequencing demonstrates how embedded systems can perform repeatable tasks independently once initialized. The approach reflects foundational concepts in robotics, where simple autonomous routines are used to control actuators in predictable and reliable ways."
         }
       ],
       "repo": "Typcial-Username/rbt211",
@@ -246,7 +296,7 @@
       "objectives": [
         {
           "code": "RES-1",
-          "reason": "Demonstrates gear ratios"
+          "reason": "Models and analyzes the relationship between motor output and real-world motion by converting a target human walking speed into mechanical requirements within a simulated system. The project involves unit conversions from miles per hour to centimeters per minute, calculation of wheel circumference, and determination of required rotational speed in revolutions per minute. These values are then used to derive an appropriate gear ratio, which is implemented and visualized using joint motion within Fusion 360. This demonstrates how theoretical calculations can be applied to mechanical system design, reflecting how robotic systems translate real-world performance requirements into actuator specifications."
         }
       ],
       "status": "complete",
@@ -274,7 +324,7 @@
       "objectives": [
         {
           "code": "DMF-6",
-          "reason": "Re-creates a pen."
+          "reason": "Designs a multi-component pen that balances functional performance with ergonomic and aesthetic considerations. The project accounts for how the pen is held and used, influencing decisions related to shape, size, and component layout to improve comfort and usability. Form and structure are developed together to ensure the product is both visually cohesive and mechanically functional. This demonstrates how product design integrates human factors and usability alongside technical requirements."
         }
       ],
       "status": "complete",
