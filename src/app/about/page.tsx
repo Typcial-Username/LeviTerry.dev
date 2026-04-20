@@ -4,8 +4,11 @@ import { NextPage } from "next";
 import styles from "../../styles/About.module.css";
 import { useEffect } from "react";
 
-import { AboutData } from "../../../public/About.json.ts";
+import YAML from "yaml";
+
+import * as AboutData from "../../../public/about.yaml";
 import Link from "next/link";
+import { YamlNode } from "../../components/YamlLoader";
 
 const About: NextPage = () => {
   useEffect(() => {
@@ -18,7 +21,9 @@ const About: NextPage = () => {
         <ol></ol>
       </aside>
 
-      <div className={styles.code}>
+      {renderYamlFile(AboutData)}
+
+      {/* <div className={styles.code}>
         <p style={{ color: "var(--clr-json-bracket)" }}>{"{"}</p>
 
         {Object.keys(AboutData).map((key) => {
@@ -33,7 +38,7 @@ const About: NextPage = () => {
               <p className={styles.json} key={key + ":"}>
                 :&nbsp;
               </p>
-              {formatJson(getValue(AboutData, key))}
+              {renderYamlFile(getValue(AboutData, key))}
               {key !==
                 Object.keys(AboutData)[Object.keys(AboutData).length - 1] && (
                 <p className={styles.json}>,</p>
@@ -43,7 +48,7 @@ const About: NextPage = () => {
         })}
 
         <p style={{ color: "var(--clr-json-bracket)" }}>{"}"}</p>
-      </div>
+      </div> */}
     </>
   );
 };
@@ -86,6 +91,37 @@ function getLineHeight(element: HTMLElement): number {
   return line_height;
 }
 
+function isPrimitive(val: any) {
+  return (
+    typeof val === "string" ||
+    typeof val === "number" ||
+    typeof val === "boolean" ||
+    val === null
+  );
+}
+
+function renderPrimitive(value: any) {
+  if (typeof value === "string") {
+    if (value.startsWith("http")) {
+      return (
+        <>
+          <Link href={value} target="_blank" rel="noopener noreferrer">
+            {value}
+          </Link>
+        </>
+      );
+    }
+    return value;
+  }
+
+  if (typeof value === "boolean") return value ? "true" : "false";
+  if (typeof value === "number") return value;
+
+  if (value === null) return "null";
+
+  return String(value);
+}
+
 function setJsonStyle(element: string | number | boolean | object | null) {
   if (Array.isArray(element)) {
     return { color: `var(--clr-json-array)` };
@@ -93,177 +129,73 @@ function setJsonStyle(element: string | number | boolean | object | null) {
   return { color: `var(--clr-json-${typeof element})` };
 }
 
-function hasKey<O extends object>(obj: O, key: PropertyKey): key is keyof O {
-  return key in obj;
-}
+export function renderYamlFile(input: string | object) {
+  let parsed;
 
-function getValue(obj: object, key: string) {
-  if (hasKey(obj, key)) {
-    return obj[key];
+  try {
+    parsed = typeof input === "string" ? YAML.parse(input) : input;
+  } catch {
+    return <div style={{ color: "red" }}># Invalid YAML</div>;
   }
 
-  return null;
+  return <div className={styles.editor}>{formatYaml(parsed, 0)}</div>;
 }
 
-function formatJson(
-  json: object | string | number | boolean | null,
-  idx: number = 0
-) {
-  let curIdx = 0;
+function formatYaml(data: any, indent: number): JSX.Element {
+  const spacing = "  ".repeat(indent);
 
-  // Check if the json is an array
-  if (Array.isArray(json)) {
-    const arr = json as any[];
-
-    let wrap = false;
-
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].length > 50) {
-        wrap = true;
-        break;
-      }
-    }
-
+  if (Array.isArray(data)) {
     return (
-      <span className={styles.json}>
-        <p className={styles.json} style={{ color: "var(--clr-json-array)" }}>
-          [
-        </p>
-        {/* If the array doesn't have to wrap */}
-        {!wrap &&
-          arr.map((val, index) => (
-            <span key={index}>
-              <p className={styles.json} style={setJsonStyle(val)}>
-                &quot;
-                {typeof val === "string" && val.startsWith("http") ?
-                  <Link href={val}>{val}</Link>
-                : val}
-                &quot;
-              </p>
-              {index < arr.length - 1 && <p className={styles.json}>,&nbsp;</p>}
+      <>
+        {data.map((item, i) => (
+          <div key={i}>
+            <span className={styles.line}>
+              {spacing}
+              <span style={{ color: "var(--clr-yaml-dash)" }}>- </span>
             </span>
-          ))}
 
-        {/* If the array has to wrap */}
-        {wrap &&
-          arr.map((val, index) => (
-            <span key={index}>
-              <br />
-              <p className={styles.json}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </p>
-              <p className={styles.json} style={setJsonStyle(val)}>
-                &quot;
-                {typeof val === "string" && val.startsWith("http") ?
-                  <Link href={val}>{val}</Link>
-                : val}
-                &quot;
-              </p>
-              {index < arr.length - 1 && <p className={styles.json}>,</p>}
-            </span>
-          ))}
-
-        {/* Add ] if the array didn't wrap */}
-        {!wrap && (
-          <p className={styles.json} style={{ color: "var(--clr-json-array)" }}>
-            ]
-          </p>
-        )}
-
-        {/* Add ] if the array did wrap */}
-        {wrap && (
-          <>
-            <br />
-            <p className={styles.json}>&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            <p
-              className={styles.json}
-              style={{ color: "var(--clr-json-array)" }}
-            >
-              ]
-            </p>
-          </>
-        )}
-      </span>
+            {isPrimitive(item) ?
+              <span style={setJsonStyle(item)}>{renderPrimitive(item)}</span>
+            : <div>{formatYaml(item, indent + 1)}</div>}
+          </div>
+        ))}
+      </>
     );
-  } else if (typeof json === "object") {
-    const obj = json as { [key: string]: any };
+  }
 
+  if (typeof data === "object" && data !== null) {
     return (
-      <span className={styles.json}>
-        <p className={styles.json} style={{ color: "var(--clr-json-bracket)" }}>
-          {"{"}
-        </p>
+      <>
+        {Object.entries(data).map(([key, value]) => {
+          const isComplex = typeof value === "object" && value !== null;
 
-        {Object.keys(obj).map((key, index) => {
-          curIdx = index;
           return (
-            <span key={key}>
-              <br />
-              <p className={styles.json}>&nbsp;&nbsp;&nbsp;&nbsp;</p>
-              <p
-                className={styles.json}
-                style={{ color: "var(--clr-json-key)" }}
-              >
-                &quot;{key}&quot;
-              </p>
-
-              <p className={styles.json}>:&nbsp;</p>
-              {hasKey(obj, key) && typeof obj[key] === "object" && (
-                <div className={styles.json}>
-                  {formatJson(obj[key], idx + 1)}
-                </div>
-              )}
-
-              {hasKey(obj, key) && typeof obj[key] !== "object" && (
-                <p className={styles.json} style={setJsonStyle(obj[key])}>
-                  {typeof obj[key] === "string" && obj[key].startsWith("http") ?
-                    <span>
-                      &quot;
-                      <Link href={obj[key]} target="_blank">
-                        {obj[key]}
-                      </Link>
-                      &quot;
-                    </span>
-                  : JSON.stringify(obj[key])}
-                </p>
-              )}
-
-              {index !== Object.keys(obj).length - 1 && (
-                <p className={styles.json}>,</p>
-              )}
-            </span>
+            <YamlNode
+              key={key}
+              label={
+                <span className={styles.line}>
+                  {spacing}
+                  <span style={{ color: "var(--clr-json-key)" }}>{key}</span>
+                  {!isComplex && (
+                    <>
+                      <span>: </span>
+                      <span style={setJsonStyle(value)}>
+                        {renderPrimitive(value)}
+                      </span>
+                    </>
+                  )}
+                </span>
+              }
+            >
+              {isComplex ? formatYaml(value, indent + 1) : null}
+            </YamlNode>
           );
         })}
-
-        <br />
-        <p className={styles.json}>&nbsp;&nbsp;</p>
-        <p className={styles.json} style={{ color: "var(--clr-json-bracket)" }}>
-          {"}"}
-        </p>
-      </span>
+      </>
     );
-  } else if (typeof json === "string") {
-    return (
-      <p className={styles.json} style={{ color: "var(--clr-json-string)" }}>
-        &quot;{json}&quot;
-      </p>
-    );
-  } else if (typeof json === "boolean") {
-    return (
-      <p className={styles.json} style={{ color: "var(--clr-json-boolean)" }}>
-        {json ? "true" : "false"}
-      </p>
-    );
-  } else if (typeof json === "number") {
-    return (
-      <p className={styles.json} style={{ color: "var(--clr-json-number)" }}>
-        {json}
-      </p>
-    );
-  } else {
-    console.log("Unknown type: ", json);
-    return json;
   }
+
+  return <span style={setJsonStyle(data)}>{renderPrimitive(data)}</span>;
 }
 
 export default About;
