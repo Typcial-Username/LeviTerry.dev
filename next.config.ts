@@ -10,6 +10,18 @@ const nextConfig: NextConfig = {
   images: {
     dangerouslyAllowSVG: true,
   },
+  turbopack: {
+    rules: {
+      "*yaml": {
+        loaders: [
+          {
+            loader: "yaml-loader",
+            options: {},
+          },
+        ],
+      },
+    },
+  },
 };
 
 module.exports = nextConfig;
