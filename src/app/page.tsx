@@ -36,7 +36,7 @@ const Home = async () => {
 
       <br />
 
-      <p>Levi Terry, Developer</p>
+      <p>Levi Terry, Robotics Engineer</p>
 
       <br />
       <br />

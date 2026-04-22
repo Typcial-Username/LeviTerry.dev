@@ -1,0 +1,502 @@
+{
+  "projects": [
+    {
+      "id": "4bit_adder",
+      "title": "4-bit Adder",
+      "description": "Builds a 4 bit binary adder using Logisim.",
+      "course": "RBT131",
+      "media": {
+        "docs": [
+          "4_Bit_Binary_Adder.pdf",
+          "4Bit_Adder_Truth_Table.pdf"
+        ],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "RES-5",
+          "reason": "Applies hardware description techniques to implement a scalable 4-bit adder on an FPGA, demonstrating how simple arithmetic units can be expanded into larger systems through modular design. The project showcases the transition from low-level logic to hardware abstraction using Verilog, including the composition of multi-bit structures and management of carry propagation. This reflects real-world digital system design practices used in processors and embedded systems, where hardware is defined, simulated, and deployed using HDL-based workflows."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "airplane_asselbly",
+      "title": "Airplane Assembly",
+      "description": "Template description",
+      "course": "DBM100",
+      "files": {
+        "cad": [],
+        "stl": []
+      },
+      "media": {
+        "docs": [],
+        "images": [],
+        "modelViewer": "https://a360.co/"
+      },
+      "objectives": [],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "belt_clip",
+      "title": "Modeling Belt Clip",
+      "description": "Designs a custom belt clip using McMaster part 91290A115.",
+      "course": "DBM100",
+      "files": {
+        "cad": [
+          "belt_clip.f3d"
+        ],
+        "stl": [
+          "belt_clip.stl"
+        ]
+      },
+      "media": {
+        "images": [
+          "belt_clip.png"
+        ],
+        "modelViewer": "https://a360.co/3XEdLau"
+      },
+      "objectives": [
+        {
+          "code": "DMF-6",
+          "reason": "Designed to clip onto a belt."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "business_card_pcb",
+      "title": "Business Card PCB",
+      "description": "Designs a custom PCB to be used as a business card.",
+      "course": "RBT205",
+      "media": {
+        "docs": [
+          "business_card_pcb.pdf"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-3",
+          "reason": "Demonstrates applied electronics and embedded system fundamentals through the design and implementation of a compact printed circuit board with interactive functionality. The project incorporates core electrical concepts including current limiting, switch-based input, and power distribution within a constrained physical layout. Component selection and circuit design decisions were made to ensure reliable operation while maintaining a minimal footprint consistent with a business card form factor. The PCB layout process required careful consideration of trace routing, spacing, and manufacturability, reinforcing practical design-for-manufacturing principles. This project reflects the integration of theoretical circuit knowledge with real-world constraints, resulting in a functional and physically realized electronic system."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "cardboard_marble_run",
+      "title": "Cardboard Marble Run",
+      "description": "Build a marble run out of cardboard",
+      "course": "DBM215",
+      "media": {
+        "videos": [
+          "https://youtube.com/embed/_YLQQtTR3QI"
+        ],
+        "images": [
+          "empty.jpg",
+          "mid.jpg",
+          "end.jpg"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "DMF-1",
+          "reason": "This project was developed in cardboard using CAD (Cardboard-Aided Design). I learned techniques to manipulate and work with cardboard to complete projects."
+        },
+        {
+          "code": "DMF-5",
+          "reason": "Techniques such as scoring to bend, strategic use of hot-glue, and utilizing support structures to allow for specific routes were all used."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "competition_base",
+      "title": "Competition Base",
+      "description": "Designs a custom robotic base for a competition-style robot. Powered by a Particle Argon.",
+      "course": "RBT353",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/rguVzqBqxHY"
+        ],
+        "docs": [],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "RES-4",
+          "reason": "Designs and implements a remotely operated robotic system using a Particle Argon microcontroller to manage real-time motor control and user interaction. The system hosts a webserver interface that enables remote command input, allowing independent control of each motor for precise maneuverability. This demonstrates embedded system design through the integration of networking, control logic, and hardware actuation, highlighting how software-defined commands translate into coordinated physical movement. The project reflects practical control system implementation, including responsiveness, modular motor control, and user-driven operation within a robotic platform."
+        },
+        {
+          "code": "RES-6",
+          "reason": "Implements autonomous navigation functionality through a path-following algorithm that enables the robot to operate without direct user input. The system processes positional or directional data to make real-time movement decisions, coordinating motor outputs to follow a defined route. This demonstrates the application of algorithmic thinking in robotics, where control logic transitions from manual input to autonomous behavior. The project highlights key concepts in autonomy, including decision-making, continuous system feedback, and the integration of software algorithms with physical motion systems."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "core2_quotes",
+      "title": "Core2 Quotes",
+      "description": "Displays quotes on the M5Stack Core2.",
+      "course": "CSC230",
+      "media": {
+        "videos": [
+          "https://youtube.com/embed/HfrW362TI20"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-4",
+          "reason": "Integrates hardware and software by utilizing the M5Stack Core2 display as an output interface to present dynamically retrieved data. The system connects to the Quotable API to fetch random quotes and updates the display at defined intervals, demonstrating interaction between network-based data sources and embedded hardware. This project highlights the coordination between software logic, timing control, and physical output components within an embedded system. By automating content retrieval and display, it reflects how embedded devices can process external data and present it to users in a meaningful and continuous manner."
+        }
+      ],
+      "repo": "Typcial-Username/CSC230-IoT",
+      "status": "complete",
+      "visibility": "public",
+      "github": {
+        "url": "https://github.com/Typcial-Username/CSC230-IoT",
+        "homepageUrl": "",
+        "pushedAt": "2026-03-09T18:28:12Z",
+        "stars": 0,
+        "topics": [
+          "class",
+          "programming",
+          "robotics",
+          "res-1"
+        ],
+        "languages": {
+          "totalSize": 66612,
+          "items": [
+            {
+              "name": "C++",
+              "color": "#f34b7d",
+              "percent": 92
+            },
+            {
+              "name": "HTML",
+              "color": "#e34c26",
+              "percent": 8
+            }
+          ]
+        },
+        "lastUpdated": "2026-03-09T18:28:12Z"
+      }
+    },
+    {
+      "id": "digital_derby",
+      "title": "Digital Derby",
+      "description": "Template description",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/7UnNRdInfSM"
+        ],
+        "images": [
+          "decals.jpg",
+          "road.jpg"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "DMF-4",
+          "reason": "Evaluates material and fabrication considerations by designing and producing a pinewood derby car optimized for 3D printing. The project accounts for additive manufacturing constraints such as layer orientation, structural strength, and tolerance for axle and wheel interfaces. Design decisions balance performance goals, such as weight distribution and stability, with the limitations and advantages of the chosen material and printing process. This demonstrates the ability to align material properties and manufacturing techniques with functional design requirements in a complete prototyping workflow."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "fpga_2bit_adder",
+      "title": "FPGA 2-bit Adder",
+      "description": "Programms a functional 2 bit adder using HDL/Verilog.",
+      "course": "RBT131",
+      "media": {
+        "docs": [
+          "Creating_2_bit_adder_on_FPGA.pdf"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-5",
+          "reason": "Demonstrates foundational digital logic design through implementation of a 2-bit adder, including sum and carry generation using basic combinational logic. The project highlights understanding of how binary arithmetic is constructed at the gate level, forming the basis for more complex computational systems. By explicitly handling carry conditions between bits, the design reflects core principles used in arithmetic logic units and low-level processor operations."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "horn_control_board",
+      "title": "Horn Control Board",
+      "description": "Allows the user to create and use custom horn sounds on their vehicle.",
+      "course": "BUS200",
+      "media": {
+        "docs": [
+          "BUS200_Business_Plan.pdf"
+        ],
+        "modelViewer": "https://www.tinkercad.com/embed/jqb4Gj4hLUl"
+      },
+      "objectives": [
+        {
+          "code": "DMF-2",
+          "reason": "Designed to work in vehicles and would be offered as a product."
+        },
+        {
+          "code": "DMF-5",
+          "reason": "Uses a soundboard module, amplifier, and speaker to produce audible sound."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "motor_speed_controller",
+      "title": "Motor Speed Controller",
+      "description": "Create a circuit that uses PWM to control a DC motor via a motor controller.",
+      "course": "RBT211",
+      "media": {
+        "videos": [
+          "https://youtube.com/embed/LI2515mfMRE"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-2",
+          "reason": "Implements microcontroller-based control of a DC motor using hardware timers, PWM signal generation, and interrupt-driven logic. The system demonstrates precise regulation of motor speed by adjusting duty cycles, allowing for smooth and consistent actuator behavior. Efficient use of embedded resources enables accurate timing control while avoiding blocking delays, supporting real-time responsiveness. Development within Microchip Studio reinforces low-level interaction with hardware and highlights an understanding of microprocessor-driven control systems."
+        },
+        {
+          "code": "RES-6",
+          "reason": "Executes an autonomous control sequence that modulates motor speed over time without requiring direct user input. The system progresses through a predefined set of states, using timing conditions to control transitions between different motor speeds. This structured sequencing demonstrates how embedded systems can perform repeatable tasks independently once initialized. The approach reflects foundational concepts in robotics, where simple autonomous routines are used to control actuators in predictable and reliable ways."
+        }
+      ],
+      "repo": "Typcial-Username/rbt211",
+      "status": "complete",
+      "visibility": "public",
+      "github": {
+        "url": "https://github.com/Typcial-Username/rbt211",
+        "homepageUrl": null,
+        "pushedAt": "2026-03-30T05:15:47Z",
+        "stars": 0,
+        "topics": [],
+        "languages": {
+          "totalSize": 15085,
+          "items": [
+            {
+              "name": "C",
+              "color": "#555555",
+              "percent": 28
+            },
+            {
+              "name": "Makefile",
+              "color": "#427819",
+              "percent": 72
+            }
+          ]
+        },
+        "lastUpdated": "2026-03-30T05:15:47Z"
+      }
+    },
+    {
+      "id": "motor_step_down",
+      "title": "Motor Step Down",
+      "description": "Converts the output speed of a TT Motor to the average walking speed of a 20-29 year old human.",
+      "course": "RBT205",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/OW4VX4612bI"
+        ],
+        "docs": [
+          "Motor_Gear_Reduction.pdf"
+        ],
+        "images": [
+          "top.png"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-1",
+          "reason": "Models and analyzes the relationship between motor output and real-world motion by converting a target human walking speed into mechanical requirements within a simulated system. The project involves unit conversions from miles per hour to centimeters per minute, calculation of wheel circumference, and determination of required rotational speed in revolutions per minute. These values are then used to derive an appropriate gear ratio, which is implemented and visualized using joint motion within Fusion 360. This demonstrates how theoretical calculations can be applied to mechanical system design, reflecting how robotic systems translate real-world performance requirements into actuator specifications."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "project_pen_assembly",
+      "title": "Project Pen Assembly",
+      "description": "Create a pen with multiple components and form an assembly",
+      "course": "DBM100",
+      "files": {
+        "cad": [
+          "Pen.f3d"
+        ]
+      },
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/WOPf5bOiLoE"
+        ],
+        "images": [
+          "pen_bg.jpg"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "DMF-6",
+          "reason": "Designs a multi-component pen that balances functional performance with ergonomic and aesthetic considerations. The project accounts for how the pen is held and used, influencing decisions related to shape, size, and component layout to improve comfort and usability. Form and structure are developed together to ensure the product is both visually cohesive and mechanically functional. This demonstrates how product design integrates human factors and usability alongside technical requirements."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "reaction_game",
+      "title": "Reaction Game",
+      "description": "Creates a precision reaction game where the goal is to press a button at a specific time when a specific LED is lit up.",
+      "course": "RBT211",
+      "repo": "Typcial-Username/rbt211",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/7ajM6mpHS4o"
+        ],
+        "docs": [
+          "reaction_game_final.pdf"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-1",
+          "reason": "Designs and implements a real-time embedded system that requires precise timing, input detection, and output control. The system challenges users to respond to time-sensitive visual cues, demonstrating accurate synchronization between hardware timers, PWM-controlled outputs, and user inputs. This mirrors real-world robotics scenarios where deterministic timing and low-latency response are critical for coordinating sensors and actuators, such as in control systems, safety mechanisms, and human-machine interaction."
+        },
+        {
+          "code": "RES-2",
+          "reason": "Implements a microcontroller-based system using low-level programming techniques, including hardware timers, PWM signal generation, and precise event timing. The project demonstrates control over microprocessor resources by managing time-critical operations, handling user input, and synchronizing outputs without relying on high-level abstractions. Development in Microchip Studio highlights direct interaction with embedded hardware, reinforcing concepts such as register-level control, timing accuracy, and efficient program structure."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": {
+        "url": "https://github.com/Typcial-Username/rbt211",
+        "homepageUrl": null,
+        "pushedAt": "2026-03-30T05:15:47Z",
+        "stars": 0,
+        "topics": [],
+        "languages": {
+          "totalSize": 15085,
+          "items": [
+            {
+              "name": "C",
+              "color": "#555555",
+              "percent": 28
+            },
+            {
+              "name": "Makefile",
+              "color": "#427819",
+              "percent": 72
+            }
+          ]
+        },
+        "lastUpdated": "2026-03-30T05:15:47Z"
+      }
+    },
+    {
+      "id": "ultrasonic_alarm_clock",
+      "title": "Ultrasonic Alarm Clock",
+      "description": "An alarm clock using ultrasonic transducers to produce directional sound to specifically wake specific people instead of the entire room.",
+      "course": "SIP405",
+      "objectives": [
+        {
+          "code": "DMF-2",
+          "reason": "Integrates an embedded system and electronic components into a functional product by combining an ESP32-based controller with ultrasonic transducers to produce directional audio output. The project demonstrates the implementation of microcontroller-driven signal generation, user interface components, and audio control within a cohesive system. Multiple hardware elements, including storage, display, and sensors, are coordinated through software to achieve reliable operation and real-time responsiveness. This reflects the practical application of embedded systems in product design, where electronic components are not only included but actively integrated to deliver a unique and functional user experience."
+        },
+        {
+          "code": "RES-3",
+          "reason": "Is powered by an M5Stack Core2 to manage timekeeping, user interaction, and audio playback using an onboard ESP32 with dual-core processing for responsive performance. The system integrates multiple embedded components, including an SD card for alarm audio storage, a display for configuration, and onboard sensors such as a gyroscope and accelerometer for interaction and state awareness. It demonstrates embedded systems design through the coordination of hardware and software to produce directional audio using ultrasonic transducers, requiring precise signal control to focus sound toward a specific target. The project also balances real-time requirements such as accurate time tracking and immediate alarm response with higher-level functions like file handling and user input, reflecting practical considerations in task management and system efficiency. Overall, it represents a cohesive integration of multiple subsystems into a functional embedded solution, highlighting applied knowledge of electronics, signal control, and system-level design."
+        }
+      ],
+      "repo": "Typcial-Username/SIP",
+      "status": "in-progress",
+      "visibility": "public",
+      "github": {
+        "url": "https://github.com/Typcial-Username/SIP",
+        "homepageUrl": null,
+        "pushedAt": "2026-03-20T07:07:23Z",
+        "stars": 0,
+        "topics": [],
+        "languages": {
+          "totalSize": 56567,
+          "items": [
+            {
+              "name": "C",
+              "color": "#555555",
+              "percent": 88
+            },
+            {
+              "name": "C++",
+              "color": "#f34b7d",
+              "percent": 12
+            }
+          ]
+        },
+        "lastUpdated": "2026-03-20T07:07:23Z"
+      }
+    },
+    {
+      "id": "vex_high_stakes",
+      "title": "Vex High Stakes",
+      "description": "Designed a robot to compete in the Vex robotics competition.",
+      "course": "PDS300",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/Sx6HJSpopeQ"
+        ],
+        "docs": [],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "DMF-3",
+          "reason": "Demonstrates Agile and MVP development through the rapid design and iteration of a competition robot under strict time and resource constraints. The project began with a minimal viable system focused on achieving basic scoring functionality, allowing early validation of core concepts before expanding capabilities. Iterative improvements were made throughout the five-week development cycle, refining mechanism reliability, control precision, and overall system efficiency based on testing and competition feedback. Limited material availability required prioritization of essential features and creative reuse of components, reinforcing MVP principles by focusing on high-impact functionality first. The final system reflects a complete Agile workflow, where continuous iteration, constraint-driven decision making, and incremental improvements led to a competitive and award-winning design."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "vex_pusbback",
+      "title": "Vex Pushback",
+      "description": "Designed a robot to compete in the Vex robotics competition.",
+      "course": "PDS400",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/ocmONiVun9M"
+        ],
+        "docs": [],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "DMF-3",
+          "reason": "Demonstrates Agile and MVP development through the iterative design and refinement of a competition robot built under limited material and time constraints. The project began with a minimal viable drivetrain and basic game interaction functionality, allowing early testing of mobility and control before expanding system capabilities. Successive iterations focused on improving structural stability, traction, and game performance based on testing outcomes and competition feedback. Resource limitations required prioritization of essential functions and efficient use of available materials, reinforcing MVP principles by focusing on core performance before refinement. The final system reflects an iterative engineering workflow that culminated in a 2nd place finish and qualification for the VEX U World Championship, validating the effectiveness of the development process under real-world competitive conditions."
+        }
+      ],
+      "status": "in-progress",
+      "visibility": "public",
+      "github": null
+    }
+  ]
+}

@@ -1,5 +1,10 @@
+import { Metadata } from "next";
 import ObjectivesView from "../../../../components/ui/uat/ObjectivesView";
 import { getPortfolioData } from "@/src/lib/portfolio-data";
+
+export const metadata: Metadata = {
+  title: "RES Boards",
+};
 
 const RoboticsBoardsPage = async () => {
   const projects = await getPortfolioData();
@@ -13,8 +18,9 @@ const RoboticsBoardsPage = async () => {
     <>
       <br />
 
-      <h1 className="text-3xl text-center">Robotics Boards UAT Page</h1>
-      <p className="text-center">Found {resRepos.length} project(s)</p>
+      <h1 className="text-3xl text-center">
+        UAT Robotics and Embedded Systems - Boards
+      </h1>
 
       <br />
 

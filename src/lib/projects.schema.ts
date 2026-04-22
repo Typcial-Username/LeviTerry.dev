@@ -67,7 +67,7 @@ const GitHubInfo = z.object({
   url: z.string(),
   homepageUrl: z.string().nullable(),
   pushedAt: z.string(),
-  stargazerCount: z.number(),
+  stars: z.number(),
   isFork: z.boolean(),
   topics: GitHubTopics,
   languages: GitHubLanguages,

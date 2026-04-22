@@ -4,6 +4,7 @@
   color: #aaa;
   margin: 0 2rem 0 2rem;
   position: absolute;
+  left: var(--main-m-left);
   display: flex;
   flex-direction: column;
   font-weight: normal;
@@ -23,11 +24,13 @@
   display: flex;
   font-size: 1rem;
   color: #aaa;
-  margin-left: 5.5rem;
+  left: calc(var(--main-m-left) + 2rem);
+  /* margin-left: 5.5rem; */
   flex-direction: column;
   text-align: left;
   font-weight: normal;
-  max-width: calc(100% - 5.5rem);
+  max-width: calc(100% - var(--main-m-left));
+  font-family: "Fira Code", monospace;
 }
 
 .json {

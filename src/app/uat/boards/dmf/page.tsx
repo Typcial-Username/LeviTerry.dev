@@ -1,6 +1,11 @@
+import { Metadata } from "next";
 import RepoManager from "../../../../components/RepoManager";
 import ObjectivesView from "../../../../components/ui/uat/ObjectivesView";
 import { getPortfolioData } from "@/src/lib/portfolio-data";
+
+export const metadata: Metadata = {
+  title: "DMF Boards",
+};
 
 const DmfBoardsPage = async () => {
   const projects = await getPortfolioData();
@@ -14,8 +19,9 @@ const DmfBoardsPage = async () => {
     <>
       <br />
 
-      <h1 className="text-3xl text-center">DMF Boards UAT Page</h1>
-      <p className="text-center">Found {dmfRepos.length} project(s)</p>
+      <h1 className="text-3xl text-center">
+        UAT Digital Maker and Fabrication - Boards
+      </h1>
 
       <br />
 
