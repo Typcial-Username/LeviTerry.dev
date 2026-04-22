@@ -1,6 +1,28 @@
 {
   "projects": [
     {
+      "id": "4bit_adder",
+      "title": "4-bit Adder",
+      "description": "Builds a 4 bit binary adder using Logisim.",
+      "course": "RBT131",
+      "media": {
+        "docs": [
+          "4_Bit_Binary_Adder.pdf",
+          "4Bit_Adder_Truth_Table.pdf"
+        ],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "RES-5",
+          "reason": "Applies hardware description techniques to implement a scalable 4-bit adder on an FPGA, demonstrating how simple arithmetic units can be expanded into larger systems through modular design. The project showcases the transition from low-level logic to hardware abstraction using Verilog, including the composition of multi-bit structures and management of carry propagation. This reflects real-world digital system design practices used in processors and embedded systems, where hardware is defined, simulated, and deployed using HDL-based workflows."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
       "id": "airplane_asselbly",
       "title": "Airplane Assembly",
       "description": "Template description",
@@ -52,20 +74,16 @@
       "id": "business_card_pcb",
       "title": "Business Card PCB",
       "description": "Designs a custom PCB to be used as a business card.",
-      "course": "RBT353",
+      "course": "RBT205",
       "media": {
-        "videos": [
-          "https://www.youtube.com/embed/rguVzqBqxHY"
-        ],
         "docs": [
           "business_card_pcb.pdf"
-        ],
-        "images": []
+        ]
       },
       "objectives": [
         {
           "code": "RES-3",
-          "reason": "Designs a custom PCB."
+          "reason": "Demonstrates applied electronics and embedded system fundamentals through the design and implementation of a compact printed circuit board with interactive functionality. The project incorporates core electrical concepts including current limiting, switch-based input, and power distribution within a constrained physical layout. Component selection and circuit design decisions were made to ensure reliable operation while maintaining a minimal footprint consistent with a business card form factor. The PCB layout process required careful consideration of trace routing, spacing, and manufacturability, reinforcing practical design-for-manufacturing principles. This project reflects the integration of theoretical circuit knowledge with real-world constraints, resulting in a functional and physically realized electronic system."
         }
       ],
       "status": "complete",
@@ -116,11 +134,11 @@
       "objectives": [
         {
           "code": "RES-4",
-          "reason": "four"
+          "reason": "Designs and implements a remotely operated robotic system using a Particle Argon microcontroller to manage real-time motor control and user interaction. The system hosts a webserver interface that enables remote command input, allowing independent control of each motor for precise maneuverability. This demonstrates embedded system design through the integration of networking, control logic, and hardware actuation, highlighting how software-defined commands translate into coordinated physical movement. The project reflects practical control system implementation, including responsiveness, modular motor control, and user-driven operation within a robotic platform."
         },
         {
           "code": "RES-6",
-          "reason": "Designs a custom PCB."
+          "reason": "Implements autonomous navigation functionality through a path-following algorithm that enables the robot to operate without direct user input. The system processes positional or directional data to make real-time movement decisions, coordinating motor outputs to follow a defined route. This demonstrates the application of algorithmic thinking in robotics, where control logic transitions from manual input to autonomous behavior. The project highlights key concepts in autonomy, including decision-making, continuous system feedback, and the integration of software algorithms with physical motion systems."
         }
       ],
       "status": "complete",
@@ -135,15 +153,12 @@
       "media": {
         "videos": [
           "https://youtube.com/embed/HfrW362TI20"
-        ],
-        "docs": [
-          "core2_quotes.pdf"
         ]
       },
       "objectives": [
         {
           "code": "RES-4",
-          "reason": "Showcases random quotes from the Quotable API and can automatically get new quotes on an interval."
+          "reason": "Integrates hardware and software by utilizing the M5Stack Core2 display as an output interface to present dynamically retrieved data. The system connects to the Quotable API to fetch random quotes and updates the display at defined intervals, demonstrating interaction between network-based data sources and embedded hardware. This project highlights the coordination between software logic, timing control, and physical output components within an embedded system. By automating content retrieval and display, it reflects how embedded devices can process external data and present it to users in a meaningful and continuous manner."
         }
       ],
       "repo": "Typcial-Username/CSC230-IoT",
@@ -182,7 +197,6 @@
       "id": "digital_derby",
       "title": "Digital Derby",
       "description": "Template description",
-      "course": "TMP000",
       "media": {
         "videos": [
           "https://www.youtube.com/embed/7UnNRdInfSM"
@@ -196,6 +210,26 @@
         {
           "code": "DMF-4",
           "reason": "Evaluates material and fabrication considerations by designing and producing a pinewood derby car optimized for 3D printing. The project accounts for additive manufacturing constraints such as layer orientation, structural strength, and tolerance for axle and wheel interfaces. Design decisions balance performance goals, such as weight distribution and stability, with the limitations and advantages of the chosen material and printing process. This demonstrates the ability to align material properties and manufacturing techniques with functional design requirements in a complete prototyping workflow."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "fpga_2bit_adder",
+      "title": "FPGA 2-bit Adder",
+      "description": "Programms a functional 2 bit adder using HDL/Verilog.",
+      "course": "RBT131",
+      "media": {
+        "docs": [
+          "Creating_2_bit_adder_on_FPGA.pdf"
+        ]
+      },
+      "objectives": [
+        {
+          "code": "RES-5",
+          "reason": "Demonstrates foundational digital logic design through implementation of a 2-bit adder, including sum and carry generation using basic combinational logic. The project highlights understanding of how binary arithmetic is constructed at the gate level, forming the basis for more complex computational systems. By explicitly handling carry conditions between bits, the design reflects core principles used in arithmetic logic units and low-level processor operations."
         }
       ],
       "status": "complete",
@@ -235,9 +269,6 @@
       "media": {
         "videos": [
           "https://youtube.com/embed/LI2515mfMRE"
-        ],
-        "docs": [
-          "motor_speed_controller.pdf"
         ]
       },
       "objectives": [
@@ -389,11 +420,11 @@
       "objectives": [
         {
           "code": "DMF-2",
-          "reason": "Uses a ESP32 microcontroller and ultrasonic transducers to produce directional sound."
+          "reason": "Integrates an embedded system and electronic components into a functional product by combining an ESP32-based controller with ultrasonic transducers to produce directional audio output. The project demonstrates the implementation of microcontroller-driven signal generation, user interface components, and audio control within a cohesive system. Multiple hardware elements, including storage, display, and sensors, are coordinated through software to achieve reliable operation and real-time responsiveness. This reflects the practical application of embedded systems in product design, where electronic components are not only included but actively integrated to deliver a unique and functional user experience."
         },
         {
           "code": "RES-3",
-          "reason": "Uses servos to precisely aim at a target."
+          "reason": "Is powered by an M5Stack Core2 to manage timekeeping, user interaction, and audio playback using an onboard ESP32 with dual-core processing for responsive performance. The system integrates multiple embedded components, including an SD card for alarm audio storage, a display for configuration, and onboard sensors such as a gyroscope and accelerometer for interaction and state awareness. It demonstrates embedded systems design through the coordination of hardware and software to produce directional audio using ultrasonic transducers, requiring precise signal control to focus sound toward a specific target. The project also balances real-time requirements such as accurate time tracking and immediate alarm response with higher-level functions like file handling and user input, reflecting practical considerations in task management and system efficiency. Overall, it represents a cohesive integration of multiple subsystems into a functional embedded solution, highlighting applied knowledge of electronics, signal control, and system-level design."
         }
       ],
       "repo": "Typcial-Username/SIP",
@@ -424,19 +455,43 @@
       }
     },
     {
-      "id": "vex",
-      "title": "Vex",
+      "id": "vex_high_stakes",
+      "title": "Vex High Stakes",
       "description": "Designed a robot to compete in the Vex robotics competition.",
       "course": "PDS300",
       "media": {
-        "videos": [],
+        "videos": [
+          "https://www.youtube.com/embed/Sx6HJSpopeQ"
+        ],
         "docs": [],
         "images": []
       },
       "objectives": [
         {
           "code": "DMF-3",
-          "reason": "Worked in a team to design and build a robot"
+          "reason": "Demonstrates Agile and MVP development through the rapid design and iteration of a competition robot under strict time and resource constraints. The project began with a minimal viable system focused on achieving basic scoring functionality, allowing early validation of core concepts before expanding capabilities. Iterative improvements were made throughout the five-week development cycle, refining mechanism reliability, control precision, and overall system efficiency based on testing and competition feedback. Limited material availability required prioritization of essential features and creative reuse of components, reinforcing MVP principles by focusing on high-impact functionality first. The final system reflects a complete Agile workflow, where continuous iteration, constraint-driven decision making, and incremental improvements led to a competitive and award-winning design."
+        }
+      ],
+      "status": "complete",
+      "visibility": "public",
+      "github": null
+    },
+    {
+      "id": "vex_pusbback",
+      "title": "Vex Pushback",
+      "description": "Designed a robot to compete in the Vex robotics competition.",
+      "course": "PDS400",
+      "media": {
+        "videos": [
+          "https://www.youtube.com/embed/ocmONiVun9M"
+        ],
+        "docs": [],
+        "images": []
+      },
+      "objectives": [
+        {
+          "code": "DMF-3",
+          "reason": "Demonstrates Agile and MVP development through the iterative design and refinement of a competition robot built under limited material and time constraints. The project began with a minimal viable drivetrain and basic game interaction functionality, allowing early testing of mobility and control before expanding system capabilities. Successive iterations focused on improving structural stability, traction, and game performance based on testing outcomes and competition feedback. Resource limitations required prioritization of essential functions and efficient use of available materials, reinforcing MVP principles by focusing on core performance before refinement. The final system reflects an iterative engineering workflow that culminated in a 2nd place finish and qualification for the VEX U World Championship, validating the effectiveness of the development process under real-world competitive conditions."
         }
       ],
       "status": "in-progress",
