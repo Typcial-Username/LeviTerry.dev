@@ -207,8 +207,11 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
                           )}
 
                           {item.type === "video" && (
-                            <div className="w-full h-full flex items-center justify-center bg-black text-white text-xs">
-                              ▶
+                            <div className="w-full h-full flex items-center justify-center bg-black text-amber-500 text-xs">
+                              <img
+                                src={`https://i.ytimg.com/vi/${item.src.split("/").pop()}/mqdefault.jpg`}
+                              />
+                              <p>▶</p>
                             </div>
                           )}
 
@@ -302,6 +305,9 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
                       <div className="w-full h-full">
                         <iframe
                           src={`http://docs.google.com/gview?url=${item.src}&embedded=true`}
+                          className="w-full h-full rounded"
+                          // width={"100%"}
+                          // height={"100%"}
                         />
                         {/* <FilePreview preview={item.src} /> */}
                       </div>
