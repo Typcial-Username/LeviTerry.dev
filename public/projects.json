@@ -23,20 +23,27 @@
       "github": null
     },
     {
-      "id": "airplane_asselbly",
+      "id": "airplane_assembly",
       "title": "Airplane Assembly",
-      "description": "Template description",
+      "description": "Designed an airplane inspired by the Cessna Citation X.",
       "course": "DBM100",
-      "files": {
-        "cad": [],
-        "stl": []
-      },
       "media": {
-        "docs": [],
-        "images": [],
-        "modelViewer": "https://a360.co/"
+        "images": [
+          "complete_body.jpg",
+          "sketch.jpg"
+        ],
+        "modelViewer": "https://a360.co/4sWWNBI"
       },
-      "objectives": [],
+      "objectives": [
+        {
+          "code": "DMF-1",
+          "reason": "Demonstrates the use of digital and physical fabrication tools to engineer and produce a physical prototype of an aircraft-inspired assembly. The design was translated from CAD into a manufactured part using additive manufacturing, requiring consideration of printability, tolerances, and part segmentation where necessary. ABS was selected as the fabrication material due to its favorable strength, durability, and UV resistance characteristics, aligning material choice with the intended use of the final prototype. This reflects the full workflow of moving from digital concept to engineered physical prototype through appropriate fabrication and material decisions."
+        },
+        {
+          "code": "DMF-4",
+          "reason": "Evaluates design and fabrication considerations through the digital modeling and structural planning of a complex multi-component aircraft assembly in Fusion 360. The project required consideration of part geometry, assembly relationships, and manufacturability to ensure the design could be accurately fabricated and assembled as a physical prototype. Structural and aesthetic features were balanced to maintain fidelity to the Citation X inspiration while remaining practical for additive manufacturing. This demonstrates the ability to apply digital design tools in conjunction with fabrication-aware engineering decision making."
+        }
+      ],
       "status": "complete",
       "visibility": "public",
       "github": null
@@ -63,7 +70,7 @@
       "objectives": [
         {
           "code": "DMF-6",
-          "reason": "Designed to clip onto a belt."
+          "reason": "Demonstrates consideration of form, function, and human factors through the design of a wearable belt clip intended for practical daily use. The geometry of the clip was developed to ensure secure attachment to a belt while maintaining ease of use for repeated attachment and removal. Design decisions account for ergonomic interaction, including how the user grips and applies force to the clip during use. The integration of McMaster-Carr hardware ensures mechanical reliability while influencing overall form and structural design. This project reflects the balance between functional performance, user interaction, and physical design constraints typical of consumer product development."
         }
       ],
       "status": "complete",
@@ -93,7 +100,7 @@
     {
       "id": "cardboard_marble_run",
       "title": "Cardboard Marble Run",
-      "description": "Build a marble run out of cardboard",
+      "description": "Designed and built a marble run using cardboard as the primary construction material, focusing on structural stability, flow control, and iterative design of pathways to guide marble movement.",
       "course": "DBM215",
       "media": {
         "videos": [
@@ -108,11 +115,11 @@
       "objectives": [
         {
           "code": "DMF-1",
-          "reason": "This project was developed in cardboard using CAD (Cardboard-Aided Design). I learned techniques to manipulate and work with cardboard to complete projects."
+          "reason": "Demonstrates the use of physical prototyping tools and techniques through the construction of a functional marble run using cardboard as the primary material. The project involved translating a conceptual design into a physical structure using hands-on fabrication methods, including cutting, assembly, and iterative adjustments to improve performance. Working within the constraints of cardboard required adapting digital or conceptual ideas into practical build decisions that account for material limitations and structural behavior. This reflects the ability to use accessible materials and fabrication techniques to produce functional prototypes through iterative physical development."
         },
         {
           "code": "DMF-5",
-          "reason": "Techniques such as scoring to bend, strategic use of hot-glue, and utilizing support structures to allow for specific routes were all used."
+          "reason": "Demonstrates proficiency with prototyping techniques and fabrication methods through the structural design and assembly of a cardboard marble run. Construction required the use of scoring techniques to create controlled bends, strategic adhesive application for joint strength, and reinforcement structures to maintain stability throughout the system. These methods were applied to guide marble movement through intentional pathway design while maintaining structural integrity across multiple segments. The project highlights practical understanding of how fabrication techniques directly influence performance, durability, and functionality in physical prototypes."
         }
       ],
       "status": "complete",
@@ -126,11 +133,17 @@
       "course": "RBT353",
       "media": {
         "videos": [
-          "https://www.youtube.com/embed/rguVzqBqxHY"
+          "https://www.youtube.com/embed/rguVzqBqxHY",
+          "https://youtube.com/embed/k93tDjTrB2I?si=53UmqVkpwSMaHSZL"
         ],
-        "docs": [],
-        "images": []
+        "docs": [
+          "PCB.pdf"
+        ],
+        "images": [
+          "base.jpg"
+        ]
       },
+      "repo": "Typcial-Username/competition-base",
       "objectives": [
         {
           "code": "RES-4",
@@ -143,7 +156,29 @@
       ],
       "status": "complete",
       "visibility": "public",
-      "github": null
+      "github": {
+        "url": "https://github.com/Typcial-Username/competition-base",
+        "homepageUrl": null,
+        "pushedAt": "2026-04-26T22:33:35Z",
+        "stars": 0,
+        "topics": [],
+        "languages": {
+          "totalSize": 5910,
+          "items": [
+            {
+              "name": "C++",
+              "color": "#f34b7d",
+              "percent": 62
+            },
+            {
+              "name": "HTML",
+              "color": "#e34c26",
+              "percent": 38
+            }
+          ]
+        },
+        "lastUpdated": "2026-04-26T22:33:35Z"
+      }
     },
     {
       "id": "core2_quotes",
@@ -196,7 +231,7 @@
     {
       "id": "digital_derby",
       "title": "Digital Derby",
-      "description": "Template description",
+      "description": "Designed a car for a Pine Wood Derby-style competition",
       "media": {
         "videos": [
           "https://www.youtube.com/embed/7UnNRdInfSM"
@@ -242,19 +277,21 @@
       "description": "Allows the user to create and use custom horn sounds on their vehicle.",
       "course": "BUS200",
       "media": {
+        "videos": [
+          "https://youtube.com/embed/eykPj4472zs?si=MYaIzvQsVhrbH34F"
+        ],
         "docs": [
           "BUS200_Business_Plan.pdf"
-        ],
-        "modelViewer": "https://www.tinkercad.com/embed/jqb4Gj4hLUl"
+        ]
       },
       "objectives": [
         {
           "code": "DMF-2",
-          "reason": "Designed to work in vehicles and would be offered as a product."
+          "reason": "Demonstrates the development of a functional electronic product intended for real-world automotive integration, requiring consideration of installation constraints, reliability, and user-facing functionality. The horn control board is designed to operate within a vehicle environment, accounting for practical factors such as power delivery, component protection, and compatibility with automotive systems. By targeting the project for potential productization, the design extends beyond prototype-level functionality and incorporates real-world use case considerations. This reflects the ability to engineer embedded electronic systems into practical, deployable consumer products."
         },
         {
           "code": "DMF-5",
-          "reason": "Uses a soundboard module, amplifier, and speaker to produce audible sound."
+          "reason": "Demonstrates proficiency in prototyping and integrating electronic subsystems through the implementation of a soundboard module, amplifier, and speaker into a cohesive audio output system. The project requires selection and coordination of multiple hardware components to ensure reliable signal flow, amplification, and sound reproduction. Integration of these components into a functional control board reflects practical experience in electronic assembly, subsystem interfacing, and prototype development. This showcases the ability to combine discrete modules into a polished and operational hardware solution."
         }
       ],
       "status": "complete",
@@ -269,6 +306,9 @@
       "media": {
         "videos": [
           "https://youtube.com/embed/LI2515mfMRE"
+        ],
+        "docs": [
+          "Motor_Controller.pdf"
         ]
       },
       "objectives": [
@@ -417,6 +457,11 @@
       "title": "Ultrasonic Alarm Clock",
       "description": "An alarm clock using ultrasonic transducers to produce directional sound to specifically wake specific people instead of the entire room.",
       "course": "SIP405",
+      "media": {
+        "docs": [
+          "schematic.pdf"
+        ]
+      },
       "objectives": [
         {
           "code": "DMF-2",
@@ -434,7 +479,7 @@
         "url": "https://github.com/Typcial-Username/SIP",
         "homepageUrl": null,
         "pushedAt": "2026-03-20T07:07:23Z",
-        "stars": 0,
+        "stars": 1,
         "topics": [],
         "languages": {
           "totalSize": 56567,
@@ -464,7 +509,12 @@
           "https://www.youtube.com/embed/Sx6HJSpopeQ"
         ],
         "docs": [],
-        "images": []
+        "images": [
+          "bot2.png",
+          "bot6.jpg",
+          "IMG_2204.jpeg",
+          "IMG_2207.jpeg"
+        ]
       },
       "objectives": [
         {
@@ -477,7 +527,7 @@
       "github": null
     },
     {
-      "id": "vex_pusbback",
+      "id": "vex_pushback",
       "title": "Vex Pushback",
       "description": "Designed a robot to compete in the Vex robotics competition.",
       "course": "PDS400",
@@ -485,8 +535,10 @@
         "videos": [
           "https://www.youtube.com/embed/ocmONiVun9M"
         ],
-        "docs": [],
-        "images": []
+        "images": [
+          "20260313_153949.jpg",
+          "20260313_154018.jpg"
+        ]
       },
       "objectives": [
         {
