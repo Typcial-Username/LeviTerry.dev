@@ -298,7 +298,7 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
                         src={item.src}
                         width={"100%"}
                         height={"100%"}
-                        className="rounded"
+                        className="rounded w-full h-full"
                       />
                     )}
 
