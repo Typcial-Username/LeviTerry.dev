@@ -18,7 +18,7 @@ const ObjectivesView = ({
   const right = objectives.slice(mid);
 
   return (
-    <div className="max-w-360 mx-auto px-4 mt-5 flex flex-row gap-16">
+    <div className="max-w-500 mx-auto px-4 mt-5 flex flex-row gap-16">
       <ol className="list-decimal flex flex-col gap-4 w-1/2">
         {left.map((obj) => {
           return (
