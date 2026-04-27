@@ -19,6 +19,7 @@ import {
 } from "../ui/carousel";
 
 import { Dialog, DialogContent } from "../../components/ui/dialog";
+import { Link } from "../../components/Link";
 
 // import FilePreview from "reactjs-file-preview";
 
@@ -306,10 +307,17 @@ export const ProjectCard: React.FC<RepositoryCardProps> = ({
                         <iframe
                           src={`http://docs.google.com/gview?url=${item.src}&embedded=true`}
                           className="w-full h-full rounded"
-                          // width={"100%"}
-                          // height={"100%"}
+                          width={"100%"}
+                          height={"100%"}
                         />
-                        {/* <FilePreview preview={item.src} /> */}
+
+                        <p>
+                          Preview Not Working?{" "}
+                          <Link
+                            href={item.src}
+                            text={item.src.split("/").pop() ?? "Download"}
+                          />
+                        </p>
                       </div>
                     )}
                   </CarouselItem>
