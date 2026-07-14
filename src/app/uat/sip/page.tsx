@@ -6,6 +6,7 @@ import Head from "next/head";
 import React from "react";
 // import { Document, Page } from "react-pdf";
 import styles from "../../../styles/sip.module.css";
+import Link from "next/link";
 // import { pdfjs } from 'react-pdf'
 
 // const DocumentViewer = dynamic(
@@ -28,7 +29,7 @@ const SIPPage: NextPage = () => {
       <br />
 
       <h1>SIP</h1>
-      <h2>Project Name: Directional Alarm Clock</h2>
+      <h2>Project Name: Ultrasonic Alarm Clock</h2>
 
       <br />
       {/* display: "flex", flexDirection: 'row', alignContent: 'center', margin: '0 auto', width: '100%', flexWrap: 'wrap' */}
@@ -60,9 +61,21 @@ const SIPPage: NextPage = () => {
       <br />
 
       <h2>Pitch</h2>
-      {/* <DocumentViewer url="https://uatedu-my.sharepoint.com/:p:/g/personal/lterry80052_uat_edu/EQ3RNNma3RNNuQTws-xXR2UBVOBKst5CVeTGrpw6-TpUNg?e=mtLhL9" /> */}
+      <div className="w-full h-full">
+        <iframe
+          src={`http://docs.google.com/gview?url=https://leviterry.dev/docs/SIP311_Pitch_Directional_Alarm_Clock.pdf?e=mtLhL9&embedded=true`}
+          className="w-full h-full rounded"
+          width={"100%"}
+          height={"100%"}
+        />
 
-      {/* <DocumentViewer url="/docs/SIP311_Pitch_Directional_Alarm_Clock.pdf" /> */}
+        <p>
+          Preview Not Working?{" "}
+          <Link href={"/docs/SIP311_Pitch_Directional_Alarm_Clock.pdf"}>
+            SIP311_Pitch_Directional_Alarm_Clock.pdf
+          </Link>
+        </p>
+      </div>
     </>
   );
 };
