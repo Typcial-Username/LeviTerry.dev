@@ -1,8 +1,7 @@
-// import ffmpeg from 'fluent-ffmpeg'
 import formidable from "formidable";
 import fs from "node:fs/promises";
 import ffmpeg from "fluent-ffmpeg";
-import ffmpegStatic from "ffmpeg-static";
+import ffmpegPath from "ffmpeg-static";
 import path from "node:path";
 
 import {
@@ -24,12 +23,10 @@ const s3 = new S3Client({
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
-  const ffmpegPath = path.resolve(ffmpegStatic as string);
+  // const ffmpegPath = path.resolve(ffmpegPath as string);
   if (!ffmpegPath) {
     throw new Error("ffmpeg path not found");
   }
-
-  console.log({ ffmpegPath });
 
   const formData = await req.formData();
 
@@ -90,9 +87,6 @@ export async function POST(req: Request) {
   const outputDir = path.join(process.cwd(), "public", "modulated");
 
   const outputFileName = sanitizedBaseName + "-modulated.uaf";
-  const wavFileName = sanitizedBaseName + ".uaf";
-
-  // const wavPath = path.join(outputDir, wavFileName); //fs.mkdtempSync('modulated-') + '/' + realFile.originalFilename;
   const modulatedPath = path.join(outputDir, outputFileName);
 
   // Convert to WAV format using ffmpeg
@@ -114,28 +108,46 @@ export async function POST(req: Request) {
 
   // Read PCM data from the WAV file
   const pcm = await fs.readFile(wavPath);
-  const dataOffset = 44;
-  const audio = pcm.subarray(dataOffset);
+  const dataOffset = findDataChunk(pcm);
+
+  const audio = pcm.subarray(
+    dataOffset.offset,
+    dataOffset.offset + dataOffset.size
+  );
 
   // Modulate the audio data
-  const finished = await modulateAudio(pcm, frequency, sampleRate);
+  // const finished = modulateAudio(audio, frequency, sampleRate);
 
-  fs.writeFile(modulatedPath, new Uint8Array(finished));
+  const sampleCount = audio.length / 2;
+  const header = createUAFHeader(sampleRate, frequency, sampleCount);
+  const gain = 0.8;
+  const scaledAudio = new Int16Array(sampleCount);
+
+  for (let i = 0; i < sampleCount; i++) {
+    scaledAudio[i] = Math.round(audio.readInt16LE(i * 2) * gain);
+  }
+
+  // const pcmBuffer = Buffer.from(
+  //   output.buffer,
+  //   output.byteOffset,
+  //   output.byteLength
+  // );
+
+  const result = new Uint8Array(header.length + audio.length);
+  result.set(header, 0);
+  result.set(scaledAudio, header.length);
+
+  await fs.writeFile(modulatedPath, result);
 
   console.log("Modulated audio saved to:", modulatedPath);
 
-  return new Response(
-    JSON.stringify({
-      message: "File received successfully",
-      modulatedPath: `modulated/${outputFileName}`,
-    }),
-    {
-      status: 200,
-      headers: {
-        "Content-Type": "audio/uaf",
-      },
-    }
-  );
+  return new Response(result, {
+    status: 200,
+    headers: {
+      "Content-Type": "audio/uaf",
+      "Content-Disposition": `attachment; filename="${outputFileName}"`,
+    },
+  });
 }
 
 function createUAFHeader(
@@ -156,8 +168,8 @@ function createUAFHeader(
 function modulateAudio(
   file: Buffer,
   carrierHz: number = 40000,
-  sampleRate: number = 192000,
-  depth: number = 0.8
+  sampleRate: number = 384000,
+  depth: number = 0.6
 ): Uint8Array<ArrayBuffer> {
   const carrierStep = (2 * Math.PI * carrierHz) / sampleRate;
 
@@ -169,8 +181,14 @@ function modulateAudio(
     const sample = file.readInt16LE(i * 2) / 32768;
 
     // AM modulation with carrier
-    const modulated =
-      Math.sqrt(Math.max(0, 1 + depth * sample)) * Math.sin(carrierStep * i);
+    const maxEnvelope = Math.sqrt(1 + depth); // worst case at sample = +1
+    const rawEnvelope =
+      Math.sqrt(Math.max(0, 1 + depth * sample)) / maxEnvelope;
+
+    const floor = 0.15;
+    const envelope = floor + (1 - floor) * rawEnvelope;
+
+    const modulated = envelope * Math.sin(carrierStep * i);
 
     // convert back to int16 with clipping
     const scaled = Math.round(modulated * 32767);
@@ -190,6 +208,19 @@ function modulateAudio(
   result.set(pcmBuffer, header.length);
 
   return result;
+}
+
+function findDataChunk(buf: Buffer): { offset: number; size: number } {
+  let pos = 12; // skip RIFF header + WAVE
+  while (pos < buf.length) {
+    const chunkId = buf.toString("ascii", pos, pos + 4);
+    const chunkSize = buf.readUInt32LE(pos + 4);
+    if (chunkId === "data") {
+      return { offset: pos + 8, size: chunkSize };
+    }
+    pos += 8 + chunkSize + (chunkSize % 2); // chunks are word-aligned
+  }
+  throw new Error("No data chunk found in WAV file");
 }
 
 export const config = {

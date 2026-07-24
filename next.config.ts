@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  serverExternalPackages: ["ffmpeg-static", "fluent-ffmpeg"],
 };
 
 module.exports = nextConfig;
